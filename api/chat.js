@@ -18,15 +18,17 @@ export default async function handler(req, res) {
 
     try {
         const { message, systemPrompt } = req.body;
-
-        console.log('Received request:', { message, systemPrompt }); // Debug log
+        
+        // Log the API key presence (not the actual key)
+        console.log('API Key present:', !!process.env.ANTHROPIC_API_KEY);
 
         const response = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'anthropic-version': '2023-06-01',
-                'x-api-key': process.env.ANTHROPIC_API_KEY
+                'x-api-key': process.env.ANTHROPIC_API_KEY,
+                'anthropic-beta': 'messages-2023-12-15'
             },
             body: JSON.stringify({
                 model: 'claude-3-opus-20240229',
@@ -40,19 +42,16 @@ export default async function handler(req, res) {
             })
         });
 
-        const data = await response.json();
-        
-        console.log('Anthropic API response:', data); // Debug log
-
-        if (data.error) {
-            console.error('Anthropic API error:', data.error);
-            res.status(500).json({ error: data.error.message || 'Unknown API error' });
-            return;
+        if (!response.ok) {
+            const errorData = await response.text();
+            console.error('Anthropic API error:', errorData);
+            throw new Error(errorData);
         }
 
+        const data = await response.json();
         res.status(200).json(data);
     } catch (error) {
         console.error('Server error:', error);
-        res.status(500).json({ error: error.message || 'Internal server error' });
+        res.status(500).json({ error: error.message });
     }
 }
