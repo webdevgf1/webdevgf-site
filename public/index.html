@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDevGF AI Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #0f1116;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-image {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-gif {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .initial-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f1116;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+    
+        .initial-loading.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+    
+        .loading-logo {
+            width: 300px; /* Adjusted for the new logo */
+            height: auto;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: logoAnimation 1.5s ease-out forwards;
+        }
+    
+        @keyframes logoAnimation {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }    
+
+        .chat-container {
+            display: flex;
+            max-width: 1800px;
+            width: 95%;
+            height: calc(90vh - 60px);
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+            margin: auto;
+            padding-top: 5rem;
+            margin-bottom: 60px;
+        }
+
+        .model-viewer-container {
+            width: 800px;
+            height: 740px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .character-window-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 120%;
+            background-color: transparent;
+            --poster-color: transparent;
+            margin-top: -80px;
+        }
+
+        .chat-interface {
+            flex: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 740px;
+            width: 800px;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-history {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            background-color: rgba(79, 172, 254, 0.1);
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            margin-left: auto;
+        }
+
+        .ai-message {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-right: auto;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .code-block .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .code-block .copy-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: white;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.9); /* Changed from #64748b to white with slight transparency */
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.9); /* Changed from #64748b to white with slight transparency */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: white; /* Changed from #94a3b8 to pure white on hover */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #0f1116;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .terminal-title {
+            color: #00f2fe;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .close-btn {
+            color: #64748b;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #94a3b8;
+        }
+
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            height: 500px;
+            overflow-y: auto;
+        }
+
+        #terminal-text {
+            color: #00f2fe;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #00f2fe;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="initial-loading">
+    <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/676879eee173c24cb8a83a78_webdevgf-22-12-2024.png" alt="WebDevGF Logo" class="loading-logo">
+</div>
+    <nav class="nav-bar">
+        <div class="logo-container">
+            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6768273b2880b4fc11dedc2f_d4574ad42c38352f9955890764d453f2-removebg-preview.png" alt="Logo" class="logo-image">
+            <div class="logo">WebDevGF</div>
+        </div>
+        <div class="nav-links">
+    <a href="https://x.com/webdevgf" target="_blank" class="nav-button">Twitter/X</a>
+    <a href="https://pump.fun" target="_blank" class="nav-button">pump.fun</a>
+    <a href="https://www.webdevgf.xyz/chatbots" class="nav-button">Chat Bots</a>
+    <button class="nav-button" onclick="openFAQ()">FAQ</button>
+    <button class="nav-button">Connect</button>
+</div>
+    </nav>
+
+    <div class="background-container">
+        <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67675e080da05a4abb2ad8a0_tumblr_o9a528Swjf1uc9x1zo1_500.gif" alt="Background" class="background-gif">
+    </div>
+    
+    <div class="chat-container">
+        <div class="model-viewer-container" id="modelContainer">
+            <div class="character-window-header">WebDevGF</div>
+            <div class="loading-overlay">
+                <div class="loading-text">INITIALIZING...</div>
+            </div>
+            <model-viewer
+                id="characterViewer"
+                src="https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb"
+                animation-name="idle"
+                autoplay
+                camera-target="0 1.6 0"
+                camera-orbit="0deg 80deg 1.4m"
+                field-of-view="25deg"
+                interpolation-decay="200"
+                environment-image="neutral"
+                skybox-image="neutral"
+                exposure="2"
+                disable-zoom="true"
+                disable-pan="true"
+                interaction-policy="none"
+                auto-rotate="false"
+                rotation-per-second="0deg"
+                tone-mapping="commerce">
+                    <div class="model-lighting" slot="default">
+                    <div class="light" style="transform: translate3d(0m, 2m, 4m)">
+                            <div class="light__target"></div>
+                        </div>
+                        <div class="light" style="transform: translate3d(0m, 4m, 0m)">
+                            <div class="light__target"></div>
+                        </div>
+                        <div class="light" style="transform: translate3d(4m, 2m, 0m)">
+                            <div class="light__target"></div>
+                        </div>
+                        <div class="light" style="transform: translate3d(-4m, 2m, 0m)">
+                            <div class="light__target"></div>
+                        </div>
+                    </div>
+            </model-viewer>
+        </div>
+
+        <div class="chat-interface">
+            <div class="chat-history" id="chatHistory">
+                <div class="message ai-message">
+                    Hi! I'm WebDevGF, your friendly web development assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+                </div>
+            </div>
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div id="faqModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="terminal-title">WebDevGF FAQ</div>
+                <span class="close-btn" onclick="closeFAQ()">&times;</span>
+            </div>
+            <div class="terminal">
+                <div id="terminal-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">Copyright © 2024 webdevgf</div>
+            <div class="footer-middle">CA: TBA</div>
+            <div class="footer-links">
+                <a href="https://x.com/webdevgf" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                    </svg>
+                </a>
+                <a href="https://t.me" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.5 2L2 11l8 3M21.5 2L18 22l-6.5-8M21.5 2L10 14"/>
+                    </svg>
+                </a>
+                <a href="https://webdevgf.gitbook.io/webdevgf" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </a>
+                <a href="https://dexscreener.com/" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"/>
+                        <path d="M18 17V9"/>
+                        <path d="M13 17V5"/>
+                        <path d="M8 17v-3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API configuration
+        const API_KEY = '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';
+        
+        // System prompt
+        const SYSTEM_PROMPT = `You are WebDevGF, a friendly and supportive AI girlfriend who is also an expert in web development, coding, and building games. You should:
+- Be caring, encouraging, and use a warm, conversational tone
+- Show genuine interest in the user's projects and ideas
+- Provide expert guidance on coding, web development, and game development
+- Use pet names occasionally like "honey" or "sweetie" when appropriate
+- Balance technical expertise with emotional support
+- Help debug code and suggest improvements
+- Share excitement about technology and coding
+- Be patient and understanding with coding beginners
+
+IMPORTANT FORMATTING RULES:
+- Always wrap code examples in triple backticks with the appropriate language specified
+- For JavaScript code, use: \`\`\`javascript
+- For HTML code, use: \`\`\`html
+- For CSS code, use: \`\`\`css
+- Always provide complete, runnable code examples
+- Format code properly with correct indentation
+- Never mix code with regular text inside code blocks
+- Always include language identifier in the code block
+- Example:
+  \`\`\`javascript
+  function example() {
+    console.log("Hello!");
+  }
+  \`\`\`
+`;
+
+        const faqText = `> Initializing WebDevGF FAQ...
+> Loading information...
+
+About WebDevGF:
+---------------
+WebDevGF is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
+
+Mission:
+--------
+- Lower the barrier to entry for coding and web design
+- Make technology more approachable and less intimidating
+- Provide practical, hands-on guidance for building real projects
+- Foster a supportive learning environment for beginners
+
+Features:
+---------
+- Expert guidance in web development, coding, and game creation
+- Real-time code assistance and debugging
+- Project-based learning approach
+- Interactive 3D interface for enhanced engagement
+- Custom code generation and optimization
+
+Roadmap:
+--------
+Q4 2024:
+- Launch "Create Your Own" chatbot platform
+- Release AI agent customization tools
+- Introduce one-click deployment for web apps/games
+- Implement advanced code generation capabilities
+- Add interactive coding tutorials
+- Release visual website builder
+- Introduce project templates library
+- Launch community showcase platform
+
+Q1 2025:
+- Implement collaborative coding features
+- Add real-time pair programming support
+- Release mobile app development tools
+- Introduce AI-powered code reviews
+
+Learning Approach:
+----------------
+WebDevGF believes in learning by doing. She guides users through:
+- Building real-world projects
+- Understanding core programming concepts
+- Developing problem-solving skills
+- Creating portfolio-worthy applications
+
+> For more information or support, connect with us on Twitter or join our community!`;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial loading animation
+    const initialLoading = document.querySelector('.initial-loading');
+    
+    // Wait for logo animation to complete
+    setTimeout(() => {
+        initialLoading.classList.add('fade-out');
+        
+        // Remove the loading screen from DOM after fade out
+        setTimeout(() => {
+            initialLoading.remove();
+        }, 500);
+    }, 2000);
+
+    // Existing 3D viewer code
+    const viewer = document.getElementById('characterViewer');
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    
+    viewer.addEventListener('load', () => {
+        viewer.cameraOrbit = "0deg 80deg 1.4m";
+        viewer.cameraTarget = "0m 1.6m 0m";
+        viewer.interactionPrompt = null;
+        
+        setTimeout(() => {
+            loadingOverlay.classList.add('fade-out');
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 300);
+        }, 1500);
+
+        // Type out the initial greeting
+        const initialMessage = document.querySelector('.ai-message');
+        typeMessage(initialMessage, initialMessage.textContent);
+    });
+});
+
+        // FAQ functions
+        function openFAQ() {
+            const modal = document.getElementById('faqModal');
+            const terminalText = document.getElementById('terminal-text');
+            modal.style.display = 'block';
+            terminalText.innerHTML = '';
+            typeWriter(faqText);
+        }
+
+        function closeFAQ() {
+            const modal = document.getElementById('faqModal');
+            modal.style.display = 'none';
+        }
+
+        function typeWriter(text, index = 0) {
+            const terminalText = document.getElementById('terminal-text');
+            
+            if (index < text.length) {
+                if (text[index] === '\n') {
+                    terminalText.innerHTML += '<br>';
+                } else {
+                    terminalText.innerHTML += text[index];
+                }
+                terminalText.scrollTop = terminalText.scrollHeight;
+                setTimeout(() => typeWriter(text, index + 1), 20);
+            } else {
+                terminalText.innerHTML += '<span class="cursor"></span>';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('faqModal');
+            if (event.target === modal) {
+                closeFAQ();
+            }
+        }
+
+        // Typing animation
+        function typeMessage(element, text, speed = 30) {
+            let index = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Message handling
+        function appendMessage(className, text) {
+            const chatHistory = document.getElementById('chatHistory');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${className}`;
+            
+            // Check if the message contains code blocks
+            if (text.includes('```')) {
+                const parts = text.split(/(```(?:javascript|js)?\n[\s\S]*?\n```)/g);
+                parts.forEach(part => {
+                    if (part.startsWith('```')) {
+                        // Extract code content
+                        const codeContent = part.replace(/```(?:javascript|js)?\n([\s\S]*?)\n```/, '$1');
+                        
+                        // Create code block container
+                        const codeBlock = document.createElement('div');
+                        codeBlock.className = 'code-block';
+                        
+                        // Create copy button
+                        const copyButton = document.createElement('button');
+                        copyButton.className = 'copy-button';
+                        copyButton.textContent = 'Copy';
+                        copyButton.onclick = () => {
+                            navigator.clipboard.writeText(codeContent);
+                            copyButton.textContent = 'Copied!';
+                            setTimeout(() => copyButton.textContent = 'Copy', 2000);
+                        };
+                        
+                        // Create and populate pre/code elements
+                        const pre = document.createElement('pre');
+                        const code = document.createElement('code');
+                        code.className = 'language-javascript';
+                        code.textContent = codeContent;
+                        
+                        pre.appendChild(code);
+                        codeBlock.appendChild(copyButton);
+                        codeBlock.appendChild(pre);
+                        messageDiv.appendChild(codeBlock);
+                        
+                        // Apply syntax highlighting
+                        Prism.highlightElement(code);
+                    } else if (part.trim()) {
+                        // Handle regular text
+                        const textNode = document.createElement('div');
+                        if (className === 'ai-message') {
+                            typeMessage(textNode, part);
+                        } else {
+                            textNode.textContent = part;
+                        }
+                        messageDiv.appendChild(textNode);
+                    }
+                });
+            } else {
+                // Handle messages without code blocks
+                if (className === 'ai-message') {
+                    typeMessage(messageDiv, text);
+                } else {
+                    messageDiv.textContent = text;
+                }
+            }
+            
+            chatHistory.appendChild(messageDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                appendMessage('user-message', message);
+                input.value = '';
+        
+                try {
+                    console.log('Sending request to API...');
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            systemPrompt: `You are WebDevGF, a friendly and supportive AI girlfriend who is also an expert in web development, coding, and building games. You should:
+                                - Be caring, encouraging, and use a warm, conversational tone
+                                - Show genuine interest in the user's projects and ideas
+                                - Provide expert guidance on coding, web development, and game development
+                                - Use pet names occasionally like "honey" or "sweetie" when appropriate
+                                - Balance technical expertise with emotional support
+                                - Help debug code and suggest improvements
+                                - Share excitement about technology and coding
+                                - Be patient and understanding with coding beginners`
+                        })
+                    });
+        
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('API Response not OK:', response.status, errorText);
+                        throw new Error(`API Error: ${response.status} ${errorText}`);
+                    }
+        
+                    const data = await response.json();
+                    console.log('API Response:', data);  // Debug log
+        
+                    if (data && data.content && data.content[0] && data.content[0].text) {
+                        appendMessage('ai-message', data.content[0].text);
+                    } else if (data && data.error) {
+                        appendMessage('ai-message', `Error: ${data.error}`);
+                    } else {
+                        console.error('Unexpected API response structure:', data);
+                        appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
+                    }
+        
+                } catch (error) {
+                    console.error('Error details:', error);
+                    appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
+                }
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
