@@ -86,14 +86,14 @@
         }
 
         .footer {
-            background-color: rgba(0, 0, 0, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 2rem;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            z-index: 100;
-        }
+    background-color: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
 
         .footer-content {
             display: flex;
@@ -184,6 +184,8 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            margin-bottom: 80px; /* Add this to create space for footer */
+    padding-bottom: 20px; /* Add this for extra spacing */
         }
 
         .chat-background {
@@ -300,7 +302,7 @@
         <div class="nav-links">
             <a href="https://x.com/webdevgf" target="_blank" class="nav-button">Twitter/X</a>
             <a href="https://pump.fun" target="_blank" class="nav-button">pump.fun</a>
-            <a href="https://www.webdevgf.xyz" class="nav-button">Home</a>
+            <a href="/" class="nav-button">Home</a>
             <button class="nav-button" onclick="openFAQ()">FAQ</button>
             <button class="nav-button">Connect</button>
         </div>
