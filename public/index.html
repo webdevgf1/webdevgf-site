@@ -145,15 +145,14 @@
             display: flex;
             max-width: 1800px;
             width: 95%;
-            height: calc(90vh - 60px);
+            height: calc(80vh - 60px);  /* Reduced from 90vh to 80vh */
             gap: 30px;
             justify-content: center;
             align-items: flex-start;
             margin: auto;
             padding-top: 5rem;
-            margin-bottom: 120px;
-            margin-bottom: 80px; /* Add this to create space for footer */
-    padding-bottom: 40px; /* Add this for extra spacing */
+            margin-bottom: 160px;  /* Increased margin at bottom */
+            padding-bottom: 60px;  /* Added extra padding */
         }
 
         .model-viewer-container {
@@ -341,6 +340,7 @@
             bottom: 0;
             width: 100%;
             z-index: 100;
+            margin-top: 40px;  /* Add this line */
         }
         
         .footer-content {
