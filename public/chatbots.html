@@ -259,6 +259,58 @@
             font-family: inherit;
         }
 
+        @media (max-width: 768px) {
+  .nav-bar {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .chat-container {
+    flex-direction: column;
+    padding-top: 7rem;
+  }
+
+  .model-viewer-container,
+  .chat-interface {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .agents-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    padding-top: 7rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-bar .logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-button {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .message {
+    max-width: 95%;
+  }
+
         button {
             padding: 0.75rem 1.5rem;
             border: none;

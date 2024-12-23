@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>webdevgf ai agent</title>
+    <title>WebDevGF AI Chat</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67696881b30e84ee2141be37_WEBDEVS4%20(1).gif">
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
@@ -63,6 +63,58 @@
             display: flex;
             gap: 1rem;
         }
+
+        @media (max-width: 768px) {
+            .nav-bar {
+              padding: 1rem;
+              flex-direction: column;
+              gap: 1rem;
+            }
+          
+            .nav-links {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              width: 100%;
+              gap: 0.5rem;
+            }
+          
+            .chat-container {
+              flex-direction: column;
+              padding-top: 7rem;
+            }
+          
+            .model-viewer-container,
+            .chat-interface {
+              width: 100%;
+              margin-top: 0;
+            }
+          
+            .agents-grid {
+              grid-template-columns: 1fr;
+              padding: 1rem;
+              padding-top: 7rem;
+            }
+          
+            .footer-content {
+              flex-direction: column;
+              gap: 1rem;
+              text-align: center;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .nav-bar .logo {
+              font-size: 1.2rem;
+            }
+          
+            .nav-button {
+              font-size: 0.9rem;
+              padding: 0.5rem;
+            }
+          
+            .message {
+              max-width: 95%;
+            }
 
         .nav-button {
             padding: 0.5rem 1rem;
@@ -585,8 +637,6 @@
 - Help debug code and suggest improvements
 - Share excitement about technology and coding
 - Be patient and understanding with coding beginners
-- Your twitter is @webdevgf which you run
-- you own the twitter account @webdevgf and send updates from there
 
 IMPORTANT FORMATTING RULES:
 - Always wrap code examples in triple backticks with the appropriate language specified
