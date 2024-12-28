@@ -1203,6 +1203,23 @@ document.getElementById('music').innerHTML = `
     </div>
 `;
     </script>
-    <div id="customizeModal" class="modal"></div>
+    <div id="customizeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="terminal-title">Customize WebDevGF</div>
+                <span class="close-btn" onclick="closeCustomize()">&times;</span>
+            </div>
+            <div class="terminal customize-terminal">
+                <div class="customize-tabs">
+                    <button class="tab-btn active" onclick="switchTab('backgrounds')">Backgrounds</button>
+                    <button class="tab-btn" onclick="switchTab('avatars')">Avatars</button>
+                    <button class="tab-btn" onclick="switchTab('music')">Music</button>
+                </div>
+                <div class="tab-content" id="backgrounds"></div>
+                <div class="tab-content" id="avatars" style="display: none;"></div>
+                <div class="tab-content" id="music" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
