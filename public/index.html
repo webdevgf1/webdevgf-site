@@ -1378,6 +1378,9 @@ async function sendMessage() {
 
         try {
             console.log('Sending request to API...');
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -1394,35 +1397,30 @@ async function sendMessage() {
                         - Help debug code and suggest improvements
                         - Share excitement about technology and coding
                         - Be patient and understanding with coding beginners`
-                })
+                }),
+                signal: controller.signal
             });
 
+            clearTimeout(timeoutId);
+
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error('API Response not OK:', response.status, errorText);
-                throw new Error(`API Error: ${response.status} ${errorText}`);
+                throw new Error(`API Error: ${response.status} - Please try again in a moment`);
             }
 
             const data = await response.json();
-            console.log('API Response:', data);
-
-            // Check if response includes demo content
-            if (data.demo) {
-                saveDemoContent(data.demo.title, data.demo.content);
-                appendMessage('ai-message', 
-                    `I've created your ${data.demo.type}! Click "Try Demo" to see it in action.`);
-            } else if (data && data.content && data.content[0] && data.content[0].text) {
+            if (data && data.content && data.content[0] && data.content[0].text) {
                 appendMessage('ai-message', data.content[0].text);
-            } else if (data && data.error) {
-                appendMessage('ai-message', `Error: ${data.error}`);
             } else {
-                console.error('Unexpected API response structure:', data);
-                appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
+                throw new Error('Invalid response format');
             }
 
         } catch (error) {
             console.error('Error details:', error);
-            appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
+            if (error.name === 'AbortError') {
+                appendMessage('ai-message', 'Sorry, the request took too long. Please try again.');
+            } else {
+                appendMessage('ai-message', 'Sorry, I encountered an error. Please try again in a moment.');
+            }
         }
     }
 }
