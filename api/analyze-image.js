@@ -17,15 +17,14 @@ export default async function handler(req, res) {
     }
 
     try {
+        console.log('Received request');
         const { image } = req.body;
-        console.log('Received image data length:', image?.length); // Debug log
-
+        
         if (!image) {
             throw new Error('No image data received');
         }
 
-        // Format the prompt for Claude
-        const prompt = "You are an AI assistant helping to create chatbot personas. Please analyze this image and provide a name and personality description that matches what you see. Focus on the character's appearance, style, and apparent traits. Format your response as valid JSON with exactly two fields: 'name' and 'personality'. Keep the personality description concise but detailed.";
+        console.log('Image data length:', image.length);
 
         const response = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
@@ -43,53 +42,42 @@ export default async function handler(req, res) {
                     content: [
                         {
                             type: "text",
-                            text: prompt
+                            text: "Analyze this image and create a fitting name and personality description for a chatbot based on what you see. Return your response in JSON format with only two fields: 'name' and 'personality'."
                         },
                         {
                             type: "image",
                             source: {
                                 type: "base64",
                                 media_type: "image/jpeg",
-                                data: image.replace(/^data:image\/[a-z]+;base64,/, '')
+                                data: image.split(',')[1]
                             }
                         }
                     ]
-                }],
-                temperature: 0.7
+                }]
             })
         });
 
-        console.log('Claude API response status:', response.status); // Debug log
+        console.log('Claude API response status:', response.status);
 
         if (!response.ok) {
             const errorData = await response.text();
-            console.error('Anthropic API error:', errorData);
-            throw new Error(`Anthropic API error: ${errorData}`);
+            console.error('Claude API error:', errorData);
+            throw new Error(`Claude API error: ${errorData}`);
         }
 
         const data = await response.json();
-        console.log('Claude response:', data); // Debug log
+        console.log('Claude response:', data);
 
-        // Parse Claude's response to ensure it's in the correct format
-        let result = data.content[0].text;
-        try {
-            // Try to parse as JSON
-            result = JSON.parse(result);
-        } catch (e) {
-            // If parsing fails, try to extract just the needed info
-            console.log('Failed to parse JSON, attempting to format response');
-            const name = result.match(/["']name["']\s*:\s*["']([^"']+)["']/)?.[1] || 'Unknown Name';
-            const personality = result.match(/["']personality["']\s*:\s*["']([^"']+)["']/)?.[1] || 'Unknown Personality';
-            result = { name, personality };
-        }
-
-        res.status(200).json(result);
+        res.status(200).json({
+            name: "Test Name",  // Temporary hardcoded response for testing
+            personality: "Test Personality"
+        });
 
     } catch (error) {
         console.error('Server error:', error);
         res.status(500).json({ 
             error: error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            details: error.stack
         });
     }
 }
