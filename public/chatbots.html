@@ -749,6 +749,41 @@
             currentAgent = null;
         }
 
+        function resizeImage(dataUrl, targetWidth, targetHeight) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            const ctx = canvas.getContext('2d');
+            
+            // Fill background with the theme color
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Calculate dimensions to maintain aspect ratio
+            const scale = Math.min(targetWidth / img.width, targetHeight / img.height);
+            const scaledWidth = img.width * scale;
+            const scaledHeight = img.height * scale;
+            
+            // Center the image
+            const x = (targetWidth - scaledWidth) / 2;
+            const y = (targetHeight - scaledHeight) / 2;
+            
+            // Enable pixel-perfect rendering for pixel art
+            ctx.imageSmoothingEnabled = false;
+            
+            // Draw the image
+            ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+            
+            resolve(canvas.toDataURL('image/png'));
+        };
+        img.onerror = reject;
+        img.src = dataUrl;
+    });
+}
+
         function appendMessage(className, text) {
             const chatHistory = document.getElementById('chatHistory');
             const messageDiv = document.createElement('div');
@@ -817,57 +852,17 @@ function handleImageUpload(file) {
         reader.onload = async (e) => {
             const imageData = e.target.result;
             
-            // Validate data URL format
-            if (!imageData.startsWith('data:image/')) {
-                alert('Invalid image format');
-                return;
-            }
-
-            // Compress image if needed
             try {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    // Set maximum dimensions
-                    const maxWidth = 800;
-                    const maxHeight = 800;
-                    
-                    let width = img.width;
-                    let height = img.height;
-                    
-                    // Calculate new dimensions
-                    if (width > height) {
-                        if (width > maxWidth) {
-                            height *= maxWidth / width;
-                            width = maxWidth;
-                        }
-                    } else {
-                        if (height > maxHeight) {
-                            width *= maxHeight / height;
-                            height = maxHeight;
-                        }
-                    }
-                    
-                    canvas.width = width;
-                    canvas.height = height;
-                    
-                    // Draw and compress image
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    // Get compressed data URL
-                    const compressedData = canvas.toDataURL('image/jpeg', 0.8);
-                    
-                    // Update preview
-                    document.getElementById('imagePreview').src = compressedData;
-                    document.getElementById('uploadArea').style.display = 'none';
-                    document.getElementById('previewArea').style.display = 'block';
-                    
-                    // Start AI analysis with compressed image
-                    analyzeImage(compressedData);
-                };
-                img.src = imageData;
+                // Resize the image to 300x300 (standard card size)
+                const resizedImage = await resizeImage(imageData, 300, 300);
+                
+                // Update preview
+                document.getElementById('imagePreview').src = resizedImage;
+                document.getElementById('uploadArea').style.display = 'none';
+                document.getElementById('previewArea').style.display = 'block';
+                
+                // Start AI analysis with resized image
+                analyzeImage(resizedImage);
             } catch (error) {
                 console.error('Error processing image:', error);
                 alert('Error processing image. Please try again.');
@@ -969,11 +964,11 @@ function deployAgent() {
         return;
     }
     
-    // Create new agent object with the actual image data URL
+    // Create new agent object
     const newAgent = {
         id: Date.now(),
         name: name,
-        image: imagePreview.src,  // This contains the full data URL
+        image: imagePreview.src,
         description: personality,
         systemPrompt: `Respond as ${name} with the following personality: ${personality}. Communicate in plain text only, without action descriptions or emotes.`
     };
@@ -986,7 +981,7 @@ function deployAgent() {
     // Add to agents array
     agents.push(newAgent);
     
-    // Refresh grid
+    // Create and add the card
     const grid = document.getElementById('agentsGrid');
     grid.appendChild(createAgentCard(newAgent));
     
