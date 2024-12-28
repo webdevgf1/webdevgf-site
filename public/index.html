@@ -1084,16 +1084,21 @@ const backgrounds = {
 
 // Avatar Models
 const avatars = {
-    default: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
-    red: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
-    blue: "path-to-blue-model.glb"
+    default: {
+        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
+        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6768273b2880b4fc11dedc2f_d4574ad42c38352f9955890764d453f2-removebg-preview.png"
+    },
+    red: {
+        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
+        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6768273b2880b4fc11dedc2f_d4574ad42c38352f9955890764d453f2-removebg-preview.png"
+    }
 };
 
 // Music Tracks
 const musicTracks = {
-    lofi: {
+    samsmith: {
         url: "https://www.youtube.com/embed/Atgk5c461GY",
-        title: "Sam Smith"
+        title: "Sam Smith - Unholy"
     },
     cyberpunk: {
         url: "https://www.youtube.com/embed/WUIqUbVim9k",
@@ -1105,13 +1110,13 @@ const musicTracks = {
 let currentAudio = null;
 
 function selectBackground(bgId) {
-    const modelViewer = document.querySelector('model-viewer');
+    const modelContainer = document.getElementById('modelContainer');
     const background = backgrounds[bgId];
     
-    // Apply background to the model viewer container
-    modelViewer.style.background = `url(${background})`;
-    modelViewer.style.backgroundSize = 'cover';
-    modelViewer.style.backgroundPosition = 'center';
+    // Apply background to the container instead of the model-viewer
+    modelContainer.style.backgroundImage = `url(${background})`;
+    modelContainer.style.backgroundSize = 'cover';
+    modelContainer.style.backgroundPosition = 'center';
     
     // Add visual feedback
     const bgItems = document.querySelectorAll('#backgrounds .grid-item');
@@ -1121,26 +1126,21 @@ function selectBackground(bgId) {
 
 function selectAvatar(avatarId) {
     const modelViewer = document.getElementById('characterViewer');
-    
-    // Show loading overlay
     const loadingOverlay = document.querySelector('.loading-overlay');
     loadingOverlay.style.display = 'flex';
     
-    // Change the model
-    modelViewer.src = avatars[avatarId];
+    // Change the model using the model URL, not the preview
+    modelViewer.src = avatars[avatarId].model;
     
-    // Add event listener for when the model is loaded
     modelViewer.addEventListener('load', () => {
-        // Hide loading overlay
         loadingOverlay.classList.add('fade-out');
         setTimeout(() => {
             loadingOverlay.style.display = 'none';
             loadingOverlay.classList.remove('fade-out');
         }, 300);
-    }, { once: true }); // Remove listener after it fires
+    }, { once: true });
     
-    // Add visual feedback for selection
-    const avatarItems = document.querySelectorAll('.grid-item');
+    const avatarItems = document.querySelectorAll('#avatars .grid-item');
     avatarItems.forEach(item => item.classList.remove('selected'));
     event.currentTarget.classList.add('selected');
 }
@@ -1180,9 +1180,9 @@ document.getElementById('backgrounds').innerHTML = `
 // Update the HTML for avatars
 document.getElementById('avatars').innerHTML = `
     <div class="grid-container">
-        ${Object.entries(avatars).map(([id, url]) => `
+        ${Object.entries(avatars).map(([id, data]) => `
             <div class="grid-item" onclick="selectAvatar('${id}')">
-                <img src="${url.replace('.glb', '.png')}" alt="${id} Avatar">
+                <img src="${data.preview}" alt="${id} Avatar">
                 <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
             </div>
         `).join('')}
