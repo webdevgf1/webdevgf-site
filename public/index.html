@@ -242,6 +242,128 @@
             overflow-x: auto;
         }
 
+        .character-window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customize-btn {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.customize-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
+}
+
+.customize-terminal {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.customize-tabs {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    color: white;
+}
+
+.tab-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.grid-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.grid-item span {
+    display: block;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+}
+
+.music-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.music-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.music-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.play-btn {
+    background: none;
+    border: none;
+    color: #00f2fe;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+}
+
         .code-block code {
             font-family: 'Consolas', 'Monaco', monospace;
             font-size: 14px;
@@ -473,7 +595,10 @@
     
     <div class="chat-container">
         <div class="model-viewer-container" id="modelContainer">
-            <div class="character-window-header">WebDevGF</div>
+            <div class="character-window-header">
+                <span>WebDevGF</span>
+                <button class="customize-btn" onclick="openCustomize()">Customize</button>
+            </div>
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
             </div>
@@ -867,6 +992,98 @@ document.addEventListener('DOMContentLoaded', () => {
                 sendMessage();
             }
         }
+
+        function openCustomize() {
+    const modal = document.getElementById('customizeModal');
+    modal.style.display = 'block';
+}
+
+function closeCustomize() {
+    const modal = document.getElementById('customizeModal');
+    modal.style.display = 'none';
+}
+
+function switchTab(tabName) {
+    // Hide all tab content
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(tab => tab.style.display = 'none');
+    
+    // Remove active class from all tabs
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    
+    // Show selected tab content and set active class
+    document.getElementById(tabName).style.display = 'block';
+    event.target.classList.add('active');
+}
+
+function selectBackground(bgId) {
+    // Implementation for changing background
+    console.log('Selected background:', bgId);
+}
+
+function selectAvatar(avatarId) {
+    // Implementation for changing avatar
+    console.log('Selected avatar:', avatarId);
+}
+
+function selectMusic(musicId) {
+    // Implementation for changing music
+    console.log('Selected music:', musicId);
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const customizeModal = document.getElementById('customizeModal');
+    const faqModal = document.getElementById('faqModal');
+    if (event.target === customizeModal) {
+        closeCustomize();
+    } else if (event.target === faqModal) {
+        closeFAQ();
+    }
+}
     </script>
+    <div id="customizeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="terminal-title">Customize WebDevGF</div>
+                <span class="close-btn" onclick="closeCustomize()">&times;</span>
+            </div>
+            <div class="terminal customize-terminal">
+                <div class="customize-tabs">
+                    <button class="tab-btn active" onclick="switchTab('backgrounds')">Backgrounds</button>
+                    <button class="tab-btn" onclick="switchTab('avatars')">Avatars</button>
+                    <button class="tab-btn" onclick="switchTab('music')">Music</button>
+                </div>
+                <div class="tab-content" id="backgrounds">
+                    <div class="grid-container">
+                        <div class="grid-item" onclick="selectBackground('cyber')">
+                            <img src="path/to/cyber-bg.jpg" alt="Cyber Background">
+                            <span>Cyber City</span>
+                        </div>
+                        <!-- Add more background options -->
+                    </div>
+                </div>
+                <div class="tab-content" id="avatars" style="display: none;">
+                    <div class="grid-container">
+                        <div class="grid-item" onclick="selectAvatar('default')">
+                            <img src="path/to/avatar1.jpg" alt="Default Avatar">
+                            <span>Default</span>
+                        </div>
+                        <!-- Add more avatar options -->
+                    </div>
+                </div>
+                <div class="tab-content" id="music" style="display: none;">
+                    <div class="music-list">
+                        <div class="music-item" onclick="selectMusic('lofi')">
+                            <span>Lofi Beats</span>
+                            <button class="play-btn">▶</button>
+                        </div>
+                        <!-- Add more music options -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
 </body>
 </html>
