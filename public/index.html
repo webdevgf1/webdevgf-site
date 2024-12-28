@@ -1076,85 +1076,90 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Typing animation
-        function typeMessage(element, text, speed = 30) {
-            let index = 0;
-            element.textContent = '';
-            
-            function type() {
-                if (index < text.length) {
-                    element.textContent += text.charAt(index);
-                    index++;
-                    setTimeout(type, speed);
-                }
-            }
-            
-            type();
+        function typeMessage(element, text, speed = 30, callback) {
+    let index = 0;
+    element.textContent = '';
+    
+    function type() {
+        if (index < text.length) {
+            element.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+        } else if (callback) {
+            callback();
         }
+    }
+    
+    type();
+}
 
         // Message handling
         function appendMessage(className, text) {
-            const chatHistory = document.getElementById('chatHistory');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${className}`;
-            
-            // Check if the message contains code blocks
-            if (text.includes('```')) {
-                const parts = text.split(/(```(?:javascript|js)?\n[\s\S]*?\n```)/g);
-                parts.forEach(part => {
-                    if (part.startsWith('```')) {
-                        // Extract code content
-                        const codeContent = part.replace(/```(?:javascript|js)?\n([\s\S]*?)\n```/, '$1');
-                        
-                        // Create code block container
-                        const codeBlock = document.createElement('div');
-                        codeBlock.className = 'code-block';
-                        
-                        // Create copy button
-                        const copyButton = document.createElement('button');
-                        copyButton.className = 'copy-button';
-                        copyButton.textContent = 'Copy';
-                        copyButton.onclick = () => {
-                            navigator.clipboard.writeText(codeContent);
-                            copyButton.textContent = 'Copied!';
-                            setTimeout(() => copyButton.textContent = 'Copy', 2000);
-                        };
-                        
-                        // Create and populate pre/code elements
-                        const pre = document.createElement('pre');
-                        const code = document.createElement('code');
-                        code.className = 'language-javascript';
-                        code.textContent = codeContent;
-                        
-                        pre.appendChild(code);
-                        codeBlock.appendChild(copyButton);
-                        codeBlock.appendChild(pre);
-                        messageDiv.appendChild(codeBlock);
-                        
-                        // Apply syntax highlighting
-                        Prism.highlightElement(code);
-                    } else if (part.trim()) {
-                        // Handle regular text
-                        const textNode = document.createElement('div');
-                        if (className === 'ai-message') {
-                            typeMessage(textNode, part);
-                        } else {
-                            textNode.textContent = part;
-                        }
-                        messageDiv.appendChild(textNode);
-                    }
-                });
-            } else {
-                // Handle messages without code blocks
+    const chatHistory = document.getElementById('chatHistory');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${className}`;
+    
+    // Check if the message contains code blocks
+    if (text.includes('```')) {
+        const parts = text.split(/(```(?:javascript|js)?\n[\s\S]*?\n```)/g);
+        parts.forEach(part => {
+            if (part.startsWith('```')) {
+                // Handle code blocks as before
+                const codeContent = part.replace(/```(?:javascript|js)?\n([\s\S]*?)\n```/, '$1');
+                const codeBlock = document.createElement('div');
+                codeBlock.className = 'code-block';
+                
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+                copyButton.onclick = () => {
+                    navigator.clipboard.writeText(codeContent);
+                    copyButton.textContent = 'Copied!';
+                    setTimeout(() => copyButton.textContent = 'Copy', 2000);
+                };
+                
+                const pre = document.createElement('pre');
+                const code = document.createElement('code');
+                code.className = 'language-javascript';
+                code.textContent = codeContent;
+                
+                pre.appendChild(code);
+                codeBlock.appendChild(copyButton);
+                codeBlock.appendChild(pre);
+                messageDiv.appendChild(codeBlock);
+                
+                Prism.highlightElement(code);
+            } else if (part.trim()) {
+                // Handle regular text
+                const textNode = document.createElement('div');
                 if (className === 'ai-message') {
-                    typeMessage(messageDiv, text);
+                    typeMessage(textNode, part, 30, () => {
+                        // Save chat history after typing animation completes
+                        saveChatHistory();
+                    });
                 } else {
-                    messageDiv.textContent = text;
+                    textNode.textContent = part;
+                    saveChatHistory();
                 }
+                messageDiv.appendChild(textNode);
             }
-            
-            chatHistory.appendChild(messageDiv);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
+        });
+    } else {
+        // Handle messages without code blocks
+        if (className === 'ai-message') {
+            typeMessage(messageDiv, text, 30, () => {
+                // Save chat history after typing animation completes
+                saveChatHistory();
+            });
+        } else {
+            messageDiv.textContent = text;
+            saveChatHistory();
         }
+    }
+    
+    chatHistory.appendChild(messageDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
 
         const originalAppendMessage = appendMessage;
 
@@ -1170,9 +1175,25 @@ function saveChatHistory() {
     const messages = [];
     
     chatHistory.querySelectorAll('.message').forEach(messageDiv => {
-        const messageContent = messageDiv.querySelector('.code-block') ? 
-            messageDiv.innerHTML : // Save full HTML for messages with code blocks
-            messageDiv.textContent; // Save just text for regular messages
+        let messageContent;
+        
+        if (messageDiv.querySelector('.code-block')) {
+            // For messages with code blocks, save the full HTML
+            messageContent = messageDiv.innerHTML;
+        } else {
+            // For regular messages, get the final text content after animation
+            const textDivs = messageDiv.querySelectorAll('div');
+            if (textDivs.length > 0) {
+                // If message has been split into divs (AI response), combine their text
+                messageContent = Array.from(textDivs)
+                    .map(div => div.textContent)
+                    .join('\n')
+                    .trim();
+            } else {
+                // Otherwise just get the direct text content
+                messageContent = messageDiv.textContent.trim();
+            }
+        }
             
         messages.push({
             type: messageDiv.classList.contains('user-message') ? 'user' : 'ai',
