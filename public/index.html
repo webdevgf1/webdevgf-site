@@ -242,6 +242,66 @@
             margin-bottom: 60px;
         }
 
+        .input-container {
+    display: flex;
+    gap: 10px;
+}
+
+.reset-button {
+    background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 75, 75, 0.2);
+}
+
+.reset-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.reset-modal-content {
+    position: relative;
+    background-color: #0f1116;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    margin: 20% auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.reset-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.confirm-reset {
+    background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
+}
+
+.cancel-reset {
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+}
+
         .model-viewer-container {
             width: 800px;
             height: 740px;
@@ -766,6 +826,7 @@
             <div class="input-container">
                 <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()">Send</button>
+                <button onclick="resetChat()" class="reset-button">Reset Chat</button>
             </div>
         </div>
     </div>
@@ -1095,6 +1156,84 @@ document.addEventListener('DOMContentLoaded', () => {
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
 
+        const originalAppendMessage = appendMessage;
+
+// Override appendMessage to include saving
+appendMessage = function(className, text) {
+    originalAppendMessage(className, text);
+    saveChatHistory();
+};
+
+// Chat history persistence functions
+function saveChatHistory() {
+    const chatHistory = document.getElementById('chatHistory');
+    const messages = [];
+    
+    chatHistory.querySelectorAll('.message').forEach(messageDiv => {
+        messages.push({
+            type: messageDiv.classList.contains('user-message') ? 'user' : 'ai',
+            content: messageDiv.innerHTML
+        });
+    });
+    
+    localStorage.setItem('webdevgf_chat_history', JSON.stringify(messages));
+}
+
+function loadChatHistory() {
+    const chatHistory = document.getElementById('chatHistory');
+    const savedHistory = localStorage.getItem('webdevgf_chat_history');
+    
+    if (savedHistory) {
+        const messages = JSON.parse(savedHistory);
+        chatHistory.innerHTML = ''; // Clear default message
+        
+        messages.forEach(message => {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${message.type}-message`;
+            messageDiv.innerHTML = message.content;
+            chatHistory.appendChild(messageDiv);
+        });
+    }
+}
+
+// Reset chat functionality
+function resetChat() {
+    document.getElementById('resetModal').style.display = 'block';
+}
+
+function closeResetModal() {
+    document.getElementById('resetModal').style.display = 'none';
+}
+
+function confirmReset() {
+    const chatHistory = document.getElementById('chatHistory');
+    chatHistory.innerHTML = `
+        <div class="message ai-message">
+            Hi! I'm WebDevGF, your friendly web development assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+        </div>
+    `;
+    localStorage.removeItem('webdevgf_chat_history');
+    closeResetModal();
+}
+
+// Update the existing window.onclick function
+const originalWindowClick = window.onclick;
+window.onclick = function(event) {
+    if (originalWindowClick) {
+        originalWindowClick(event);
+    }
+    
+    const resetModal = document.getElementById('resetModal');
+    if (event.target === resetModal) {
+        closeResetModal();
+    }
+};
+
+// Load chat history when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadChatHistory();
+});
+
         async function sendMessage() {
             const input = document.getElementById('userInput');
             const message = input.value.trim();
@@ -1356,6 +1495,16 @@ function selectMusic(musicId) {
             </div>
         </div>
     </div>
+    <div id="resetModal" class="reset-modal">
+    <div class="reset-modal-content">
+        <h2 style="color: white; margin-bottom: 15px;">Reset Chat</h2>
+        <p style="color: #64748b;">Are you sure you want to reset the chat? This will clear all conversation history.</p>
+        <div class="reset-modal-buttons">
+            <button onclick="confirmReset()" class="nav-button confirm-reset">Reset</button>
+            <button onclick="closeResetModal()" class="nav-button cancel-reset">Cancel</button>
+        </div>
+    </div>
+</div>
     <div id="bugReportModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
