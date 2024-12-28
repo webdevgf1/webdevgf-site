@@ -844,6 +844,48 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialMessage = document.querySelector('.ai-message');
         typeMessage(initialMessage, initialMessage.textContent);
     });
+
+    // Add the new initialization function here
+    function initializeCustomization() {
+        // Update the HTML for backgrounds
+        document.getElementById('backgrounds').innerHTML = `
+            <div class="grid-container">
+                ${Object.entries(backgrounds).map(([id, url]) => `
+                    <div class="grid-item" onclick="selectBackground('${id}')">
+                        <img src="${url}" alt="${id} Background">
+                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        // Update the HTML for avatars
+        document.getElementById('avatars').innerHTML = `
+            <div class="grid-container">
+                ${Object.entries(avatars).map(([id, data]) => `
+                    <div class="grid-item" onclick="selectAvatar('${id}')">
+                        <img src="${data.preview}" alt="${id} Avatar">
+                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        // Update the HTML for music
+        document.getElementById('music').innerHTML = `
+            <div class="music-list">
+                ${Object.entries(musicTracks).map(([id, track]) => `
+                    <div class="music-item" onclick="selectMusic('${id}')">
+                        <span>${track.title}</span>
+                        <button class="play-btn">▶</button>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // Call the initialization function
+    initializeCustomization();
 });
 
         // FAQ functions
@@ -1166,42 +1208,6 @@ function selectMusic(musicId) {
         </iframe>
     `;
 }
-
-// Update the HTML for backgrounds
-document.getElementById('backgrounds').innerHTML = `
-    <div class="grid-container">
-        ${Object.entries(backgrounds).map(([id, url]) => `
-            <div class="grid-item" onclick="selectBackground('${id}')">
-                <img src="${url}" alt="${id} Background">
-                <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
-            </div>
-        `).join('')}
-    </div>
-`;
-
-// Update the HTML for avatars
-document.getElementById('avatars').innerHTML = `
-    <div class="grid-container">
-        ${Object.entries(avatars).map(([id, data]) => `
-            <div class="grid-item" onclick="selectAvatar('${id}')">
-                <img src="${data.preview}" alt="${id} Avatar">
-                <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
-            </div>
-        `).join('')}
-    </div>
-`;
-
-// Update the HTML for music
-document.getElementById('music').innerHTML = `
-    <div class="music-list">
-        ${Object.entries(musicTracks).map(([id, track]) => `
-            <div class="music-item" onclick="selectMusic('${id}')">
-                <span>${track.title}</span>
-                <button class="play-btn">▶</button>
-            </div>
-        `).join('')}
-    </div>
-`;
     </script>
     <div id="customizeModal" class="modal">
         <div class="modal-content">
