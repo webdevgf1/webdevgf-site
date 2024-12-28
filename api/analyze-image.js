@@ -32,7 +32,7 @@ export default async function handler(req, res) {
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.ANTHROPIC_API_KEY,
-                'anthropic-version': '2024-01-01'
+                'anthropic-version': '2023-06-01'  // Updated to correct version
             },
             body: JSON.stringify({
                 model: 'claude-3-opus-20240229',
