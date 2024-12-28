@@ -829,42 +829,39 @@ async function analyzeImage(imageData) {
     
     status.innerHTML = 'AI is analyzing the image...';
     suggestions.querySelector('.loading-dots').style.display = 'block';
-    
-    // Simulate AI analysis delay (replace with actual API call later)
-    setTimeout(() => {
-        // Generate random characteristics
-        const traits = [
-            'confident', 'creative', 'analytical', 'empathetic', 'mysterious',
-            'playful', 'sophisticated', 'energetic', 'calm', 'intellectual'
-        ];
-        const backgrounds = [
-            'tech expert', 'artist', 'adventurer', 'scholar', 'mentor',
-            'innovator', 'strategist', 'visionary', 'guardian', 'pioneer'
-        ];
-        
-        const randomName = generateAgentName();
-        const selectedTraits = getRandomElements(traits, 3);
-        const background = getRandomElements(backgrounds, 1)[0];
-        
-        nameInput.value = randomName;
-        personalityInput.value = `A ${selectedTraits.join(', ')} ${background} who brings unique perspectives and insights. They excel at connecting with others while maintaining their distinctive character.`;
+
+    try {
+        const response = await fetch('/api/analyze-image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                image: imageData
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Image analysis failed');
+        }
+
+        const analysisResult = await response.json();
+        console.log('Analysis result:', analysisResult);
+
+        // Use the analysis results
+        nameInput.value = analysisResult.name;
+        personalityInput.value = analysisResult.personality;
         
         status.innerHTML = 'AI analysis complete! You can now customize your agent.';
         suggestions.querySelector('.loading-dots').style.display = 'none';
         editBtn.style.display = 'block';
         deployBtn.disabled = false;
-    }, 2000);
-}
 
-function generateAgentName() {
-    const prefixes = ['Neo', 'Echo', 'Nova', 'Zen', 'Sol', 'Luna', 'Aura', 'Kai'];
-    const suffixes = ['Mind', 'Core', 'Wave', 'Pulse', 'Spark', 'Flow', 'Path'];
-    return `${getRandomElements(prefixes, 1)[0]}${getRandomElements(suffixes, 1)[0]}`;
-}
-
-function getRandomElements(arr, count) {
-    const shuffled = [...arr].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
+    } catch (error) {
+        console.error('Error analyzing image:', error);
+        status.innerHTML = 'Error analyzing image. Please try again.';
+        suggestions.querySelector('.loading-dots').style.display = 'none';
+    }
 }
 
 function enableEditing() {
