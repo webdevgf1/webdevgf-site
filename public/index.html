@@ -10,6 +10,7 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdn.playht.com/client-sdk.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
     <style>
         * {
@@ -1228,14 +1229,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Handle regular text
                 const textNode = document.createElement('div');
                 if (className === 'ai-message') {
-                    typeMessage(textNode, part, 30, () => {
-                        saveChatHistory();
-                    });
-                } else {
-                    textNode.textContent = part;
-                    saveChatHistory();
-                }
-                messageDiv.appendChild(textNode);
+    typeMessage(textNode, part, 30, () => {
+        saveChatHistory();
+        if (!part.includes('```')) {
+            speakMessage(part);
+        }
+    });
+} else {
+    textNode.textContent = part;
+    saveChatHistory();
+}
+messageDiv.appendChild(textNode);
             }
         });
     } else {
@@ -1471,6 +1475,30 @@ function submitBugReport(event) {
             closeBugReport();
         }, 2000);
     }, 1000);
+}
+
+async function speakMessage(text) {
+    // Remove any code blocks from the text
+    const plainText = text.replace(/```[\s\S]*?```/g, '').trim();
+    
+    try {
+        // Initialize PlayHT with your credentials
+        const playht = new PlayHT({
+            apiKey: '861d235a49a540f8afee065be3c6724f',
+            userId: '9wDOSoyPaacfi8Ks2yjUx7uB8fh1'
+        });
+
+        // You can customize the voice ID to match your preference
+        const options = {
+            voiceId: 'en-US-Nia',
+            speed: 1,
+            pitch: 1
+        };
+
+        await playht.generate(plainText, options);
+    } catch (error) {
+        console.error('Text-to-speech error:', error);
+    }
 }
 
 function switchTab(tabName) {
