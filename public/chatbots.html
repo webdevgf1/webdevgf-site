@@ -809,18 +809,62 @@ function handleImageUpload(file) {
         const reader = new FileReader();
         reader.onload = async (e) => {
             const imageData = e.target.result;
-            // Ensure we have a valid base64 data URL
+            
+            // Validate data URL format
             if (!imageData.startsWith('data:image/')) {
                 alert('Invalid image format');
                 return;
             }
 
-            document.getElementById('imagePreview').src = imageData;
-            document.getElementById('uploadArea').style.display = 'none';
-            document.getElementById('previewArea').style.display = 'block';
-            
-            // Start AI analysis
-            await analyzeImage(imageData);
+            // Compress image if needed
+            try {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set maximum dimensions
+                    const maxWidth = 800;
+                    const maxHeight = 800;
+                    
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    // Calculate new dimensions
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    // Draw and compress image
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // Get compressed data URL
+                    const compressedData = canvas.toDataURL('image/jpeg', 0.8);
+                    
+                    // Update preview
+                    document.getElementById('imagePreview').src = compressedData;
+                    document.getElementById('uploadArea').style.display = 'none';
+                    document.getElementById('previewArea').style.display = 'block';
+                    
+                    // Start AI analysis with compressed image
+                    analyzeImage(compressedData);
+                };
+                img.src = imageData;
+            } catch (error) {
+                console.error('Error processing image:', error);
+                alert('Error processing image. Please try again.');
+            }
         };
         reader.readAsDataURL(file);
     }
@@ -838,13 +882,16 @@ async function analyzeImage(imageData) {
     suggestions.querySelector('.loading-dots').style.display = 'block';
 
     try {
+        // Log the first 100 characters of image data for debugging
+        console.log('Image data preview:', imageData.substring(0, 100));
+        
         const response = await fetch('/api/analyze-image', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                image: imageData  // Send the complete data URL
+                image: imageData
             })
         });
 
@@ -855,9 +902,10 @@ async function analyzeImage(imageData) {
         }
 
         const analysisResult = await response.json();
+        console.log('Analysis result:', analysisResult);
         
-        nameInput.value = analysisResult.name;
-        personalityInput.value = analysisResult.personality;
+        nameInput.value = analysisResult.name || 'AI Assistant';
+        personalityInput.value = analysisResult.personality || 'A helpful and knowledgeable assistant.';
         
         status.innerHTML = 'AI analysis complete! You can now customize your agent.';
         suggestions.querySelector('.loading-dots').style.display = 'none';
