@@ -270,6 +270,205 @@
             font-weight: 500;
         }
 
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+    }
+
+    .modal-content {
+        position: relative;
+        width: 90%;
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #0f1116;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .terminal {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        height: 70vh;
+        overflow-y: auto;
+        font-family: 'Consolas', monospace;
+        line-height: 1.6;
+    }
+
+    #terminal-text {
+        color: #e0e0e0;
+        font-size: 0.95rem;
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 8px;
+        height: 16px;
+        background-color: #00f2fe;
+        animation: blink 1s infinite;
+        margin-left: 4px;
+    }
+
+    .create-agent-button {
+    position: fixed;
+    bottom: 80px;
+    right: 30px;
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+.create-agent-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 242, 254, 0.4);
+}
+
+.creator-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1001;
+}
+
+.creator-content {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #0f1116;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.creator-header {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.creator-title {
+    font-size: 1.2rem;
+    color: #00f2fe;
+    font-weight: 500;
+}
+
+.creator-body {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.upload-area {
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #00f2fe;
+}
+
+.preview-area {
+    width: 100%;
+    position: relative;
+}
+
+#imagePreview {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.reset-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #94a3b8;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-family: inherit;
+}
+
+.personality-suggestions {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.deploy-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.deploy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+}
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
         .close-button {
             background: none;
             border: none;
@@ -326,6 +525,54 @@
             </div>
         </div>
     </div>
+
+    const creatorHTML = `
+<div class="create-agent-button" onclick="openCreator()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="16"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+    </svg>
+    Create Your Own Agent
+</div>
+
+<div class="creator-modal" id="creatorModal">
+    <div class="creator-content">
+        <div class="creator-header">
+            <div class="creator-title">Create Your Custom Agent</div>
+            <span class="close-btn" onclick="closeCreator()">&times;</span>
+        </div>
+        <div class="creator-body">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="imageUpload" accept="image/*" hidden>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <p>Click or drag image to upload</p>
+                </div>
+                <div class="preview-area" id="previewArea" style="display: none;">
+                    <img id="imagePreview" src="" alt="Preview">
+                    <button onclick="resetUpload()" class="reset-btn">Reset</button>
+                </div>
+            </div>
+            <div class="agent-details">
+                <div class="input-group">
+                    <label>Agent Name</label>
+                    <input type="text" id="agentName" placeholder="Enter agent name">
+                </div>
+                <div class="input-group">
+                    <label>Personality Description</label>
+                    <textarea id="agentPersonality" rows="4" placeholder="Describe your agent's personality..."></textarea>
+                </div>
+                <div class="personality-suggestions" id="personalitySuggestions"></div>
+                <button onclick="deployAgent()" class="deploy-btn">Deploy Agent</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script>
         const agents = [
@@ -473,6 +720,120 @@
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
 
+        function initializeCreator() {
+    // Add the HTML to the page
+    document.body.insertAdjacentHTML('beforeend', creatorHTML);
+    
+    // Setup the upload functionality
+    const uploadArea = document.getElementById('uploadArea');
+    const imageUpload = document.getElementById('imageUpload');
+    
+    uploadArea.addEventListener('click', () => imageUpload.click());
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#00f2fe';
+    });
+    
+    uploadArea.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        handleImageUpload(file);
+    });
+    
+    imageUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        handleImageUpload(file);
+    });
+}
+
+function handleImageUpload(file) {
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            document.getElementById('imagePreview').src = e.target.result;
+            document.getElementById('uploadArea').style.display = 'none';
+            document.getElementById('previewArea').style.display = 'block';
+            
+            // Analyze image and suggest personality
+            analyzeImage(e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+async function analyzeImage(imageData) {
+    // Here you would typically send the image to your backend for analysis
+    // For now, we'll simulate a response
+    const suggestions = document.getElementById('personalitySuggestions');
+    suggestions.innerHTML = 'Analyzing image...';
+    
+    // Simulate analysis delay
+    setTimeout(() => {
+        suggestions.innerHTML = 'Suggested traits based on image: Confident, Creative, Tech-savvy';
+        
+        // Auto-fill some fields based on "analysis"
+        document.getElementById('agentPersonality').value = 
+            'A confident and creative individual with a strong interest in technology. ' +
+            'Enjoys helping others and sharing knowledge.';
+    }, 1500);
+}
+
+function resetUpload() {
+    document.getElementById('uploadArea').style.display = 'block';
+    document.getElementById('previewArea').style.display = 'none';
+    document.getElementById('imageUpload').value = '';
+    document.getElementById('personalitySuggestions').innerHTML = '';
+}
+
+function openCreator() {
+    document.getElementById('creatorModal').style.display = 'block';
+}
+
+function closeCreator() {
+    document.getElementById('creatorModal').style.display = 'none';
+    resetUpload();
+}
+
+function deployAgent() {
+    const name = document.getElementById('agentName').value;
+    const personality = document.getElementById('agentPersonality').value;
+    const image = document.getElementById('imagePreview').src;
+    
+    if (!name || !personality || !image) {
+        alert('Please fill in all fields and upload an image');
+        return;
+    }
+    
+    // Create new agent object
+    const newAgent = {
+        id: Date.now(),
+        name: name,
+        image: image,
+        description: personality,
+        systemPrompt: `Respond as ${name} with the following personality: ${personality}. Communicate in plain text only, without action descriptions or emotes.`
+    };
+    
+    // Save to localStorage
+    const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
+    customAgents.push(newAgent);
+    localStorage.setItem('customAgents', JSON.stringify(customAgents));
+    
+    // Add to agents array
+    agents.push(newAgent);
+    
+    // Refresh grid
+    const grid = document.getElementById('agentsGrid');
+    grid.appendChild(createAgentCard(newAgent));
+    
+    // Close modal
+    closeCreator();
+}
+
         async function sendMessage() {
     if (!currentAgent) return;
 
@@ -521,18 +882,108 @@
     }
 }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeAgents();
-            
-            const userInput = document.getElementById('userInput');
-            if (userInput) {
-                userInput.addEventListener('keypress', (event) => {
-                    if (event.key === 'Enter') {
-                        sendMessage();
-                    }
-                });
+const faqContent = `
+Welcome to WebDevGF's AI Friends! 🤖
+
+FAQ:
+
+Q: How do I start chatting with an agent?
+A: Simply click on any agent card to open a chat window and start your conversation!
+
+Q: Are conversations private?
+A: Yes, all conversations are private and take place in your browser only.
+
+Q: Can I customize the agents?
+A: Coming soon! We're working on allowing users to create and customize their own agents.
+
+Q: How do the different agents work?
+A: Each agent has a unique personality and knowledge base that shapes their responses and interaction style.
+
+Q: Can I use these agents on other platforms?
+A: We're currently working on Discord, Telegram, and Twitter integration. Stay tuned!
+
+Q: Is there a limit to how much I can chat?
+A: Currently, you can chat as much as you'd like with any agent.
+
+Q: How do I report issues or bugs?
+A: We're adding a bug reporting system soon. For now, please reach out via Twitter @webdevgf.
+
+Tips for the best experience:
+- Try different agents to find your favorite
+- Be specific in your questions
+- Experiment with different conversation topics
+- Check back regularly for new features and agents
+
+Updates Coming Soon:
+- Create your own custom agents
+- Multi-agent group chats
+- Voice chat capabilities
+- Chat history storage
+- Background music options
+- Agent ratings and feedback
+`;
+
+function openFAQ() {
+    const modal = document.getElementById('faqModal');
+    const terminalText = document.getElementById('terminal-text');
+    modal.style.display = 'block';
+    terminalText.innerHTML = '';
+    typeWriter(faqContent);
+}
+
+function closeFAQ() {
+    const modal = document.getElementById('faqModal');
+    modal.style.display = 'none';
+}
+
+function typeWriter(text, index = 0) {
+    const terminalText = document.getElementById('terminal-text');
+    const lines = text.split('\n');
+    
+    if (index < lines.length) {
+        // Add special formatting for headers and questions
+        let line = lines[index];
+        if (line.endsWith(':')) {
+            line = `<span style="color: #00f2fe; font-weight: bold;">${line}</span>`;
+        } else if (line.startsWith('Q:')) {
+            line = `<span style="color: #4facfe">${line}</span>`;
+        } else if (line.startsWith('A:')) {
+            line = `<span style="color: #ffffff">${line}</span>`;
+        }
+        
+        terminalText.innerHTML += line + '<br>';
+        terminalText.scrollTop = terminalText.scrollHeight;
+        setTimeout(() => typeWriter(text, index + 1), 30);
+    } else {
+        terminalText.innerHTML += '<span class="cursor"></span>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize base agents
+    initializeAgents();
+    
+    // Initialize the creator functionality
+    initializeCreator();
+    
+    // Load custom agents from localStorage
+    const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
+    customAgents.forEach(agent => {
+        agents.push(agent);
+        const grid = document.getElementById('agentsGrid');
+        grid.appendChild(createAgentCard(agent));
+    });
+    
+    // Your existing input handler
+    const userInput = document.getElementById('userInput');
+    if (userInput) {
+        userInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
             }
         });
+    }
+});
     </script>
 
     <div id="faqModal" class="modal">
