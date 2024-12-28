@@ -902,18 +902,18 @@ function resetUpload() {
 function deployAgent() {
     const name = document.getElementById('agentName').value;
     const personality = document.getElementById('agentPersonality').value;
-    const image = document.getElementById('imagePreview').src;
+    const imagePreview = document.getElementById('imagePreview');
     
-    if (!name || !personality || !image) {
+    if (!name || !personality || !imagePreview.src) {
         alert('Please fill in all fields and upload an image');
         return;
     }
     
-    // Create new agent object
+    // Create new agent object with the actual image data URL
     const newAgent = {
         id: Date.now(),
         name: name,
-        image: image,
+        image: imagePreview.src,  // This contains the full data URL
         description: personality,
         systemPrompt: `Respond as ${name} with the following personality: ${personality}. Communicate in plain text only, without action descriptions or emotes.`
     };
