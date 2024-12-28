@@ -834,7 +834,7 @@ async function analyzeImage(imageData) {
         // Log the image data size
         console.log('Image data size:', imageData.length);
         
-        const response = await fetch('https://api.webdevgf.xyz/api/analyze-image', {
+        const response = await fetch('/api/analyze-image', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
