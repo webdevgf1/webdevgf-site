@@ -17,22 +17,22 @@ export default async function handler(req, res) {
     }
 
     try {
-        console.log('Received request');
+        if (!process.env.CLAUDE_API_KEY) {
+            throw new Error('CLAUDE_API_KEY environment variable is not set');
+        }
+
         const { image } = req.body;
         
         if (!image) {
             throw new Error('No image data received');
         }
 
-        console.log('Image data length:', image.length);
-
         const response = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'anthropic-version': '2023-06-01',
-                'x-api-key': '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',
-                'anthropic-beta': 'messages-2023-12-15'
+                'X-API-Key': process.env.CLAUDE_API_KEY,
+                'anthropic-version': '2024-01-01'
             },
             body: JSON.stringify({
                 model: 'claude-3-opus-20240229',
@@ -57,21 +57,30 @@ export default async function handler(req, res) {
             })
         });
 
-        console.log('Claude API response status:', response.status);
-
         if (!response.ok) {
             const errorData = await response.text();
-            console.error('Claude API error:', errorData);
+            console.error('Claude API error response:', errorData);
             throw new Error(`Claude API error: ${errorData}`);
         }
 
         const data = await response.json();
-        console.log('Claude response:', data);
+        
+        // Parse the response content to extract the JSON
+        let jsonResponse;
+        try {
+            // Extract the text content from Claude's response
+            const content = data.content[0].text;
+            // Parse it as JSON
+            jsonResponse = JSON.parse(content);
+        } catch (e) {
+            console.error('Error parsing Claude response:', e);
+            jsonResponse = {
+                name: "AI Assistant",
+                personality: "A helpful and knowledgeable assistant."
+            };
+        }
 
-        res.status(200).json({
-            name: "Test Name",  // Temporary hardcoded response for testing
-            personality: "Test Personality"
-        });
+        res.status(200).json(jsonResponse);
 
     } catch (error) {
         console.error('Server error:', error);
