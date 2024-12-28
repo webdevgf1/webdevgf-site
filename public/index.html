@@ -1113,10 +1113,12 @@ function selectBackground(bgId) {
     const modelContainer = document.getElementById('modelContainer');
     const background = backgrounds[bgId];
     
-    // Apply background to the container instead of the model-viewer
+    // Change this part
+    modelContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; // Keep the dark overlay
     modelContainer.style.backgroundImage = `url(${background})`;
     modelContainer.style.backgroundSize = 'cover';
     modelContainer.style.backgroundPosition = 'center';
+    modelContainer.style.backgroundBlendMode = 'overlay';
     
     // Add visual feedback
     const bgItems = document.querySelectorAll('#backgrounds .grid-item');
@@ -1201,47 +1203,6 @@ document.getElementById('music').innerHTML = `
     </div>
 `;
     </script>
-    <div id="customizeModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="terminal-title">Customize WebDevGF</div>
-                <span class="close-btn" onclick="closeCustomize()">&times;</span>
-            </div>
-            <div class="terminal customize-terminal">
-                <div class="customize-tabs">
-                    <button class="tab-btn active" onclick="switchTab('backgrounds')">Backgrounds</button>
-                    <button class="tab-btn" onclick="switchTab('avatars')">Avatars</button>
-                    <button class="tab-btn" onclick="switchTab('music')">Music</button>
-                </div>
-                <div class="tab-content" id="backgrounds">
-                    <div class="grid-container">
-                        <div class="grid-item" onclick="selectBackground('cyber')">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67698456434a0426a18f6ae7_Gif.jpg" alt="Cyber Background">
-                            <span>Cyber City</span>
-                        </div>
-                        <!-- Add more background options -->
-                    </div>
-                </div>
-                <div class="tab-content" id="avatars" style="display: none;">
-                    <div class="grid-container">
-                        <div class="grid-item" onclick="selectAvatar('default')">
-                            <img src="path/to/avatar1.jpg" alt="Default Avatar">
-                            <span>Default</span>
-                        </div>
-                        <!-- Add more avatar options -->
-                    </div>
-                </div>
-                <div class="tab-content" id="music" style="display: none;">
-                    <div class="music-list">
-                        <div class="music-item" onclick="selectMusic('lofi')">
-                            <span>Lofi Beats</span>
-                            <button class="play-btn">▶</button>
-                        </div>
-                        <!-- Add more music options -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>    
+    <div id="customizeModal" class="modal"></div>
 </body>
 </html>
