@@ -1203,11 +1203,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Check if the message contains code blocks
     if (text.includes('```')) {
-        const parts = text.split(/(```(?:javascript|js)?\n[\s\S]*?\n```)/g);
+        const parts = text.split(/(```(?:javascript|js|html|css)?\n[\s\S]*?\n```)/g);
         parts.forEach(part => {
             if (part.startsWith('```')) {
-                // Handle code blocks as before
-                const codeContent = part.replace(/```(?:javascript|js)?\n([\s\S]*?)\n```/, '$1');
+                // Handle code blocks
+                const codeContent = part.replace(/```(?:javascript|js|html|css)?\n([\s\S]*?)\n```/, '$1');
                 const codeBlock = document.createElement('div');
                 codeBlock.className = 'code-block';
                 
@@ -1236,7 +1236,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const textNode = document.createElement('div');
                 if (className === 'ai-message') {
                     typeMessage(textNode, part, 30, () => {
-                        // Save chat history after typing animation completes
                         saveChatHistory();
                     });
                 } else {
@@ -1250,7 +1249,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle messages without code blocks
         if (className === 'ai-message') {
             typeMessage(messageDiv, text, 30, () => {
-                // Save chat history after typing animation completes
                 saveChatHistory();
             });
         } else {
