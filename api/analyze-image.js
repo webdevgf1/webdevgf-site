@@ -27,11 +27,24 @@ export default async function handler(req, res) {
             throw new Error('No image data received');
         }
 
-        // Extract base64 data after the comma
-        const base64Data = image.split(',')[1];
-        if (!base64Data) {
-            throw new Error('Invalid image data format');
+        // Extract base64 data and media type
+        const matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+        
+        if (!matches || matches.length !== 3) {
+            throw new Error('Invalid image data URL format');
         }
+
+        const mediaType = matches[1];
+        const base64Data = matches[2];
+
+        // Verify base64 data
+        if (!base64Data || base64Data.trim() === '') {
+            throw new Error('Empty base64 data');
+        }
+
+        // Log for debugging (remove in production)
+        console.log('Media Type:', mediaType);
+        console.log('Base64 length:', base64Data.length);
 
         const response = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
@@ -54,7 +67,7 @@ export default async function handler(req, res) {
                             type: "image",
                             source: {
                                 type: "base64",
-                                media_type: "image/jpeg",
+                                media_type: mediaType,
                                 data: base64Data
                             }
                         }
