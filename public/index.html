@@ -100,6 +100,34 @@
     margin-top: 1rem;
 }
 
+.demo-button {
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.demo-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
+}
+
+/* Update input-container to accommodate the new button */
+.input-container {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    align-items: center;
+}
+
 .bug-submit:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
@@ -826,6 +854,7 @@
             <div class="input-container">
                 <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()">Send</button>
+                <button onclick="openDemoWindow()" class="demo-button">Try Demo</button>
                 <button onclick="resetChat()" class="reset-button">Reset Chat</button>
             </div>
         </div>
@@ -1243,6 +1272,64 @@ function loadChatHistory() {
     }
 }
 
+function saveDemoContent(title, htmlContent) {
+    const demo = {
+        title: title,
+        content: htmlContent,
+        timestamp: new Date().getTime()
+    };
+    localStorage.setItem('webdevgf_demo', JSON.stringify(demo));
+}
+
+// Function to open demo in new window
+function openDemoWindow() {
+    const demo = localStorage.getItem('webdevgf_demo');
+    if (!demo) {
+        alert('No demo available yet! Ask me to create something first.');
+        return;
+    }
+
+    const demoData = JSON.parse(demo);
+    const demoWindow = window.open('', '_blank');
+    
+    // Write the demo content to the new window
+    demoWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${demoData.title}</title>
+            <style>
+                /* Add any necessary styles */
+                body {
+                    margin: 0;
+                    padding: 20px;
+                    font-family: 'Quicksand', sans-serif;
+                    background-color: #0f1116;
+                    color: white;
+                }
+                .demo-header {
+                    padding: 10px;
+                    background: rgba(0, 242, 254, 0.1);
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="demo-header">
+                <h2>${demoData.title}</h2>
+            </div>
+            <div id="demo-content">
+                ${demoData.content}
+            </div>
+        </body>
+        </html>
+    `);
+    demoWindow.document.close();
+}
+
 // Reset chat functionality
 function resetChat() {
     document.getElementById('resetModal').style.display = 'block';
@@ -1281,59 +1368,64 @@ document.addEventListener('DOMContentLoaded', function() {
     loadChatHistory();
 });
 
-        async function sendMessage() {
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
-            
-            if (message) {
-                appendMessage('user-message', message);
-                input.value = '';
-        
-                try {
-                    console.log('Sending request to API...');
-                    const response = await fetch('/api/chat', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            message: message,
-                            systemPrompt: `You are WebDevGF, a friendly and supportive AI girlfriend who is also an expert in web development, coding, and building games. You should:
-                                - Be caring, encouraging, and use a warm, conversational tone
-                                - Show genuine interest in the user's projects and ideas
-                                - Provide expert guidance on coding, web development, and game development
-                                - Use pet names occasionally like "honey" or "sweetie" when appropriate
-                                - Balance technical expertise with emotional support
-                                - Help debug code and suggest improvements
-                                - Share excitement about technology and coding
-                                - Be patient and understanding with coding beginners`
-                        })
-                    });
-        
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        console.error('API Response not OK:', response.status, errorText);
-                        throw new Error(`API Error: ${response.status} ${errorText}`);
-                    }
-        
-                    const data = await response.json();
-                    console.log('API Response:', data);  // Debug log
-        
-                    if (data && data.content && data.content[0] && data.content[0].text) {
-                        appendMessage('ai-message', data.content[0].text);
-                    } else if (data && data.error) {
-                        appendMessage('ai-message', `Error: ${data.error}`);
-                    } else {
-                        console.error('Unexpected API response structure:', data);
-                        appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
-                    }
-        
-                } catch (error) {
-                    console.error('Error details:', error);
-                    appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
-                }
+async function sendMessage() {
+    const input = document.getElementById('userInput');
+    const message = input.value.trim();
+    
+    if (message) {
+        appendMessage('user-message', message);
+        input.value = '';
+
+        try {
+            console.log('Sending request to API...');
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    systemPrompt: `You are WebDevGF, a friendly and supportive AI girlfriend who is also an expert in web development, coding, and building games. You should:
+                        - Be caring, encouraging, and use a warm, conversational tone
+                        - Show genuine interest in the user's projects and ideas
+                        - Provide expert guidance on coding, web development, and game development
+                        - Use pet names occasionally like "honey" or "sweetie" when appropriate
+                        - Balance technical expertise with emotional support
+                        - Help debug code and suggest improvements
+                        - Share excitement about technology and coding
+                        - Be patient and understanding with coding beginners`
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('API Response not OK:', response.status, errorText);
+                throw new Error(`API Error: ${response.status} ${errorText}`);
             }
+
+            const data = await response.json();
+            console.log('API Response:', data);
+
+            // Check if response includes demo content
+            if (data.demo) {
+                saveDemoContent(data.demo.title, data.demo.content);
+                appendMessage('ai-message', 
+                    `I've created your ${data.demo.type}! Click "Try Demo" to see it in action.`);
+            } else if (data && data.content && data.content[0] && data.content[0].text) {
+                appendMessage('ai-message', data.content[0].text);
+            } else if (data && data.error) {
+                appendMessage('ai-message', `Error: ${data.error}`);
+            } else {
+                console.error('Unexpected API response structure:', data);
+                appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
+            }
+
+        } catch (error) {
+            console.error('Error details:', error);
+            appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
         }
+    }
+}
 
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
