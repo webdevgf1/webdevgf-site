@@ -807,13 +807,20 @@
 function handleImageUpload(file) {
     if (file && file.type.startsWith('image/')) {
         const reader = new FileReader();
-        reader.onload = (e) => {
-            document.getElementById('imagePreview').src = e.target.result;
+        reader.onload = async (e) => {
+            const imageData = e.target.result;
+            // Ensure we have a valid base64 data URL
+            if (!imageData.startsWith('data:image/')) {
+                alert('Invalid image format');
+                return;
+            }
+
+            document.getElementById('imagePreview').src = imageData;
             document.getElementById('uploadArea').style.display = 'none';
             document.getElementById('previewArea').style.display = 'block';
             
             // Start AI analysis
-            analyzeImage(e.target.result);
+            await analyzeImage(imageData);
         };
         reader.readAsDataURL(file);
     }
@@ -831,37 +838,26 @@ async function analyzeImage(imageData) {
     suggestions.querySelector('.loading-dots').style.display = 'block';
 
     try {
-        // Log the image data size
-        console.log('Image data size:', imageData.length);
-        
         const response = await fetch('/api/analyze-image', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                image: imageData
+                image: imageData  // Send the complete data URL
             })
         });
 
-        console.log('Response status:', response.status);
-        const responseText = await response.text();
-        console.log('Response text:', responseText);
-
         if (!response.ok) {
-            throw new Error(`API Error: ${response.status} ${responseText}`);
+            const errorText = await response.text();
+            console.error('API Response:', response.status, errorText);
+            throw new Error(`API Error: ${response.status} ${errorText}`);
         }
 
-        let analysisResult;
-        try {
-            analysisResult = JSON.parse(responseText);
-        } catch (e) {
-            throw new Error('Failed to parse API response');
-        }
-
-        nameInput.value = analysisResult.name || 'Unknown Name';
-        personalityInput.value = analysisResult.personality || 'Default personality description';
+        const analysisResult = await response.json();
+        
+        nameInput.value = analysisResult.name;
+        personalityInput.value = analysisResult.personality;
         
         status.innerHTML = 'AI analysis complete! You can now customize your agent.';
         suggestions.querySelector('.loading-dots').style.display = 'none';
@@ -870,7 +866,7 @@ async function analyzeImage(imageData) {
 
     } catch (error) {
         console.error('Full error details:', error);
-        status.innerHTML = 'Image analysis error. Please try again.';
+        status.innerHTML = 'Error analyzing image. Please try again.';
         suggestions.querySelector('.loading-dots').style.display = 'none';
     }
 }
