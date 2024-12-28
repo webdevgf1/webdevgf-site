@@ -281,6 +281,57 @@
         z-index: 1000;
     }
 
+    .status-text {
+    margin-bottom: 20px;
+    color: #00f2fe;
+    font-size: 0.9rem;
+}
+
+.loading-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 10px;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    background-color: #00f2fe;
+    border-radius: 50%;
+    animation: bounce 0.5s infinite alternate;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+}
+
+.edit-btn {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#agentName[readonly],
+#agentPersonality[readonly] {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: not-allowed;
+}
+
     .modal-content {
         position: relative;
         width: 90%;
@@ -526,53 +577,58 @@
         </div>
     </div>
 
-    const creatorHTML = `
-<div class="create-agent-button" onclick="openCreator()">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="12" y1="8" x2="12" y2="16"/>
-        <line x1="8" y1="12" x2="16" y2="12"/>
-    </svg>
-    Create Your Own Agent
-</div>
-
-<div class="creator-modal" id="creatorModal">
-    <div class="creator-content">
-        <div class="creator-header">
-            <div class="creator-title">Create Your Custom Agent</div>
-            <span class="close-btn" onclick="closeCreator()">&times;</span>
-        </div>
-        <div class="creator-body">
-            <div class="upload-section">
-                <div class="upload-area" id="uploadArea">
-                    <input type="file" id="imageUpload" accept="image/*" hidden>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    <p>Click or drag image to upload</p>
-                </div>
-                <div class="preview-area" id="previewArea" style="display: none;">
-                    <img id="imagePreview" src="" alt="Preview">
-                    <button onclick="resetUpload()" class="reset-btn">Reset</button>
-                </div>
+    <div class="create-agent-button" onclick="openCreator()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        Create Your Own Agent
+    </div>
+    
+    <div class="creator-modal" id="creatorModal">
+        <div class="creator-content">
+            <div class="creator-header">
+                <div class="creator-title">Create Your Custom Agent</div>
+                <span class="close-btn" onclick="closeCreator()">&times;</span>
             </div>
-            <div class="agent-details">
-                <div class="input-group">
-                    <label>Agent Name</label>
-                    <input type="text" id="agentName" placeholder="Enter agent name">
+            <div class="creator-body">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="imageUpload" accept="image/*" hidden>
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <p>Click or drag image to upload</p>
+                    </div>
+                    <div class="preview-area" id="previewArea" style="display: none;">
+                        <img id="imagePreview" src="" alt="Preview">
+                        <button onclick="resetUpload()" class="reset-btn">Reset</button>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>Personality Description</label>
-                    <textarea id="agentPersonality" rows="4" placeholder="Describe your agent's personality..."></textarea>
+                <div class="agent-details">
+                    <div class="status-text" id="analysisStatus">Upload an image to begin...</div>
+                    <div class="input-group">
+                        <label>Agent Name</label>
+                        <input type="text" id="agentName" placeholder="AI will suggest a name..." readonly>
+                    </div>
+                    <div class="input-group">
+                        <label>Personality Description</label>
+                        <textarea id="agentPersonality" rows="4" placeholder="AI will analyze the image..." readonly></textarea>
+                    </div>
+                    <div class="personality-suggestions" id="personalitySuggestions">
+                        <div class="loading-dots" style="display: none;">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <button onclick="enableEditing()" class="edit-btn" id="editBtn" style="display: none;">Customize Agent</button>
+                    <button onclick="deployAgent()" class="deploy-btn" disabled id="deployBtn">Deploy Agent</button>
                 </div>
-                <div class="personality-suggestions" id="personalitySuggestions"></div>
-                <button onclick="deployAgent()" class="deploy-btn">Deploy Agent</button>
             </div>
         </div>
     </div>
-</div>
 
     <script>
         const agents = [
@@ -721,14 +777,11 @@
         }
 
         function initializeCreator() {
-    // Add the HTML to the page
-    document.body.insertAdjacentHTML('beforeend', creatorHTML);
-    
-    // Setup the upload functionality
     const uploadArea = document.getElementById('uploadArea');
     const imageUpload = document.getElementById('imageUpload');
     
     uploadArea.addEventListener('click', () => imageUpload.click());
+    
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = '#00f2fe';
@@ -759,7 +812,7 @@ function handleImageUpload(file) {
             document.getElementById('uploadArea').style.display = 'none';
             document.getElementById('previewArea').style.display = 'block';
             
-            // Analyze image and suggest personality
+            // Start AI analysis
             analyzeImage(e.target.result);
         };
         reader.readAsDataURL(file);
@@ -767,27 +820,61 @@ function handleImageUpload(file) {
 }
 
 async function analyzeImage(imageData) {
-    // Here you would typically send the image to your backend for analysis
-    // For now, we'll simulate a response
+    const status = document.getElementById('analysisStatus');
     const suggestions = document.getElementById('personalitySuggestions');
-    suggestions.innerHTML = 'Analyzing image...';
+    const nameInput = document.getElementById('agentName');
+    const personalityInput = document.getElementById('agentPersonality');
+    const editBtn = document.getElementById('editBtn');
+    const deployBtn = document.getElementById('deployBtn');
     
-    // Simulate analysis delay
+    status.innerHTML = 'AI is analyzing the image...';
+    suggestions.querySelector('.loading-dots').style.display = 'block';
+    
+    // Simulate AI analysis delay (replace with actual API call later)
     setTimeout(() => {
-        suggestions.innerHTML = 'Suggested traits based on image: Confident, Creative, Tech-savvy';
+        // Generate random characteristics
+        const traits = [
+            'confident', 'creative', 'analytical', 'empathetic', 'mysterious',
+            'playful', 'sophisticated', 'energetic', 'calm', 'intellectual'
+        ];
+        const backgrounds = [
+            'tech expert', 'artist', 'adventurer', 'scholar', 'mentor',
+            'innovator', 'strategist', 'visionary', 'guardian', 'pioneer'
+        ];
         
-        // Auto-fill some fields based on "analysis"
-        document.getElementById('agentPersonality').value = 
-            'A confident and creative individual with a strong interest in technology. ' +
-            'Enjoys helping others and sharing knowledge.';
-    }, 1500);
+        const randomName = generateAgentName();
+        const selectedTraits = getRandomElements(traits, 3);
+        const background = getRandomElements(backgrounds, 1)[0];
+        
+        nameInput.value = randomName;
+        personalityInput.value = `A ${selectedTraits.join(', ')} ${background} who brings unique perspectives and insights. They excel at connecting with others while maintaining their distinctive character.`;
+        
+        status.innerHTML = 'AI analysis complete! You can now customize your agent.';
+        suggestions.querySelector('.loading-dots').style.display = 'none';
+        editBtn.style.display = 'block';
+        deployBtn.disabled = false;
+    }, 2000);
 }
 
-function resetUpload() {
-    document.getElementById('uploadArea').style.display = 'block';
-    document.getElementById('previewArea').style.display = 'none';
-    document.getElementById('imageUpload').value = '';
-    document.getElementById('personalitySuggestions').innerHTML = '';
+function generateAgentName() {
+    const prefixes = ['Neo', 'Echo', 'Nova', 'Zen', 'Sol', 'Luna', 'Aura', 'Kai'];
+    const suffixes = ['Mind', 'Core', 'Wave', 'Pulse', 'Spark', 'Flow', 'Path'];
+    return `${getRandomElements(prefixes, 1)[0]}${getRandomElements(suffixes, 1)[0]}`;
+}
+
+function getRandomElements(arr, count) {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+}
+
+function enableEditing() {
+    const nameInput = document.getElementById('agentName');
+    const personalityInput = document.getElementById('agentPersonality');
+    
+    nameInput.readOnly = false;
+    personalityInput.readOnly = false;
+    
+    nameInput.focus();
 }
 
 function openCreator() {
@@ -797,6 +884,20 @@ function openCreator() {
 function closeCreator() {
     document.getElementById('creatorModal').style.display = 'none';
     resetUpload();
+}
+
+function resetUpload() {
+    document.getElementById('uploadArea').style.display = 'block';
+    document.getElementById('previewArea').style.display = 'none';
+    document.getElementById('imageUpload').value = '';
+    document.getElementById('personalitySuggestions').innerHTML = '';
+    document.getElementById('agentName').value = '';
+    document.getElementById('agentPersonality').value = '';
+    document.getElementById('editBtn').style.display = 'none';
+    document.getElementById('deployBtn').disabled = true;
+    
+    const status = document.getElementById('analysisStatus');
+    status.innerHTML = 'Upload an image to begin...';
 }
 
 function deployAgent() {
