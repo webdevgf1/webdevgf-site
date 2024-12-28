@@ -348,6 +348,33 @@
             margin-top: -20px;  /* Add this to align with model viewer */
         }
 
+        .demo-button {
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.demo-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
+}
+
+/* Add spacing between buttons */
+.input-container button {
+    margin-left: 10px;
+}
+
+.input-container button:first-child {
+    margin-left: 0;
+}
+
         .chat-history {
             flex-grow: 1;
             overflow-y: auto;
@@ -826,6 +853,7 @@
             <div class="input-container">
                 <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()">Send</button>
+                <button onclick="handleDemoClick()" class="demo-button">Demo</button>
                 <button onclick="resetChat()" class="reset-button">Reset Chat</button>
             </div>
         </div>
@@ -1202,6 +1230,87 @@ function saveChatHistory() {
     });
     
     localStorage.setItem('webdevgf_chat_history', JSON.stringify(messages));
+}
+
+function createPreview(code) {
+    // Create a new window
+    const previewWindow = window.open('', '_blank');
+    
+    // Get the code type (HTML, CSS, or JavaScript)
+    const isHTML = code.includes('<html') || code.includes('<!DOCTYPE html');
+    const isCSS = code.includes('{') && code.includes('}') && !code.includes('function');
+    
+    // If it's a complete HTML document, use it directly
+    if (isHTML) {
+        previewWindow.document.write(code);
+        previewWindow.document.close();
+        return;
+    }
+    
+    // Create a basic HTML template for other code types
+    const template = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Code Preview</title>
+            ${isCSS ? `<style>${code}</style>` : ''}
+            <style>
+                body { 
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                    background-color: #f0f0f0;
+                }
+                #preview-container {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                }
+            </style>
+        </head>
+        <body>
+            <div id="preview-container">
+                ${isCSS ? '<div id="css-preview">CSS Preview</div>' : ''}
+            </div>
+            ${!isCSS ? `<script>${code}</script>` : ''}
+        </body>
+        </html>
+    `;
+    
+    previewWindow.document.write(template);
+    previewWindow.document.close();
+}
+
+// Function to extract code from messages
+function extractLatestCode() {
+    const messages = document.querySelectorAll('.message');
+    let latestCode = '';
+    
+    // Loop through messages in reverse to find the latest code block
+    for (let i = messages.length - 1; i >= 0; i--) {
+        const codeBlock = messages[i].querySelector('.code-block');
+        if (codeBlock) {
+            const code = codeBlock.querySelector('code');
+            if (code) {
+                latestCode = code.textContent;
+                break;
+            }
+        }
+    }
+    
+    return latestCode;
+}
+
+// Event handler for demo button
+function handleDemoClick() {
+    const code = extractLatestCode();
+    if (code) {
+        createPreview(code);
+    } else {
+        alert('No code found in the current chat to preview!');
+    }
 }
 
 function loadChatHistory() {
