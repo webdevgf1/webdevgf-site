@@ -1170,9 +1170,13 @@ function saveChatHistory() {
     const messages = [];
     
     chatHistory.querySelectorAll('.message').forEach(messageDiv => {
+        const messageContent = messageDiv.querySelector('.code-block') ? 
+            messageDiv.innerHTML : // Save full HTML for messages with code blocks
+            messageDiv.textContent; // Save just text for regular messages
+            
         messages.push({
             type: messageDiv.classList.contains('user-message') ? 'user' : 'ai',
-            content: messageDiv.innerHTML
+            content: messageContent
         });
     });
     
@@ -1184,15 +1188,37 @@ function loadChatHistory() {
     const savedHistory = localStorage.getItem('webdevgf_chat_history');
     
     if (savedHistory) {
-        const messages = JSON.parse(savedHistory);
-        chatHistory.innerHTML = ''; // Clear default message
-        
-        messages.forEach(message => {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${message.type}-message`;
-            messageDiv.innerHTML = message.content;
-            chatHistory.appendChild(messageDiv);
-        });
+        try {
+            const messages = JSON.parse(savedHistory);
+            chatHistory.innerHTML = ''; // Clear default message
+            
+            messages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${message.type}-message`;
+                
+                // Handle messages with code blocks
+                if (message.content.includes('code-block')) {
+                    messageDiv.innerHTML = message.content;
+                    // Re-initialize Prism highlighting for code blocks
+                    messageDiv.querySelectorAll('code').forEach(block => {
+                        Prism.highlightElement(block);
+                    });
+                } else {
+                    // For regular messages, set the text content directly without animation
+                    messageDiv.textContent = message.content.replace(/^"(.*)"$/, '$1');
+                }
+                
+                chatHistory.appendChild(messageDiv);
+            });
+        } catch (error) {
+            console.error('Error loading chat history:', error);
+            // If there's an error loading history, reset to default message
+            chatHistory.innerHTML = `
+                <div class="message ai-message">
+                    Hi! I'm WebDevGF, your friendly web development assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+                </div>
+            `;
+        }
     }
 }
 
