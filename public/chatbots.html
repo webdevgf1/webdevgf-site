@@ -831,28 +831,37 @@ async function analyzeImage(imageData) {
     suggestions.querySelector('.loading-dots').style.display = 'block';
 
     try {
-        const response = await fetch('/api/analyze-image', {  // Use relative URL
+        // Log the image data size
+        console.log('Image data size:', imageData.length);
+        
+        const response = await fetch('https://api.webdevgf.xyz/api/analyze-image', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
                 image: imageData
             })
         });
 
+        console.log('Response status:', response.status);
+        const responseText = await response.text();
+        console.log('Response text:', responseText);
+
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error('API Response not OK:', response.status, errorText);
-            throw new Error(`API Error: ${response.status} ${errorText}`);
+            throw new Error(`API Error: ${response.status} ${responseText}`);
         }
 
-        const analysisResult = await response.json();
-        console.log('Analysis result:', analysisResult);
+        let analysisResult;
+        try {
+            analysisResult = JSON.parse(responseText);
+        } catch (e) {
+            throw new Error('Failed to parse API response');
+        }
 
-        // Update the inputs with the results
-        nameInput.value = analysisResult.name;
-        personalityInput.value = analysisResult.personality;
+        nameInput.value = analysisResult.name || 'Unknown Name';
+        personalityInput.value = analysisResult.personality || 'Default personality description';
         
         status.innerHTML = 'AI analysis complete! You can now customize your agent.';
         suggestions.querySelector('.loading-dots').style.display = 'none';
@@ -860,8 +869,8 @@ async function analyzeImage(imageData) {
         deployBtn.disabled = false;
 
     } catch (error) {
-        console.error('Error analyzing image:', error);
-        status.innerHTML = 'Error analyzing image. Please try again.';
+        console.error('Full error details:', error);
+        status.innerHTML = 'Image analysis error. Please try again.';
         suggestions.querySelector('.loading-dots').style.display = 'none';
     }
 }
@@ -902,18 +911,18 @@ function resetUpload() {
 function deployAgent() {
     const name = document.getElementById('agentName').value;
     const personality = document.getElementById('agentPersonality').value;
-    const imagePreview = document.getElementById('imagePreview');
+    const image = document.getElementById('imagePreview').src;
     
-    if (!name || !personality || !imagePreview.src) {
+    if (!name || !personality || !image) {
         alert('Please fill in all fields and upload an image');
         return;
     }
     
-    // Create new agent object with the actual image data URL
+    // Create new agent object
     const newAgent = {
         id: Date.now(),
         name: name,
-        image: imagePreview.src,  // This contains the full data URL
+        image: image,
         description: personality,
         systemPrompt: `Respond as ${name} with the following personality: ${personality}. Communicate in plain text only, without action descriptions or emotes.`
     };
