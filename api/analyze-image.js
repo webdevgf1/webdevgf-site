@@ -17,8 +17,8 @@ export default async function handler(req, res) {
     }
 
     try {
-        if (!process.env.CLAUDE_API_KEY) {
-            throw new Error('CLAUDE_API_KEY environment variable is not set');
+        if (!process.env.ANTHROPIC_API_KEY) {
+            throw new Error('ANTHROPIC_API_KEY environment variable is not set');
         }
 
         const { image } = req.body;
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-Key': process.env.CLAUDE_API_KEY,
+                'x-api-key': process.env.ANTHROPIC_API_KEY,
                 'anthropic-version': '2024-01-01'
             },
             body: JSON.stringify({
