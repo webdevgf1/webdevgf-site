@@ -831,37 +831,28 @@ async function analyzeImage(imageData) {
     suggestions.querySelector('.loading-dots').style.display = 'block';
 
     try {
-        // Log the image data size
-        console.log('Image data size:', imageData.length);
-        
-        const response = await fetch('https://api.webdevgf.xyz/api/analyze-image', {
+        const response = await fetch('/api/analyze-image', {  // Use relative URL
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 image: imageData
             })
         });
 
-        console.log('Response status:', response.status);
-        const responseText = await response.text();
-        console.log('Response text:', responseText);
-
         if (!response.ok) {
-            throw new Error(`API Error: ${response.status} ${responseText}`);
+            const errorText = await response.text();
+            console.error('API Response not OK:', response.status, errorText);
+            throw new Error(`API Error: ${response.status} ${errorText}`);
         }
 
-        let analysisResult;
-        try {
-            analysisResult = JSON.parse(responseText);
-        } catch (e) {
-            throw new Error('Failed to parse API response');
-        }
+        const analysisResult = await response.json();
+        console.log('Analysis result:', analysisResult);
 
-        nameInput.value = analysisResult.name || 'Unknown Name';
-        personalityInput.value = analysisResult.personality || 'Default personality description';
+        // Update the inputs with the results
+        nameInput.value = analysisResult.name;
+        personalityInput.value = analysisResult.personality;
         
         status.innerHTML = 'AI analysis complete! You can now customize your agent.';
         suggestions.querySelector('.loading-dots').style.display = 'none';
@@ -869,8 +860,8 @@ async function analyzeImage(imageData) {
         deployBtn.disabled = false;
 
     } catch (error) {
-        console.error('Full error details:', error);
-        status.innerHTML = 'Image analysis error. Please try again.';
+        console.error('Error analyzing image:', error);
+        status.innerHTML = 'Error analyzing image. Please try again.';
         suggestions.querySelector('.loading-dots').style.display = 'none';
     }
 }
