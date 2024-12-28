@@ -59,6 +59,93 @@
             letter-spacing: 0.5px;
         }
 
+        .bug-report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    color: #00f2fe;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bug-input, .bug-textarea, .bug-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    width: 100%;
+}
+
+.bug-textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.bug-submit {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.bug-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+}
+
+.bug-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    color: #00f2fe;
+}
+
+/* Checkmark animation */
+.checkmark {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1rem;
+}
+
+.checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke: #00f2fe;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke: #00f2fe;
+    stroke-width: 2;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
         .nav-links {
             display: flex;
             gap: 1rem;
@@ -618,6 +705,7 @@
     <a href="/chatbots.html" class="nav-button">Chat Bots</a>
     <button class="nav-button" onclick="openFAQ()">FAQ</button>
     <button class="nav-button">Connect</button>
+    <button class="nav-button" onclick="openBugReport()">Report Bug</button>
 </div>
     </nav>
 
@@ -1077,6 +1165,43 @@ function closeCustomize() {
     modal.style.display = 'none';
 }
 
+function openBugReport() {
+    const modal = document.getElementById('bugReportModal');
+    const form = document.getElementById('bugReportForm');
+    const success = document.getElementById('bugSubmitSuccess');
+    modal.style.display = 'block';
+    form.style.display = 'flex';
+    success.style.display = 'none';
+}
+
+function closeBugReport() {
+    const modal = document.getElementById('bugReportModal');
+    modal.style.display = 'none';
+}
+
+function submitBugReport(event) {
+    event.preventDefault();
+    const form = document.getElementById('bugReportForm');
+    const success = document.getElementById('bugSubmitSuccess');
+    
+    // Simulate submission delay
+    form.style.opacity = '0.5';
+    form.style.pointerEvents = 'none';
+    
+    setTimeout(() => {
+        form.style.display = 'none';
+        success.style.display = 'flex';
+        
+        // Reset and hide modal after 2 seconds
+        setTimeout(() => {
+            form.reset();
+            form.style.opacity = '1';
+            form.style.pointerEvents = 'auto';
+            closeBugReport();
+        }, 2000);
+    }, 1000);
+}
+
 function switchTab(tabName) {
     // Hide all tab content
     const tabContents = document.querySelectorAll('.tab-content');
@@ -1110,10 +1235,14 @@ function selectMusic(musicId) {
 window.onclick = function(event) {
     const customizeModal = document.getElementById('customizeModal');
     const faqModal = document.getElementById('faqModal');
+    const bugReportModal = document.getElementById('bugReportModal');
+    
     if (event.target === customizeModal) {
         closeCustomize();
     } else if (event.target === faqModal) {
         closeFAQ();
+    } else if (event.target === bugReportModal) {
+        closeBugReport();
     }
 }
 
@@ -1227,5 +1356,41 @@ function selectMusic(musicId) {
             </div>
         </div>
     </div>
+    <div id="bugReportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="terminal-title">Report a Bug</div>
+                <span class="close-btn" onclick="closeBugReport()">&times;</span>
+            </div>
+            <div class="terminal">
+                <form id="bugReportForm" onsubmit="submitBugReport(event)" class="bug-report-form">
+                    <div class="form-group">
+                        <label for="bugTitle">Bug Title:</label>
+                        <input type="text" id="bugTitle" required class="bug-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="bugDescription">Description:</label>
+                        <textarea id="bugDescription" required class="bug-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bugPriority">Priority:</label>
+                        <select id="bugPriority" required class="bug-select">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="bug-submit">Submit Report</button>
+                </form>
+                <div id="bugSubmitSuccess" class="bug-success" style="display: none;">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                    <p>Bug report submitted successfully!</p>
+                </div>
+            </div>
+        </div>
+    </div>    
 </body>
 </html>
