@@ -27,12 +27,18 @@ export default async function handler(req, res) {
             throw new Error('No image data received');
         }
 
+        // Extract base64 data after the comma
+        const base64Data = image.split(',')[1];
+        if (!base64Data) {
+            throw new Error('Invalid image data format');
+        }
+
         const response = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.ANTHROPIC_API_KEY,
-                'anthropic-version': '2023-06-01'  // Updated to correct version
+                'anthropic-version': '2023-06-01'
             },
             body: JSON.stringify({
                 model: 'claude-3-opus-20240229',
@@ -49,7 +55,7 @@ export default async function handler(req, res) {
                             source: {
                                 type: "base64",
                                 media_type: "image/jpeg",
-                                data: image.split(',')[1]
+                                data: base64Data
                             }
                         }
                     ]
