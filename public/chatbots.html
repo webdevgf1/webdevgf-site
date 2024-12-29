@@ -1215,9 +1215,8 @@ function deployAgent() {
     // Add to agents array
     agents.push(newAgent);
     
-    // Create and add the card
-    const grid = document.getElementById('agentsGrid');
-    grid.appendChild(createAgentCard(newAgent));
+    // Reinitialize the entire grid
+    initializeAgents();
     
     // Close modal
     closeCreator();
