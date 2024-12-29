@@ -555,14 +555,15 @@
     <nav class="nav-bar">
         <div class="logo-container">
             <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6768273b2880b4fc11dedc2f_d4574ad42c38352f9955890764d453f2-removebg-preview.png" alt="Logo" class="logo-image">
-            <div class="logo">webdevgf Chat Bots</div>
+            <div class="logo">WebDevGF</div>
         </div>
         <div class="nav-links">
             <a href="https://x.com/webdevgf" target="_blank" class="nav-button">Twitter/X</a>
             <a href="https://pump.fun" target="_blank" class="nav-button">pump.fun</a>
-            <a href="/" class="nav-button">Home</a>
+            <a href="/chatbots.html" class="nav-button">Chat Bots</a>
             <button class="nav-button" onclick="openFAQ()">FAQ</button>
             <button class="nav-button">Connect</button>
+            <button class="nav-button" onclick="openBugReport()">Report Bug</button>
         </div>
     </nav>
 
@@ -1037,53 +1038,62 @@ function deployAgent() {
     }
 }
 
-const faqContent = `
-Welcome to WebDevGF's AI Friends! 🤖
+const faqText = `> Initializing WebDevGF FAQ...
+> Loading information...
 
-FAQ:
+About WebDevGF:
+---------------
+WebDevGF is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
 
-Q: How do I start chatting with an agent?
-A: Simply click on any agent card to open a chat window and start your conversation!
+Mission:
+--------
+- Lower the barrier to entry for coding and web design
+- Make technology more approachable and less intimidating
+- Provide practical, hands-on guidance for building real projects
+- Foster a supportive learning environment for beginners
 
-Q: Are conversations private?
-A: Yes, all conversations are private and take place in your browser only.
+Features:
+---------
+- Expert guidance in web development, coding, and game creation
+- Real-time code assistance and debugging
+- Project-based learning approach
+- Interactive 3D interface for enhanced engagement
+- Custom code generation and optimization
 
-Q: Can I customize the agents?
-A: Coming soon! We're working on allowing users to create and customize their own agents.
+Roadmap:
+--------
+Q4 2024:
+- Launch "Create Your Own" chatbot platform
+- Release AI agent customization tools
+- Introduce one-click deployment for web apps/games
+- Implement advanced code generation capabilities
+- Add interactive coding tutorials
+- Release visual website builder
+- Introduce project templates library
+- Launch community showcase platform
 
-Q: How do the different agents work?
-A: Each agent has a unique personality and knowledge base that shapes their responses and interaction style.
+Q1 2025:
+- Implement collaborative coding features
+- Add real-time pair programming support
+- Release mobile app development tools
+- Introduce AI-powered code reviews
 
-Q: Can I use these agents on other platforms?
-A: We're currently working on Discord, Telegram, and Twitter integration. Stay tuned!
+Learning Approach:
+----------------
+WebDevGF believes in learning by doing. She guides users through:
+- Building real-world projects
+- Understanding core programming concepts
+- Developing problem-solving skills
+- Creating portfolio-worthy applications
 
-Q: Is there a limit to how much I can chat?
-A: Currently, you can chat as much as you'd like with any agent.
-
-Q: How do I report issues or bugs?
-A: We're adding a bug reporting system soon. For now, please reach out via Twitter @webdevgf.
-
-Tips for the best experience:
-- Try different agents to find your favorite
-- Be specific in your questions
-- Experiment with different conversation topics
-- Check back regularly for new features and agents
-
-Updates Coming Soon:
-- Create your own custom agents
-- Multi-agent group chats
-- Voice chat capabilities
-- Chat history storage
-- Background music options
-- Agent ratings and feedback
-`;
+> For more information or support, connect with us on Twitter or join our community!`;
 
 function openFAQ() {
     const modal = document.getElementById('faqModal');
     const terminalText = document.getElementById('terminal-text');
     modal.style.display = 'block';
     terminalText.innerHTML = '';
-    typeWriter(faqContent);
+    typeWriter(faqText);
 }
 
 function closeFAQ() {
@@ -1093,24 +1103,25 @@ function closeFAQ() {
 
 function typeWriter(text, index = 0) {
     const terminalText = document.getElementById('terminal-text');
-    const lines = text.split('\n');
     
-    if (index < lines.length) {
-        // Add special formatting for headers and questions
-        let line = lines[index];
-        if (line.endsWith(':')) {
-            line = `<span style="color: #00f2fe; font-weight: bold;">${line}</span>`;
-        } else if (line.startsWith('Q:')) {
-            line = `<span style="color: #4facfe">${line}</span>`;
-        } else if (line.startsWith('A:')) {
-            line = `<span style="color: #ffffff">${line}</span>`;
+    if (index < text.length) {
+        if (text[index] === '\n') {
+            terminalText.innerHTML += '<br>';
+        } else {
+            terminalText.innerHTML += text[index];
         }
-        
-        terminalText.innerHTML += line + '<br>';
         terminalText.scrollTop = terminalText.scrollHeight;
-        setTimeout(() => typeWriter(text, index + 1), 30);
+        setTimeout(() => typeWriter(text, index + 1), 20);
     } else {
         terminalText.innerHTML += '<span class="cursor"></span>';
+    }
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('faqModal');
+    if (event.target === modal) {
+        closeFAQ();
     }
 }
 
@@ -1141,18 +1152,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
     </script>
 
-    <div id="faqModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="terminal-title">💫 WebDevGF's AI Friends 💫</div>
-                <span class="close-btn" onclick="closeFAQ()">&times;</span>
-            </div>
-            <div class="terminal">
-                <div id="terminal-text"></div>
-                <span class="cursor"></span>
-            </div>
+<div id="faqModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="terminal-title">WebDevGF FAQ</div>
+            <span class="close-btn" onclick="closeFAQ()">&times;</span>
+        </div>
+        <div class="terminal">
+            <div id="terminal-text"></div>
         </div>
     </div>
+</div>
 
     <footer class="footer">
         <div class="footer-content">
