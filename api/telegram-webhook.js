@@ -15,7 +15,14 @@ export default async function handler(req, res) {
 
         console.log('4. Attempting to send acknowledgment...');
         
+        // Create AbortController for timeout
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, 5000); // 5 second timeout
+
         try {
+            console.log('4.1 Making fetch request...');
             const response = await fetch(
                 'https://api.telegram.org/bot' + token + '/sendMessage',
                 {
@@ -25,10 +32,12 @@ export default async function handler(req, res) {
                     },
                     body: JSON.stringify({
                         chat_id: chatId,
-                        text: "Processing your message..."
-                    })
+                        text: "Test message with timeout"
+                    }),
+                    signal: controller.signal
                 }
             );
+            console.log('4.2 Got response:', response.status);
             
             const data = await response.json();
             console.log('5. Telegram response:', data);
@@ -40,11 +49,23 @@ export default async function handler(req, res) {
             console.log('6. Successfully sent acknowledgment');
 
         } catch (error) {
-            console.error('7. Error sending message:', error);
+            console.error('7. Error sending message:', {
+                name: error.name,
+                message: error.message,
+                type: error.type,
+                stack: error.stack
+            });
             throw error;
+        } finally {
+            clearTimeout(timeout);
         }
 
     } catch (error) {
-        console.error('8. Main handler error:', error);
+        console.error('8. Main handler error:', {
+            name: error.name,
+            message: error.message,
+            type: error.type,
+            stack: error.stack
+        });
     }
 }
