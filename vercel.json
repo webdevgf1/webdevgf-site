@@ -19,7 +19,7 @@
       "dest": "/api/deploy-telegram-bot.js"
     },
     {
-      "src": "/api/telegram-webhook",
+      "src": "/api/telegram-webhook/.*",
       "dest": "/api/telegram-webhook.js"
     }
   ]
