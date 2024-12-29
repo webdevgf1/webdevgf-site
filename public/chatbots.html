@@ -298,6 +298,80 @@
     padding: 10px;
 }
 
+.deploy-telegram {
+    background: #2aabee; /* Telegram blue */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
+
+.deploy-telegram:hover {
+    background: #229ed9;
+    transform: translateY(-1px);
+}
+
+.deploy-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.deploy-modal-content {
+    position: relative;
+    background-color: #1a1b26;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.bot-token-input {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-family: 'Consolas', monospace;  /* Better for displaying tokens */
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.bot-token-input:focus {
+    outline: none;
+    border-color: #4facfe;
+    box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.1);
+}
+
+.deploy-modal-content ol {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.deploy-modal-content ol li {
+    margin-bottom: 5px;
+}
+
+.deploy-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
 .loading-dots span {
     width: 8px;
     height: 8px;
@@ -734,18 +808,110 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
         }
 
         function createAgentCard(agent) {
-            const card = document.createElement('div');
-            card.className = 'agent-card';
-            card.innerHTML = `
-                <div class="agent-image" style="background-image: url(${agent.image})"></div>
-                <div class="agent-info">
-                    <div class="agent-name">${agent.name}</div>
-                    <div class="agent-description">${agent.description}</div>
-                </div>
-            `;
-            card.onclick = () => openChat(agent);
-            return card;
-        }
+    const card = document.createElement('div');
+    card.className = 'agent-card';
+    card.innerHTML = `
+        <div class="agent-image" style="background-image: url(${agent.image})"></div>
+        <div class="agent-info">
+            <div class="agent-name">${agent.name}</div>
+            <div class="agent-description">${agent.description}</div>
+            <div style="display: flex; margin-top: 15px;">
+                <button class="nav-button chat-btn">Chat</button>
+                <button class="deploy-telegram">Telegram</button>
+            </div>
+        </div>
+    `;
+
+    // Add event listeners after creating the HTML
+    const chatBtn = card.querySelector('.chat-btn');
+    const deployBtn = card.querySelector('.deploy-telegram');
+
+    chatBtn.addEventListener('click', () => openChat(agent));
+    deployBtn.addEventListener('click', () => openDeployModal(agent));
+
+    return card;
+}
+
+function openDeployModal(bot) {
+    currentDeployBot = bot;
+    document.getElementById('deployModal').style.display = 'block';
+    document.getElementById('botToken').value = '';
+}
+
+function closeDeployModal() {
+    const modal = document.getElementById('deployModal');
+    const tokenInput = document.getElementById('botToken');
+    const validationMessage = document.getElementById('tokenValidation');
+    
+    modal.style.display = 'none';
+    tokenInput.value = '';
+    validationMessage.style.display = 'none';
+    tokenInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+    currentDeployBot = null;
+}
+
+function validateBotToken(token) {
+    // Basic validation for Telegram bot token format
+    const tokenRegex = /^\d+:[\w-]{35,}$/;
+    return tokenRegex.test(token);
+}
+
+function deployBot() {
+    const tokenInput = document.getElementById('botToken');
+    const validationMessage = document.getElementById('tokenValidation');
+    const token = tokenInput.value.trim();
+
+    // Validate token
+    if (!validateBotToken(token)) {
+        validationMessage.style.display = 'block';
+        tokenInput.style.borderColor = '#ff4444';
+        return;
+    }
+
+    // Reset validation styling
+    validationMessage.style.display = 'none';
+    tokenInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+    
+    // Here you would make the API call to your backend
+    alert(`Deploying bot to Telegram...`);
+    
+    // Simulate deployment success
+    setTimeout(() => {
+        alert('Bot successfully deployed to Telegram!');
+        closeDeployModal();
+    }, 2000);
+}
+
+// Update your createAgentCard function to include the Telegram button
+function createAgentCard(agent) {
+    const card = document.createElement('div');
+    card.className = 'agent-card';
+    card.innerHTML = `
+        <div class="agent-image" style="background-image: url(${agent.image})"></div>
+        <div class="agent-info">
+            <div class="agent-name">${agent.name}</div>
+            <div class="agent-description">${agent.description}</div>
+            <div style="display: flex; margin-top: 15px;">
+                <button onclick="openChat(${JSON.stringify(agent)})" class="nav-button">Chat</button>
+                <button onclick="openDeployModal(${JSON.stringify(agent)})" class="deploy-telegram">Telegram</button>
+            </div>
+        </div>
+    `;
+    return card;
+}
+
+// Update window.onclick to handle clicking outside the deploy modal
+window.onclick = function(event) {
+    const deployModal = document.getElementById('deployModal');
+    const faqModal = document.getElementById('faqModal');
+    
+    if (event.target === deployModal) {
+        closeDeployModal();
+    }
+    if (event.target === faqModal) {
+        closeFAQ();
+    }
+}
 
         function openChat(agent) {
             currentAgent = agent;
@@ -1176,6 +1342,42 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="terminal">
             <div id="terminal-text"></div>
+        </div>
+    </div>
+</div>
+
+<div id="deployModal" class="deploy-modal">
+    <div class="deploy-modal-content">
+        <h2 style="color: white; margin-bottom: 15px;">Deploy Bot to Telegram</h2>
+        
+        <!-- Step by step instructions -->
+        <div style="color: #94a3b8; margin-bottom: 20px;">
+            <p style="color: #4facfe; margin-bottom: 10px;">How to get your Bot Token:</p>
+            <ol style="margin-left: 20px; line-height: 1.6">
+                <li>Open Telegram and search for "@BotFather"</li>
+                <li>Send "/newbot" to BotFather</li>
+                <li>Follow instructions to create your bot</li>
+                <li>Copy the API token BotFather gives you</li>
+            </ol>
+        </div>
+
+        <!-- Token input -->
+        <div style="margin-bottom: 20px;">
+            <label for="botToken" style="color: #94a3b8; display: block; margin-bottom: 8px;">Enter your Bot Token:</label>
+            <input 
+                type="text" 
+                id="botToken" 
+                class="bot-token-input" 
+                placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
+                autocomplete="off"
+                spellcheck="false"
+            >
+            <p id="tokenValidation" style="color: #ff4444; font-size: 0.9rem; margin-top: 5px; display: none;">Please enter a valid bot token</p>
+        </div>
+
+        <div class="deploy-buttons">
+            <button onclick="closeDeployModal()" class="nav-button">Cancel</button>
+            <button onclick="deployBot()" class="deploy-telegram">Deploy Bot</button>
         </div>
     </div>
 </div>
