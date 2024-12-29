@@ -957,7 +957,7 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
     }
 }
 
-        function createAgentCard(agent) {
+function createAgentCard(agent) {
     const card = document.createElement('div');
     card.className = 'agent-card';
     card.innerHTML = `
@@ -979,7 +979,9 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
     chatBtn.addEventListener('click', () => openChat(agent));
     deployBtn.addEventListener('click', () => openDeployModal(agent));
 
+    // Remove the card.onclick handler
     return card;
+}   return card;
 }
 
 function openDeployModal(bot) {
