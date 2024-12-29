@@ -336,30 +336,37 @@
     cursor: not-allowed;
 }
 
-    .modal-content {
-        position: relative;
-        width: 90%;
-        max-width: 800px;
-        margin: 50px auto;
-        background-color: #0f1116;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        overflow: hidden;
-    }
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #0f1116;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
 
-    .terminal {
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 20px;
-        height: 70vh;
-        overflow-y: auto;
-        font-family: 'Consolas', monospace;
-        line-height: 1.6;
-    }
+.terminal {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    height: 70vh;
+    overflow-y: auto;
+    font-family: 'Consolas', monospace;
+    line-height: 1.6;
+}
 
     #terminal-text {
-        color: #e0e0e0;
-        font-size: 0.95rem;
-    }
+    color: #00f2fe;  /* Changed from #e0e0e0 */
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.terminal-title {
+    color: #00f2fe;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
 
     .cursor {
         display: inline-block;
@@ -1103,15 +1110,22 @@ function closeFAQ() {
 
 function typeWriter(text, index = 0) {
     const terminalText = document.getElementById('terminal-text');
+    const lines = text.split('\n');
     
-    if (index < text.length) {
-        if (text[index] === '\n') {
-            terminalText.innerHTML += '<br>';
-        } else {
-            terminalText.innerHTML += text[index];
+    if (index < lines.length) {
+        // Add special formatting for headers and questions
+        let line = lines[index];
+        if (line.endsWith(':')) {
+            line = `<span style="color: #00f2fe; font-weight: bold;">${line}</span>`;
+        } else if (line.startsWith('Q:')) {
+            line = `<span style="color: #4facfe">${line}</span>`;
+        } else if (line.startsWith('A:')) {
+            line = `<span style="color: #ffffff">${line}</span>`;
         }
+        
+        terminalText.innerHTML += line + '<br>';
         terminalText.scrollTop = terminalText.scrollHeight;
-        setTimeout(() => typeWriter(text, index + 1), 20);
+        setTimeout(() => typeWriter(text, index + 1), 30);
     } else {
         terminalText.innerHTML += '<span class="cursor"></span>';
     }
@@ -1155,7 +1169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <div id="faqModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <div class="terminal-title">WebDevGF FAQ</div>
+            <div class="terminal-title">💫 WebDevGF's AI Friends 💫</div>
             <span class="close-btn" onclick="closeFAQ()">&times;</span>
         </div>
         <div class="terminal">
