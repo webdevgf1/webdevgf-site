@@ -14,11 +14,42 @@ const redis = createClient({
 
 redis.on('error', (err) => console.error('Redis Client Error:', err));
 
+async function sendTelegramMessage(token, chatId, text) {
+    try {
+        console.log('Starting sendTelegramMessage...');
+        console.log(`Parameters - chatId: ${chatId}, text length: ${text.length}`);
+
+        const url = `https://api.telegram.org/bot${token}/sendMessage`;
+        console.log('Request URL:', url);
+
+        const body = JSON.stringify({
+            chat_id: chatId,
+            text: text
+        });
+        console.log('Request body:', body);
+
+        console.log('Making fetch request...');
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: body
+        });
+        
+        console.log('Fetch response status:', response.status);
+        const result = await response.json();
+        console.log('API Response:', JSON.stringify(result, null, 2));
+
+        return result;
+    } catch (error) {
+        console.error('Error in sendTelegramMessage:', error);
+        throw error;
+    }
+}
+
 export default async function handler(req, res) {
     console.log('Webhook received with message:', req.body?.message?.text);
-
-    // Always respond OK to Telegram first
-    res.status(200).json({ ok: true });
 
     try {
         const update = req.body;
@@ -27,7 +58,7 @@ export default async function handler(req, res) {
 
         if (!chatId || !messageText) {
             console.log('Invalid update:', update);
-            return;
+            return res.status(400).json({ error: 'Invalid update' });
         }
 
         // Get bot token from URL
@@ -35,19 +66,27 @@ export default async function handler(req, res) {
         const token = urlParts[urlParts.length - 1];
         console.log('Processing message for chat ID:', chatId);
 
-        // Send initial response
-        await sendTelegramMessage(token, chatId, "Processing your message...");
+        // Send test message first
+        console.log('Sending test message...');
+        await sendTelegramMessage(token, chatId, "Test message before processing...");
+        
+        // Send response to Telegram after initial message
+        res.status(200).json({ ok: true });
 
-        // Get bot config from Redis
-        if (!redis.isOpen) {
-            await redis.connect();
-        }
-
-        const botConfig = await redis.get(`bot:${token}`);
-        const config = botConfig ? JSON.parse(botConfig) : null;
-        console.log('Bot config:', config);
-
+        // Continue with regular processing...
         try {
+            await sendTelegramMessage(token, chatId, "Processing your message...");
+            console.log('Initial message sent successfully');
+
+            // Get bot config from Redis
+            if (!redis.isOpen) {
+                await redis.connect();
+            }
+
+            const botConfig = await redis.get(`bot:${token}`);
+            const config = botConfig ? JSON.parse(botConfig) : null;
+            console.log('Bot config:', config);
+
             // Make Claude API request
             const response = await fetch('https://api.anthropic.com/v1/messages', {
                 method: 'POST',
@@ -68,48 +107,25 @@ export default async function handler(req, res) {
             });
 
             const data = await response.json();
+            console.log('Claude response:', data);
             
             if (data.content?.[0]?.text) {
                 await sendTelegramMessage(token, chatId, data.content[0].text);
+                console.log('Final response sent');
             } else {
                 throw new Error('Invalid Claude API response');
             }
         } catch (error) {
-            console.error('Error processing message:', error);
+            console.error('Processing error:', error);
             await sendTelegramMessage(token, chatId, "Sorry, I encountered an error. Please try again.");
         }
 
     } catch (error) {
         console.error('Main handler error:', error);
+        res.status(500).json({ error: 'Internal server error' });
     } finally {
         if (redis.isOpen) {
             await redis.disconnect();
         }
-    }
-}
-
-async function sendTelegramMessage(token, chatId, text) {
-    try {
-        console.log('Sending message to chat ID:', chatId);
-        const response = await fetch(
-            `https://api.telegram.org/bot${token}/sendMessage`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: text
-                })
-            }
-        );
-        
-        const result = await response.json();
-        console.log('Telegram API response:', result);
-        return result;
-    } catch (error) {
-        console.error('Error sending message:', error);
-        throw error;
     }
 }
