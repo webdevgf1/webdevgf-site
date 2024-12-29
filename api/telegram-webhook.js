@@ -2,16 +2,28 @@ import { Telegraf } from 'telegraf';
 import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
-    console.log('Received webhook request:', req.method, req.url);
-    
+    // Handle CORS
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
+
     if (req.method !== 'POST') {
-        return res.status(405).end();
+        console.log(`Received ${req.method} request instead of POST`);
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
+        console.log('Received webhook request');
         const update = req.body;
-        console.log('Received update:', JSON.stringify(update, null, 2));
         
+        // Validate update object
         if (!update || !update.message || !update.message.text) {
             console.log('Invalid update object, skipping');
             return res.status(200).end();
@@ -20,24 +32,22 @@ export default async function handler(req, res) {
         // Get bot token from the webhook URL
         const urlParts = req.url.split('/');
         const token = urlParts[urlParts.length - 1];
-        console.log('Extracted token from URL:', token.slice(0, 10) + '...');
+        console.log('Processing message for bot:', token.slice(0, 10) + '...');
 
         // Get bot config from KV storage
         const botConfig = await kv.get(`bot:${token}`);
-        console.log('Retrieved bot config:', botConfig ? 'Found' : 'Not found');
         
         if (!botConfig) {
-            console.error('Bot configuration not found for token:', token.slice(0, 10) + '...');
+            console.error('Bot configuration not found');
             return res.status(400).json({ error: 'Bot not configured' });
         }
 
         const bot = new Telegraf(token);
 
-        try {
-            console.log('Sending typing action...');
-            await bot.telegram.sendChatAction(update.message.chat.id, 'typing');
+        // Send typing action
+        await bot.telegram.sendChatAction(update.message.chat.id, 'typing');
 
-            console.log('Making request to Anthropic API...');
+        try {
             const response = await fetch('https://api.anthropic.com/v1/messages', {
                 method: 'POST',
                 headers: {
@@ -57,20 +67,15 @@ export default async function handler(req, res) {
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Anthropic API error:', response.status, errorText);
                 throw new Error(`Anthropic API error: ${response.status}`);
             }
 
             const data = await response.json();
-            console.log('Received response from Anthropic:', data ? 'Success' : 'Empty response');
             
             if (data.content && data.content[0] && data.content[0].text) {
-                console.log('Sending message back to user...');
                 await bot.telegram.sendMessage(update.message.chat.id, data.content[0].text, {
                     parse_mode: 'Markdown'
                 });
-                console.log('Message sent successfully');
             } else {
                 throw new Error('Invalid response format from Anthropic API');
             }
@@ -82,9 +87,9 @@ export default async function handler(req, res) {
             );
         }
 
-        res.status(200).end();
+        return res.status(200).json({ ok: true });
     } catch (error) {
         console.error('Webhook error:', error);
-        res.status(500).json({ error: 'Webhook processing failed' });
+        return res.status(500).json({ error: 'Webhook processing failed' });
     }
 }
