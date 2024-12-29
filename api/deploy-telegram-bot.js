@@ -17,7 +17,7 @@ export default async function handler(req, res) {
             console.log('Deleting existing webhook...');
             await fetch(`https://api.telegram.org/bot${token}/deleteWebhook`);
 
-            // Construct webhook URL
+            // Construct webhook URL - ensuring we use the non-www domain
             const webhookUrl = `https://webdevgf.xyz/api/telegram-webhook/${token}`;
             console.log('Setting webhook to:', webhookUrl);
 
@@ -32,7 +32,8 @@ export default async function handler(req, res) {
                     body: JSON.stringify({
                         url: webhookUrl,
                         allowed_updates: ['message'],
-                        drop_pending_updates: true
+                        drop_pending_updates: true,
+                        max_connections: 100
                     })
                 }
             );
