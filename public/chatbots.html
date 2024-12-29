@@ -1369,19 +1369,11 @@ window.onclick = function(event) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize base agents
+    // Initialize base agents and custom agents
     initializeAgents();
     
     // Initialize the creator functionality
     initializeCreator();
-    
-    // Load custom agents from localStorage
-    const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
-    customAgents.forEach(agent => {
-        agents.push(agent);
-        const grid = document.getElementById('agentsGrid');
-        grid.appendChild(createAgentCard(agent));
-    });
     
     // Your existing input handler
     const userInput = document.getElementById('userInput');
