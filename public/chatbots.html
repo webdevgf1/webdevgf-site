@@ -965,21 +965,9 @@ function createAgentCard(agent) {
         <div class="agent-info">
             <div class="agent-name">${agent.name}</div>
             <div class="agent-description">${agent.description}</div>
-            <div style="display: flex; margin-top: 15px;">
-                <button class="nav-button chat-btn">Chat</button>
-                <button class="deploy-telegram">Telegram</button>
-            </div>
         </div>
     `;
-
-    // Add event listeners after creating the HTML
-    const chatBtn = card.querySelector('.chat-btn');
-    const deployBtn = card.querySelector('.deploy-telegram');
-
-    chatBtn.addEventListener('click', () => openChat(agent));
-    deployBtn.addEventListener('click', () => openDeployModal(agent));
-
-    // Remove the card.onclick handler
+    card.addEventListener('click', () => openChat(agent));
     return card;
 }
 
@@ -1035,25 +1023,25 @@ function deployBot() {
 
 // Update window.onclick to handle clicking outside the deploy modal
 window.onclick = function(event) {
-    const deployModal = document.getElementById('deployModal');
-    const faqModal = document.getElementById('faqModal');
     const chatModal = document.getElementById('chatModal');
-    const pumpModal = document.getElementById('pumpModal');
-    const subdomainModal = document.getElementById('subdomainModal');
+    const faqModal = document.getElementById('faqModal');
     
-    if (event.target === deployModal) {
-        closeDeployModal();
+    // Main modal handlers
+    if (event.target === chatModal) {
+        closeChat();
     }
     if (event.target === faqModal) {
         closeFAQ();
     }
-    if (event.target === chatModal) {
-        closeChat();
+    
+    // Deployment modal handlers
+    if (event.target === document.getElementById('deployModal')) {
+        closeDeployModal();
     }
-    if (event.target === pumpModal) {
+    if (event.target === document.getElementById('pumpModal')) {
         closePumpModal();
     }
-    if (event.target === subdomainModal) {
+    if (event.target === document.getElementById('subdomainModal')) {
         closeSubdomainModal();
     }
 }
