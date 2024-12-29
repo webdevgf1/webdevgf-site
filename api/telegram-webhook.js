@@ -1,71 +1,43 @@
 export default async function handler(req, res) {
-    console.log('1. Webhook received');
+    console.log('Webhook received');
     
     try {
         const chatId = req.body?.message?.chat?.id;
-        const messageText = req.body?.message?.text;
         const urlParts = req.url.split('/');
         const token = urlParts[urlParts.length - 1];
         
-        console.log('2. Message details:', { chatId, messageText });
+        // Log initial details
+        console.log('Chat ID:', chatId);
+        console.log('Token:', token);
         
         // Respond to Telegram immediately
         res.status(200).json({ ok: true });
-        console.log('3. Sent 200 response');
 
-        console.log('4. Attempting to send acknowledgment...');
+        console.log('Making telegram request...');
         
-        // Create AbortController for timeout
-        const controller = new AbortController();
-        const timeout = setTimeout(() => {
-            controller.abort();
-        }, 5000); // 5 second timeout
-
-        try {
-            console.log('4.1 Making fetch request...');
-            const response = await fetch(
-                'https://api.telegram.org/bot' + token + '/sendMessage',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: "Test message with timeout"
-                    }),
-                    signal: controller.signal
-                }
-            );
-            console.log('4.2 Got response:', response.status);
-            
-            const data = await response.json();
-            console.log('5. Telegram response:', data);
-            
-            if (!data.ok) {
-                throw new Error('Telegram API error: ' + JSON.stringify(data));
+        const response = await fetch(
+            'https://api.telegram.org/bot' + token + '/sendMessage',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: 'Simple test message'
+                })
             }
-            
-            console.log('6. Successfully sent acknowledgment');
+        );
 
-        } catch (error) {
-            console.error('7. Error sending message:', {
-                name: error.name,
-                message: error.message,
-                type: error.type,
-                stack: error.stack
-            });
-            throw error;
-        } finally {
-            clearTimeout(timeout);
+        const data = await response.json();
+        console.log('Telegram response:', data);
+
+        if (!data.ok) {
+            throw new Error('Telegram API error: ' + JSON.stringify(data));
         }
 
     } catch (error) {
-        console.error('8. Main handler error:', {
-            name: error.name,
-            message: error.message,
-            type: error.type,
-            stack: error.stack
-        });
+        console.error('Error:', error.message);
+        console.error('Full error:', error);
     }
 }
