@@ -1116,7 +1116,6 @@ function typeWriter(text, index = 0) {
     const lines = text.split('\n');
     
     if (index < lines.length) {
-        // Add special formatting for headers and questions
         let line = lines[index];
         if (line.endsWith(':')) {
             line = `<span style="color: #00f2fe; font-weight: bold;">${line}</span>`;
@@ -1128,7 +1127,8 @@ function typeWriter(text, index = 0) {
         
         terminalText.innerHTML += line + '<br>';
         terminalText.scrollTop = terminalText.scrollHeight;
-        setTimeout(() => typeWriter(text, index + 1), 30);
+        // Changed from 30 to 50 for slower typing
+        setTimeout(() => typeWriter(text, index + 1), 50);
     } else {
         terminalText.innerHTML += '<span class="cursor"></span>';
     }
@@ -1173,7 +1173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="modal-content">
         <div class="modal-header">
             <div class="terminal-title">💫 WebDevGF's AI Friends 💫</div>
-            <span class="close-btn" onclick="closeFAQ()">&times;</span>
         </div>
         <div class="terminal">
             <div id="terminal-text"></div>
