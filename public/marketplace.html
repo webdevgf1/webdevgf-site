@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDevGF Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67696881b30e84ee2141be37_WEBDEVS4%20(1).gif">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #0f1116;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(15, 17, 22, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-image {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
+        .main-content {
+            padding: 6rem 2rem 2rem;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .coming-soon-banner {
+            background: linear-gradient(45deg, rgba(0, 242, 254, 0.1), rgba(79, 172, 254, 0.1));
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .banner-title {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .banner-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .filters-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .filter-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .agent-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 242, 254, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.1);
+        }
+
+        .agent-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .agent-info {
+            padding: 1rem;
+        }
+
+        .agent-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .price-value {
+            color: #00f2fe;
+            font-weight: 500;
+        }
+
+        .category-tag {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="logo-container">
+            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6768273b2880b4fc11dedc2f_d4574ad42c38352f9955890764d453f2-removebg-preview.png" alt="Logo" class="logo-image">
+            <div class="logo">WebDevGF Marketplace</div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search AI agents...">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+        </div>
+
+        <div class="nav-links">
+            <a href="https://x.com/webdevgf" target="_blank" class="nav-button">Twitter/X</a>
+    <a href="https://pump.fun" target="_blank" class="nav-button">pump.fun</a>
+    <a href="/chatbots.html" class="nav-button">Chat Bots</a>
+    <a href="/index.html" class="nav-button">Home</a>
+        </div>
+    </nav>
+
+    <!-- Marketplace Header -->
+    <div class="hero-banner">
+        <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67714b2a2ad8d02fcdb129d2_marketplace.png" 
+             alt="WebDevGF Marketplace Banner" 
+             class="banner-image">
+    </div>
+<div class="activity-feed">
+    <!-- Activity feed content -->
+</div>
+
+    <main class="main-content">
+        <div class="coming-soon-banner">
+            <h1 class="banner-title">Marketplace Coming Soon!</h1>
+            <p class="banner-subtitle">The future of AI agent trading is almost here. Stay tuned for the launch!</p>
+        </div>
+
+        <div class="filters-row">
+            <div style="display: flex; gap: 1rem;">
+                <button class="filter-button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                    </svg>
+                    Filters
+                </button>
+                <button class="filter-button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6h18M3 12h18M3 18h18"/>
+                    </svg>
+                    Sort by
+                </button>
+                <button class="filter-button">Price: High to Low</button>
+                <button class="filter-button">Recently Added</button>
+                <button class="filter-button">Most Popular</button>
+                <button class="filter-button">Verified Only</button>
+                <button class="filter-button">👑 Marketcap Leaders</button>
+            </div>
+        </div>
+
+        <div class="agents-grid">
+            <!-- Sample Agent Cards -->
+            <div class="agent-card">
+                <div style="position: relative;">
+                    <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67714fc429f082f1f5fdccb9_u1867889465_coding_ai_anime_style_--v_6.1_01498d0c-81cf-4221-9c82-cfaa3951829d_3.png" alt="AI Agent" class="agent-image">
+                    <span class="category-tag">Development</span>
+                </div>
+                <div class="agent-info">
+                    <div class="agent-name">CodeAssist Pro</div>
+                    <div class="agent-price">
+                        <span>Mcap: $700,350</span>
+                        <span class="price-value">5,200,000 $WEBDEVGF</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div style="position: relative;">
+                    <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67714fc574ad9665aeff09d1_u1867889465_design_ai_anime_style_painter_--v_6.1_bbbd3f24-807c-44cb-8e36-0a68a38e023d_1.png" alt="AI Agent" class="agent-image">
+                    <span class="category-tag">Design</span>
+                </div>
+                <div class="agent-info">
+                    <div class="agent-name">DesignGPT</div>
+                    <div class="agent-price">
+                        <span>Mcap: $1.4m</span>
+                        <span class="price-value">15,400,000 $WEBDEVGF</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div style="position: relative;">
+                    <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67714fc46c239d960d5b73a8_u1867889465_teacher_ai_agent_anime_style_--v_6.1_87f19060-016d-4c5c-aa5d-78c743cb98ba_1.png" alt="AI Agent" class="agent-image">
+                    <span class="category-tag">Education</span>
+                </div>
+                <div class="agent-info">
+                    <div class="agent-name">AITutor</div>
+                    <div class="agent-price">
+                        <span>Mcap: $34,041</span>
+                        <span class="price-value">1840 $WEBDEVGF</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div style="position: relative;">
+                    <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67714fec6066f0c99fbb7563_u1867889465_data_analyst_ai_agent_anime_style_--v_6.1_e3b73cd5-ba1f-4e91-9700-44d88b3f7720_1.png" alt="AI Agent" class="agent-image">
+                    <span class="category-tag">Analytics</span>
+                </div>
+                <div class="agent-info">
+                    <div class="agent-name">DataAnalyst AI</div>
+                    <div class="agent-price">
+                        <span>Mcap: $91,301</span>
+                        <span class="price-value">1500 $WEBDEVGF</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">Copyright © 2024 webdevgf</div>
+            <div class="footer-middle">CA: TBA</div>
+            <div class="footer-links">
+                <a href="https://x.com/webdevgf" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                    </svg>
+                </a>
+                <a href="https://t.me" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21.5 2L2 11l8 3M21.5 2L18 22l-6.5-8M21.5 2L10 14"/>
+                    </svg>
+                </a>
+                <a href="https://webdevgf.gitbook.io/webdevgf" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </a>
+                <a href="https://dexscreener.com/" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/>
+                        <path d="M18 17V9"/>
+                        <path d="M13 17V5"/>
+                        <path d="M8 17v-3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add hover effect to agent cards
+        document.querySelectorAll('.agent-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+                card.style.borderColor = 'rgba(0, 242, 254, 0.5)';
+                card.style.boxShadow = '0 4px 20px rgba(0, 242, 254, 0.1)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                card.style.boxShadow = 'none';
+            });
+        });
+
+        // Filter button click effect
+        document.querySelectorAll('.filter-button').forEach(button => {
+            button.addEventListener('click', () => {
+                button.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                setTimeout(() => {
+                    button.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                }, 200);
+            });
+        });
+
+        // Search input focus effect
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('focus', () => {
+            searchInput.style.borderColor = 'rgba(0, 242, 254, 0.5)';
+            searchInput.style.boxShadow = '0 0 10px rgba(0, 242, 254, 0.1)';
+        });
+
+        searchInput.addEventListener('blur', () => {
+            searchInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            searchInput.style.boxShadow = 'none';
+        });
+    </script>
+</body>
+</html>
