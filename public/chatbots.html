@@ -821,19 +821,22 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
         function initializeAgents() {
     const grid = document.getElementById('agentsGrid');
     
-    // Add the Headers
+    // Clear the grid first
+    grid.innerHTML = '';
+    
+    // Add WebDevGF's Agents header
     const presetHeader = document.createElement('div');
     presetHeader.className = 'section-header';
     presetHeader.textContent = 'WebDevGF\'s Agents';
     grid.appendChild(presetHeader);
 
-    // Add preset agents
+    // Add first 10 preset agents
     agents.slice(0, 10).forEach(agent => {
         const card = createAgentCard(agent);
         grid.appendChild(card);
     });
 
-    // Add Custom Agents header
+    // Add Your Agents header
     const customHeader = document.createElement('div');
     customHeader.className = 'section-header';
     customHeader.textContent = 'Your Agents';
@@ -841,11 +844,21 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
     
     // Load custom agents from localStorage
     const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
-    customAgents.forEach(agent => {
-        agents.push(agent);
-        const grid = document.getElementById('agentsGrid');
-        grid.appendChild(createAgentCard(agent));
-    });
+    if (customAgents.length > 0) {
+        customAgents.forEach(agent => {
+            const card = createAgentCard(agent);
+            grid.appendChild(card);
+        });
+    } else {
+        // Show empty message if no custom agents
+        const emptyMessage = document.createElement('div');
+        emptyMessage.style.gridColumn = '1 / -1';
+        emptyMessage.style.textAlign = 'center';
+        emptyMessage.style.color = 'rgba(255, 255, 255, 0.6)';
+        emptyMessage.style.padding = '2rem';
+        emptyMessage.textContent = 'Create your own agents using the button below!';
+        grid.appendChild(emptyMessage);
+    }
 }
 
         function createAgentCard(agent) {
