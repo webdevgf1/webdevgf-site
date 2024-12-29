@@ -17,8 +17,8 @@ export default async function handler(req, res) {
             console.log('Deleting existing webhook...');
             await fetch(`https://api.telegram.org/bot${token}/deleteWebhook`);
 
-            // Construct webhook URL - ensuring we use the non-www domain
-            const webhookUrl = `https://webdevgf.xyz/api/telegram-webhook/${token}`;
+            // Construct webhook URL using www subdomain
+            const webhookUrl = `https://www.webdevgf.xyz/api/telegram-webhook/${token}`;
             console.log('Setting webhook to:', webhookUrl);
 
             // Set webhook directly using Telegram API
