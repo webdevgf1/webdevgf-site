@@ -1,3 +1,5 @@
+import https from 'https';
+
 export default async function handler(req, res) {
     console.log('1. Webhook received');
     
@@ -6,25 +8,53 @@ export default async function handler(req, res) {
         const urlParts = req.url.split('/');
         const token = urlParts[urlParts.length - 1];
         
-        // Log initial details
         console.log('2. Processing message for:', { chatId, token });
         
         // Respond to Telegram immediately
         res.status(200).json({ ok: true });
         console.log('3. Sent 200 response');
 
-        // Use URL method that worked in browser
-        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=Test message via URL`;
-        console.log('4. Making request to URL:', url);
-        
-        const response = await fetch(url);
-        console.log('5. Got response status:', response.status);
+        // Make HTTP request using native https module
+        await new Promise((resolve, reject) => {
+            const encodedText = encodeURIComponent('Test message via HTTPS');
+            const path = `/bot${token}/sendMessage?chat_id=${chatId}&text=${encodedText}`;
+            
+            console.log('4. Making HTTPS request to api.telegram.org');
+            
+            const options = {
+                hostname: 'api.telegram.org',
+                port: 443,
+                path: path,
+                method: 'GET'
+            };
 
-        const data = await response.json();
-        console.log('6. Response data:', data);
+            const request = https.request(options, (response) => {
+                console.log('5. Got response code:', response.statusCode);
+                
+                let data = '';
+                response.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                response.on('end', () => {
+                    console.log('6. Response data:', data);
+                    resolve(data);
+                });
+            });
+
+            request.on('error', (error) => {
+                console.error('7. Request error:', error);
+                reject(error);
+            });
+
+            console.log('8. Ending request');
+            request.end();
+        });
+
+        console.log('9. Request completed');
 
     } catch (error) {
-        console.error('Error:', error.message);
+        console.error('10. Error:', error.message);
         console.error('Full error:', error);
     }
 }
