@@ -261,6 +261,100 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .deploy-pump {
+    background: #FF6B6B;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
+
+.deploy-pump:hover {
+    background: #FF5252;
+    transform: translateY(-1px);
+}
+
+.deploy-subdomain {
+    background: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
+
+.deploy-subdomain:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+}
+
+/* Modal styles for pump.fun */
+.pump-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.pump-terminal {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #00f2fe;
+    font-family: 'Consolas', monospace;
+    padding: 20px;
+    border-radius: 8px;
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+/* Modal styles for subdomain */
+.subdomain-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.subdomain-input {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.subdomain-label {
+    display: block;
+    margin-bottom: 10px;
+    color: #94a3b8;
+}
+
+.domain-suffix {
+    color: #00f2fe;
+    margin-left: 8px;
+}
+
         .input-container {
             position: relative;
             padding: 1rem;
@@ -969,11 +1063,17 @@ function openChat(agent) {
     document.getElementById('currentAgentName').textContent = agent.name;
     document.getElementById('chatHistory').innerHTML = '';
     
-    // Update chat header to include Telegram button for custom agents
+    // Updated chat header with new deployment buttons
     const chatHeader = document.querySelector('.chat-header');
     chatHeader.innerHTML = `
         <div class="agent-name" id="currentAgentName">${agent.name}</div>
-        ${agent.id > 10 ? `<button class="deploy-telegram" onclick="openDeployModal(currentAgent)">Deploy to Telegram</button>` : ''}
+        <div class="deploy-buttons">
+            ${agent.id > 10 ? `
+                <button class="deploy-telegram" onclick="openDeployModal(currentAgent)">Deploy to Telegram</button>
+                <button class="deploy-pump" onclick="openPumpModal(currentAgent)">Deploy to pump.fun</button>
+                <button class="deploy-subdomain" onclick="openSubdomainModal(currentAgent)">Deploy to Subdomain</button>
+            ` : ''}
+        </div>
         <button class="close-button" onclick="closeChat()">&times;</button>
     `;
     
@@ -981,44 +1081,60 @@ function openChat(agent) {
     appendMessage('ai-message', `Hey, I'm ${agent.name}. What's on your mind?`);
 }
 
-        function closeChat() {
-            document.getElementById('chatModal').style.display = 'none';
-            currentAgent = null;
-        }
+// Add new modal opening functions
+function openPumpModal(bot) {
+    currentDeployBot = bot;
+    document.getElementById('pumpModal').style.display = 'block';
+    // Auto-fill the terminal with bot information
+    const terminalText = document.getElementById('pump-terminal-text');
+    const botInfo = `> Initializing deployment to pump.fun...
+> Bot Name: ${bot.name}
+> Description: ${bot.description}
+> System Prompt: ${bot.systemPrompt}
+> Generating deployment configuration...
+`;
+    typeWriterEffect(terminalText, botInfo);
+}
 
-        function resizeImage(dataUrl, targetWidth, targetHeight) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = targetWidth;
-            canvas.height = targetHeight;
-            const ctx = canvas.getContext('2d');
-            
-            // Fill background with the theme color
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Calculate dimensions to maintain aspect ratio
-            const scale = Math.min(targetWidth / img.width, targetHeight / img.height);
-            const scaledWidth = img.width * scale;
-            const scaledHeight = img.height * scale;
-            
-            // Center the image
-            const x = (targetWidth - scaledWidth) / 2;
-            const y = (targetHeight - scaledHeight) / 2;
-            
-            // Enable pixel-perfect rendering for pixel art
-            ctx.imageSmoothingEnabled = false;
-            
-            // Draw the image
-            ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
-            
-            resolve(canvas.toDataURL('image/png'));
-        };
-        img.onerror = reject;
-        img.src = dataUrl;
-    });
+function openSubdomainModal(bot) {
+    currentDeployBot = bot;
+    document.getElementById('subdomainModal').style.display = 'block';
+}
+
+// Add closing functions for new modals
+function closePumpModal() {
+    document.getElementById('pumpModal').style.display = 'none';
+    currentDeployBot = null;
+}
+
+function closeSubdomainModal() {
+    document.getElementById('subdomainModal').style.display = 'none';
+    document.getElementById('subdomainInput').value = '';
+    currentDeployBot = null;
+}
+
+// Add typing effect for the pump.fun terminal
+function typeWriterEffect(element, text, index = 0) {
+    if (index < text.length) {
+        element.innerHTML += text.charAt(index);
+        element.scrollTop = element.scrollHeight;
+        setTimeout(() => typeWriterEffect(element, text, index + 1), 20);
+    } else {
+        element.innerHTML += '<span class="cursor"></span>';
+    }
+}
+
+// Add subdomain deployment function
+function deployToSubdomain() {
+    const subdomain = document.getElementById('subdomainInput').value.trim();
+    if (!subdomain) {
+        alert('Please enter a subdomain');
+        return;
+    }
+    
+    // Here you would handle the actual deployment
+    alert(`Deploying ${currentDeployBot.name} to ${subdomain}.webdevgf.xyz`);
+    closeSubdomainModal();
 }
 
         function appendMessage(className, text) {
@@ -1394,6 +1510,37 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="terminal">
             <div id="terminal-text"></div>
+        </div>
+    </div>
+</div>
+
+<div id="pumpModal" class="pump-modal">
+    <div class="deploy-modal-content">
+        <h2 style="color: white; margin-bottom: 15px;">Deploy to pump.fun</h2>
+        <div class="pump-terminal" id="pump-terminal-text"></div>
+        <div class="deploy-buttons">
+            <button onclick="closePumpModal()" class="nav-button">Cancel</button>
+            <button class="deploy-pump">Deploy</button>
+        </div>
+    </div>
+</div>
+
+<div id="subdomainModal" class="subdomain-modal">
+    <div class="deploy-modal-content">
+        <h2 style="color: white; margin-bottom: 15px;">Deploy to Subdomain</h2>
+        <div style="margin-bottom: 20px;">
+            <label for="subdomainInput" class="subdomain-label">Enter your subdomain:</label>
+            <input 
+                type="text" 
+                id="subdomainInput" 
+                class="subdomain-input" 
+                placeholder="your-subdomain"
+            >
+            <span class="domain-suffix">.webdevgf.xyz</span>
+        </div>
+        <div class="deploy-buttons">
+            <button onclick="closeSubdomainModal()" class="nav-button">Cancel</button>
+            <button onclick="deployToSubdomain()" class="deploy-subdomain">Deploy</button>
         </div>
     </div>
 </div>
