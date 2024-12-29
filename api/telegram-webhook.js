@@ -1,5 +1,3 @@
-import https from 'https';
-
 export default async function handler(req, res) {
     console.log('1. Webhook received');
     
@@ -12,42 +10,44 @@ export default async function handler(req, res) {
         res.status(200).json({ ok: true });
         console.log('2. Sent 200 response');
 
-        const options = {
-            hostname: 'api.telegram.org',
-            path: `/bot${token}/sendMessage?chat_id=${chatId}&text=Test`,
-            method: 'GET',
-            timeout: 5000 // 5 second timeout
-        };
+        // Create AbortController with timeout
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, 5000);
 
-        console.log('3. Making request with options:', options);
-
-        const request = https.request(options);
-
-        request.on('timeout', () => {
-            console.log('4a. Request timed out');
-            request.destroy();
-        });
-
-        request.on('error', (error) => {
-            console.log('4b. Request error:', error.message);
-        });
-
-        request.on('response', (response) => {
-            console.log('4c. Got response:', response.statusCode);
+        try {
+            console.log('3. Starting fetch request');
+            const response = await fetch(
+                `https://api.telegram.org/bot${token}/sendMessage`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: 'Test with AbortController'
+                    }),
+                    signal: controller.signal
+                }
+            );
             
-            response.on('data', (chunk) => {
-                console.log('5. Got data:', chunk.toString());
-            });
+            console.log('4. Got response:', response.status);
+            const data = await response.json();
+            console.log('5. Response data:', data);
 
-            response.on('end', () => {
-                console.log('6. Response complete');
-            });
-        });
-
-        request.end();
-        console.log('7. Request sent');
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                console.log('Request timed out');
+            } else {
+                console.error('Request failed:', error);
+            }
+        } finally {
+            clearTimeout(timeout);
+        }
 
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Main error:', error);
     }
 }
