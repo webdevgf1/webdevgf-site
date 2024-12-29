@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export default async function handler(req, res) {
     console.log('Webhook received');
     
@@ -8,27 +6,38 @@ export default async function handler(req, res) {
         const urlParts = req.url.split('/');
         const token = urlParts[urlParts.length - 1];
         
+        // Log initial details
+        console.log('Chat ID:', chatId);
+        console.log('Token:', token);
+        
         // Respond to Telegram immediately
         res.status(200).json({ ok: true });
 
-        console.log('Sending message attempt 1...');
-        const response = await axios({
-            method: 'post',
-            url: `https://api.telegram.org/bot${token}/sendMessage`,
-            data: {
-                chat_id: chatId,
-                text: 'Test message via axios'
-            },
-            timeout: 5000
-        });
+        console.log('Making telegram request...');
+        
+        const response = await fetch(
+            'https://api.telegram.org/bot' + token + '/sendMessage',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: 'Simple test message'
+                })
+            }
+        );
 
-        console.log('Response from Telegram:', response.data);
+        const data = await response.json();
+        console.log('Telegram response:', data);
+
+        if (!data.ok) {
+            throw new Error('Telegram API error: ' + JSON.stringify(data));
+        }
 
     } catch (error) {
-        console.error('Error details:', {
-            message: error.message,
-            response: error.response?.data,
-            status: error.response?.status
-        });
+        console.error('Error:', error.message);
+        console.error('Full error:', error);
     }
 }
