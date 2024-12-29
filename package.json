@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "telegraf": "^4.12.2",
-    "@vercel/kv": "^0.2.0",
+    "redis": "^4.6.13",
     "node-fetch": "^3.3.0"
   }
 }
