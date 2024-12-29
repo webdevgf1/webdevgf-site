@@ -819,44 +819,12 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
         const API_KEY = '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';
 
         function initializeAgents() {
-    const grid = document.getElementById('agentsGrid');
-    
-    // Add WebDevGF's Agents header
-    const presetHeader = document.createElement('div');
-    presetHeader.className = 'section-header';
-    presetHeader.textContent = 'WebDevGF\'s Agents';
-    grid.appendChild(presetHeader);
-
-    // Add preset agents
-    agents.slice(0, 10).forEach(agent => {
-        const card = createAgentCard(agent);
-        grid.appendChild(card);
-    });
-
-    // Add Your Agents header
-    const customHeader = document.createElement('div');
-    customHeader.className = 'section-header';
-    customHeader.textContent = 'Your Agents';
-    grid.appendChild(customHeader);
-
-    // Load custom agents from localStorage
-    const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
-    if (customAgents.length > 0) {
-        customAgents.forEach(agent => {
-            agents.push(agent);
-            grid.appendChild(createAgentCard(agent));
-        });
-    } else {
-        // If no custom agents, show a message
-        const emptyMessage = document.createElement('div');
-        emptyMessage.style.gridColumn = '1 / -1';
-        emptyMessage.style.textAlign = 'center';
-        emptyMessage.style.color = 'rgba(255, 255, 255, 0.6)';
-        emptyMessage.style.padding = '2rem';
-        emptyMessage.textContent = 'Create your own agents using the button below!';
-        grid.appendChild(emptyMessage);
-    }
-}
+            const grid = document.getElementById('agentsGrid');
+            agents.forEach(agent => {
+                const card = createAgentCard(agent);
+                grid.appendChild(card);
+            });
+        }
 
         function createAgentCard(agent) {
     const card = document.createElement('div');
@@ -1215,8 +1183,9 @@ function deployAgent() {
     // Add to agents array
     agents.push(newAgent);
     
-    // Reinitialize the entire grid
-    initializeAgents();
+    // Create and add the card
+    const grid = document.getElementById('agentsGrid');
+    grid.appendChild(createAgentCard(newAgent));
     
     // Close modal
     closeCreator();
