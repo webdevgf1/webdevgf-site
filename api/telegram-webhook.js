@@ -1,13 +1,13 @@
 import { Telegraf } from 'telegraf';
-import { kv } from '@vercel/kv';
+import { createClient } from 'redis';
+
+// Create Redis client
+const redis = createClient({
+    url: process.env.REDIS_URL
+});
 
 export default async function handler(req, res) {
-    console.log('Webhook received request:', {
-        method: req.method,
-        url: req.url,
-        headers: req.headers,
-        body: req.body
-    });
+    console.log('Webhook received request');
 
     if (req.method !== 'POST') {
         console.log(`Invalid method: ${req.method}`);
@@ -15,6 +15,11 @@ export default async function handler(req, res) {
     }
 
     try {
+        // Connect to Redis
+        if (!redis.isOpen) {
+            await redis.connect();
+        }
+
         const update = req.body;
         console.log('Telegram update:', JSON.stringify(update, null, 2));
         
@@ -28,11 +33,12 @@ export default async function handler(req, res) {
         const token = urlParts[urlParts.length - 1];
         console.log('Bot token from URL:', token);
 
-        // Get bot config
-        const botConfig = await kv.get(`bot:${token}`);
-        console.log('Bot config:', botConfig);
+        // Get bot config from Redis
+        const botConfig = await redis.get(`bot:${token}`);
+        const config = botConfig ? JSON.parse(botConfig) : null;
+        console.log('Bot config:', config);
         
-        if (!botConfig) {
+        if (!config) {
             console.error('Bot config not found for token:', token);
             return res.status(400).json({ error: 'Bot not configured' });
         }
@@ -57,7 +63,7 @@ export default async function handler(req, res) {
                         role: 'user',
                         content: update.message.text
                     }],
-                    system: botConfig.systemPrompt,
+                    system: config.systemPrompt,
                     model: 'claude-3-opus-20240229',
                     max_tokens: 1000
                 })
@@ -91,9 +97,13 @@ export default async function handler(req, res) {
             );
         }
 
+        await redis.disconnect();
         return res.status(200).json({ ok: true });
     } catch (error) {
         console.error('Webhook handler error:', error);
+        if (redis.isOpen) {
+            await redis.disconnect();
+        }
         return res.status(500).json({ error: 'Webhook processing failed: ' + error.message });
     }
 }

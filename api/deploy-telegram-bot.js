@@ -1,9 +1,19 @@
 import { Telegraf } from 'telegraf';
-import { kv } from '@vercel/kv';
+import { createClient } from 'redis';
+
+// Create Redis client
+const redis = createClient({
+    url: process.env.REDIS_URL
+});
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
+            // Connect to Redis
+            if (!redis.isOpen) {
+                await redis.connect();
+            }
+
             const { token, agent, systemPrompt } = req.body;
             console.log('Starting bot deployment...');
 
@@ -45,16 +55,17 @@ export default async function handler(req, res) {
                 throw new Error(`Failed to set webhook: ${webhookResult.description}`);
             }
 
-            // Store bot config in KV storage
-            await kv.set(`bot:${token}`, {
+            // Store bot config in Redis
+            await redis.set(`bot:${token}`, JSON.stringify({
                 agent,
                 systemPrompt,
                 created_at: new Date().toISOString()
-            });
+            }));
 
             // Get webhook info to verify
             const webhookInfo = await fetch(`https://api.telegram.org/bot${token}/getWebhookInfo`).then(r => r.json());
             
+            await redis.disconnect();
             res.status(200).json({ 
                 success: true, 
                 message: 'Bot deployed successfully',
@@ -63,6 +74,9 @@ export default async function handler(req, res) {
             });
         } catch (error) {
             console.error('Bot deployment error:', error);
+            if (redis.isOpen) {
+                await redis.disconnect();
+            }
             res.status(500).json({ error: 'Failed to deploy bot: ' + error.message });
         }
     } else {
