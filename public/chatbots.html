@@ -1444,6 +1444,11 @@ function closeFAQ() {
     modal.style.display = 'none';
 }
 
+function closeChat() {
+    document.getElementById('chatModal').style.display = 'none';
+    currentAgent = null;
+}
+
 function typeWriter(text, index = 0) {
     const terminalText = document.getElementById('terminal-text');
     const lines = text.split('\n');
@@ -1464,14 +1469,6 @@ function typeWriter(text, index = 0) {
         setTimeout(() => typeWriter(text, index + 1), 50);
     } else {
         terminalText.innerHTML += '<span class="cursor"></span>';
-    }
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('faqModal');
-    if (event.target === modal) {
-        closeFAQ();
     }
 }
 
