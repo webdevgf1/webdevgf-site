@@ -1,7 +1,22 @@
 {
   "functions": {
-    "api/**/*.js": {
+    "api/*.js": {
+      "memory": 1024,
       "maxDuration": 60
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/chatbots",
+      "dest": "/public/chatbots.html"
+    },
+    {
+      "src": "/api/deploy-telegram-bot",
+      "dest": "/api/deploy-telegram-bot.js"
+    }
+  ]
 }
