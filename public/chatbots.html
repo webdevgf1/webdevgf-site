@@ -522,30 +522,111 @@
     cursor: not-allowed;
 }
 
+.terminal-header {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 12px 20px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.control.close { background-color: #ff5f56; }
+.control.minimize { background-color: #ffbd2e; }
+.control.maximize { background-color: #27c93f; }
+
+.control:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+    transition: all 0.2s ease;
+}
+
+.prompt-container {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.prompt-prefix {
+    color: #4facfe;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+#terminal-text span.highlight {
+    color: #00f2fe;
+    font-weight: 600;
+}
+
+#terminal-text span.command {
+    color: #4facfe;
+    font-weight: 500;
+}
+
+#terminal-text span.section {
+    color: #ff79c6;
+    font-weight: 600;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.terminal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.terminal::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.terminal::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
 .modal-content {
     position: relative;
     width: 90%;
     max-width: 800px;
     margin: 50px auto;
-    background-color: #0f1116;
+    background-color: #1a1b26;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 .terminal {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.95);
     padding: 20px;
     height: 70vh;
     overflow-y: auto;
-    font-family: 'Consolas', monospace;
-    line-height: 1.6;
-}
-
-    #terminal-text {
-    color: #00f2fe;  /* Changed from #e0e0e0 */
+    font-family: 'Fira Code', 'Consolas', monospace;
     line-height: 1.6;
     font-size: 0.95rem;
+}
+
+#terminal-text {
+    color: #e0e0e0;
+    line-height: 1.6;
 }
 
 .terminal-title {
@@ -1103,13 +1184,27 @@ function closeSubdomainModal() {
 }
 
 // Add typing effect for the pump.fun terminal
-function typeWriterEffect(element, text, index = 0) {
-    if (index < text.length) {
-        element.innerHTML += text.charAt(index);
-        element.scrollTop = element.scrollHeight;
-        setTimeout(() => typeWriterEffect(element, text, index + 1), 20);
+function typeWriter(text, index = 0) {
+    const terminalText = document.getElementById('terminal-text');
+    const lines = text.split('\n');
+    
+    if (index < lines.length) {
+        let line = lines[index];
+        
+        // Style different types of lines
+        if (line.startsWith('> ')) {
+            line = `<span class="command">${line}</span>`;
+        } else if (line.endsWith(':')) {
+            line = `<span class="section">${line}</span>`;
+        } else if (line.startsWith('-')) {
+            line = `<span class="highlight">•</span> ${line.substring(1)}`;
+        }
+        
+        terminalText.innerHTML += line + '<br>';
+        terminalText.scrollTop = terminalText.scrollHeight;
+        setTimeout(() => typeWriter(text, index + 1), 30);
     } else {
-        element.innerHTML += '<span class="cursor"></span>';
+        terminalText.innerHTML += '<span class="cursor"></span>';
     }
 }
 
@@ -1528,10 +1623,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <div id="faqModal" class="modal">
     <div class="modal-content">
-        <div class="modal-header">
-            <div class="terminal-title">💫 WebDevGF's AI Friends 💫</div>
+        <div class="terminal-header">
+            <div class="terminal-controls">
+                <span class="control close"></span>
+                <span class="control minimize"></span>
+                <span class="control maximize"></span>
+            </div>
+            <div class="terminal-title">🌟 WebDevGF Terminal v1.0.0</div>
+            <div class="terminal-actions">
+                <button class="nav-button" onclick="closeFAQ()">Close</button>
+            </div>
         </div>
         <div class="terminal">
+            <div class="prompt-container">
+                <div class="prompt-prefix">webdevgf@ai:~$</div>
+            </div>
             <div id="terminal-text"></div>
         </div>
     </div>
