@@ -1,6 +1,20 @@
 import { Telegraf } from 'telegraf';
 import { createClient } from 'redis';
 
+// Create Redis client with better timeout and retry options
+const redis = createClient({
+    url: process.env.REDIS_URL,
+    socket: {
+        connectTimeout: 10000,
+        reconnectStrategy: (retries) => {
+            if (retries > 10) return new Error('Too many retries');
+            return Math.min(retries * 100, 3000);
+        }
+    }
+});
+
+redis.on('error', (err) => console.error('Redis Client Error:', err));
+
 export default async function handler(req, res) {
     console.log('Starting deployment handler');
     
@@ -8,18 +22,25 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const redis = createClient({
-        url: process.env.REDIS_URL
-    });
-
     try {
         const { token, agent, systemPrompt } = req.body;
         console.log('Received deployment request for token:', token);
 
         // Connect to Redis
         console.log('Connecting to Redis...');
-        await redis.connect();
+        if (!redis.isOpen) {
+            await redis.connect();
+        }
         console.log('Redis connected');
+
+        // First verify bot token is valid
+        try {
+            const bot = new Telegraf(token);
+            const botInfo = await bot.telegram.getMe();
+            console.log('Bot info verified:', botInfo);
+        } catch (error) {
+            throw new Error('Invalid bot token: ' + error.message);
+        }
 
         // Store bot configuration
         const botConfig = {
@@ -36,7 +57,11 @@ export default async function handler(req, res) {
         const storedConfig = await redis.get(`bot:${token}`);
         console.log('Verified stored config:', storedConfig);
 
-        // Set up webhook
+        // Delete any existing webhook
+        console.log('Deleting existing webhook...');
+        await fetch(`https://api.telegram.org/bot${token}/deleteWebhook`);
+
+        // Set up new webhook
         const webhookUrl = `https://www.webdevgf.xyz/api/telegram-webhook/${token}`;
         console.log('Setting webhook to:', webhookUrl);
 
@@ -49,7 +74,8 @@ export default async function handler(req, res) {
                 },
                 body: JSON.stringify({
                     url: webhookUrl,
-                    allowed_updates: ['message']
+                    allowed_updates: ['message'],
+                    drop_pending_updates: true
                 })
             }
         );
@@ -61,20 +87,27 @@ export default async function handler(req, res) {
             throw new Error(`Failed to set webhook: ${webhookResult.description}`);
         }
 
-        await redis.disconnect();
-        console.log('Deployment completed successfully');
+        // Verify webhook was set
+        const webhookInfo = await fetch(`https://api.telegram.org/bot${token}/getWebhookInfo`).then(r => r.json());
+        console.log('Webhook info:', webhookInfo);
 
         res.status(200).json({
             success: true,
             message: 'Bot deployed successfully',
             webhook_url: webhookUrl,
-            config_stored: true
+            config_stored: true,
+            webhook_info: webhookInfo
         });
     } catch (error) {
         console.error('Deployment error:', error);
-        if (redis.isOpen) {
-            await redis.disconnect();
-        }
         res.status(500).json({ error: 'Failed to deploy bot: ' + error.message });
+    } finally {
+        try {
+            if (redis && redis.isOpen) {
+                await redis.disconnect();
+            }
+        } catch (error) {
+            console.error('Error disconnecting from Redis:', error);
+        }
     }
 }
