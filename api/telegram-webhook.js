@@ -7,103 +7,103 @@ const redis = createClient({
 });
 
 export default async function handler(req, res) {
-    console.log('Webhook received request');
+    // Add CORS headers
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
+
+    console.log('Webhook received:', {
+        method: req.method,
+        headers: req.headers,
+        url: req.url,
+        body: JSON.stringify(req.body, null, 2)
+    });
 
     if (req.method !== 'POST') {
-        console.log(`Invalid method: ${req.method}`);
-        return res.status(405).json({ error: 'Method not allowed' });
+        return res.status(200).end(); // More permissive with non-POST requests
     }
 
     try {
-        // Connect to Redis
-        if (!redis.isOpen) {
-            await redis.connect();
-        }
+        // Always respond 200 to Telegram first
+        res.status(200).json({ ok: true });
 
         const update = req.body;
-        console.log('Telegram update:', JSON.stringify(update, null, 2));
-        
-        if (!update || !update.message || !update.message.text) {
-            console.log('Invalid update object:', update);
-            return res.status(200).end();
+        if (!update || !update.message) {
+            console.log('No message in update:', update);
+            return;
         }
 
         // Get bot token from URL
         const urlParts = req.url.split('/');
         const token = urlParts[urlParts.length - 1];
-        console.log('Bot token from URL:', token);
+        console.log('Processing for bot token:', token);
 
-        // Get bot config from Redis
-        const botConfig = await redis.get(`bot:${token}`);
-        const config = botConfig ? JSON.parse(botConfig) : null;
-        console.log('Bot config:', config);
-        
-        if (!config) {
-            console.error('Bot config not found for token:', token);
-            return res.status(400).json({ error: 'Bot not configured' });
+        // Connect to Redis only when needed
+        if (!redis.isOpen) {
+            console.log('Connecting to Redis...');
+            await redis.connect();
         }
+
+        // Get bot config
+        const botConfigStr = await redis.get(`bot:${token}`);
+        console.log('Redis response:', botConfigStr);
+        
+        if (!botConfigStr) {
+            console.error('No bot config found for token');
+            return;
+        }
+
+        const botConfig = JSON.parse(botConfigStr);
+        console.log('Bot config loaded:', botConfig);
 
         const bot = new Telegraf(token);
 
-        try {
-            // Send typing indicator
-            console.log('Sending typing action...');
-            await bot.telegram.sendChatAction(update.message.chat.id, 'typing');
+        // Send typing action
+        await bot.telegram.sendChatAction(update.message.chat.id, 'typing');
 
-            console.log('Making Claude API request...');
-            const response = await fetch('https://api.anthropic.com/v1/messages', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': process.env.ANTHROPIC_API_KEY,
-                    'anthropic-version': '2023-06-01'
-                },
-                body: JSON.stringify({
-                    messages: [{
-                        role: 'user',
-                        content: update.message.text
-                    }],
-                    system: config.systemPrompt,
-                    model: 'claude-3-opus-20240229',
-                    max_tokens: 1000
-                })
-            });
+        // Make Claude API request
+        console.log('Sending request to Claude...');
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': process.env.ANTHROPIC_API_KEY,
+                'anthropic-version': '2023-06-01'
+            },
+            body: JSON.stringify({
+                messages: [{
+                    role: 'user',
+                    content: update.message.text || ''
+                }],
+                system: botConfig.systemPrompt,
+                model: 'claude-3-opus-20240229',
+                max_tokens: 1000
+            })
+        });
 
-            console.log('Claude API response status:', response.status);
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Claude API error:', errorText);
-                throw new Error(`Claude API error: ${response.status}`);
-            }
+        console.log('Claude response status:', response.status);
+        const data = await response.json();
+        console.log('Claude response:', data);
 
-            const data = await response.json();
-            console.log('Claude API response:', data);
-            
-            if (data.content && data.content[0] && data.content[0].text) {
-                console.log('Sending message back to user...');
-                await bot.telegram.sendMessage(update.message.chat.id, data.content[0].text, {
-                    parse_mode: 'Markdown'
-                });
-                console.log('Message sent successfully');
-            } else {
-                throw new Error('Invalid Claude API response format');
-            }
-        } catch (error) {
-            console.error('Error processing message:', error);
-            await bot.telegram.sendMessage(
-                update.message.chat.id, 
-                'Sorry, I encountered an error processing your message. Please try again later.'
-            );
+        if (data.content && data.content[0] && data.content[0].text) {
+            await bot.telegram.sendMessage(update.message.chat.id, data.content[0].text);
+            console.log('Response sent to user');
         }
 
-        await redis.disconnect();
-        return res.status(200).json({ ok: true });
     } catch (error) {
-        console.error('Webhook handler error:', error);
-        if (redis.isOpen) {
+        console.error('Webhook processing error:', error);
+        // Don't send error response to Telegram - we already sent 200
+    } finally {
+        // Clean up Redis connection
+        if (redis && redis.isOpen) {
             await redis.disconnect();
         }
-        return res.status(500).json({ error: 'Webhook processing failed: ' + error.message });
     }
 }
