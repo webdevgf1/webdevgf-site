@@ -83,7 +83,19 @@
             padding: 2rem;
             max-width: 1800px;
             margin: 0 auto;
-            padding-top: 6rem;
+            padding-top: 100px;
+        }
+
+        .section-header {
+            grid-column: 1 / -1;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-left: 0.5rem;
         }
 
         .footer {
@@ -807,12 +819,44 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
         const API_KEY = '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';
 
         function initializeAgents() {
-            const grid = document.getElementById('agentsGrid');
-            agents.forEach(agent => {
-                const card = createAgentCard(agent);
-                grid.appendChild(card);
-            });
-        }
+    const grid = document.getElementById('agentsGrid');
+    
+    // Add WebDevGF's Agents header
+    const presetHeader = document.createElement('div');
+    presetHeader.className = 'section-header';
+    presetHeader.textContent = 'WebDevGF\'s Agents';
+    grid.appendChild(presetHeader);
+
+    // Add preset agents
+    agents.slice(0, 10).forEach(agent => {
+        const card = createAgentCard(agent);
+        grid.appendChild(card);
+    });
+
+    // Add Your Agents header
+    const customHeader = document.createElement('div');
+    customHeader.className = 'section-header';
+    customHeader.textContent = 'Your Agents';
+    grid.appendChild(customHeader);
+
+    // Load custom agents from localStorage
+    const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
+    if (customAgents.length > 0) {
+        customAgents.forEach(agent => {
+            agents.push(agent);
+            grid.appendChild(createAgentCard(agent));
+        });
+    } else {
+        // If no custom agents, show a message
+        const emptyMessage = document.createElement('div');
+        emptyMessage.style.gridColumn = '1 / -1';
+        emptyMessage.style.textAlign = 'center';
+        emptyMessage.style.color = 'rgba(255, 255, 255, 0.6)';
+        emptyMessage.style.padding = '2rem';
+        emptyMessage.textContent = 'Create your own agents using the button below!';
+        grid.appendChild(emptyMessage);
+    }
+}
 
         function createAgentCard(agent) {
     const card = document.createElement('div');
