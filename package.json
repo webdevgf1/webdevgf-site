@@ -1,6 +1,9 @@
 {
+  "name": "webdevgf-telegram-bots",
+  "version": "1.0.0",
   "dependencies": {
     "telegraf": "^4.12.2",
-    "@vercel/kv": "^0.2.0"
+    "@vercel/kv": "^0.2.0",
+    "node-fetch": "^3.3.0"
   }
 }
