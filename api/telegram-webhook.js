@@ -8,53 +8,46 @@ export default async function handler(req, res) {
         const urlParts = req.url.split('/');
         const token = urlParts[urlParts.length - 1];
         
-        console.log('2. Processing message for:', { chatId, token });
-        
         // Respond to Telegram immediately
         res.status(200).json({ ok: true });
-        console.log('3. Sent 200 response');
+        console.log('2. Sent 200 response');
 
-        // Make HTTP request using native https module
-        await new Promise((resolve, reject) => {
-            const encodedText = encodeURIComponent('Test message via HTTPS');
-            const path = `/bot${token}/sendMessage?chat_id=${chatId}&text=${encodedText}`;
-            
-            console.log('4. Making HTTPS request to api.telegram.org');
-            
-            const options = {
-                hostname: 'api.telegram.org',
-                port: 443,
-                path: path,
-                method: 'GET'
-            };
+        const options = {
+            hostname: 'api.telegram.org',
+            path: `/bot${token}/sendMessage?chat_id=${chatId}&text=Test`,
+            method: 'GET',
+            timeout: 5000 // 5 second timeout
+        };
 
-            const request = https.request(options, (response) => {
-                console.log('5. Got response code:', response.statusCode);
-                
-                let data = '';
-                response.on('data', (chunk) => {
-                    data += chunk;
-                });
+        console.log('3. Making request with options:', options);
 
-                response.on('end', () => {
-                    console.log('6. Response data:', data);
-                    resolve(data);
-                });
-            });
+        const request = https.request(options);
 
-            request.on('error', (error) => {
-                console.error('7. Request error:', error);
-                reject(error);
-            });
-
-            console.log('8. Ending request');
-            request.end();
+        request.on('timeout', () => {
+            console.log('4a. Request timed out');
+            request.destroy();
         });
 
-        console.log('9. Request completed');
+        request.on('error', (error) => {
+            console.log('4b. Request error:', error.message);
+        });
+
+        request.on('response', (response) => {
+            console.log('4c. Got response:', response.statusCode);
+            
+            response.on('data', (chunk) => {
+                console.log('5. Got data:', chunk.toString());
+            });
+
+            response.on('end', () => {
+                console.log('6. Response complete');
+            });
+        });
+
+        request.end();
+        console.log('7. Request sent');
 
     } catch (error) {
-        console.error('10. Error:', error.message);
-        console.error('Full error:', error);
+        console.error('Error:', error);
     }
 }
