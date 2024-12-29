@@ -1,4 +1,5 @@
 import { Telegraf } from 'telegraf';
+import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -10,19 +11,19 @@ export default async function handler(req, res) {
             }
 
             const bot = new Telegraf(token);
-            const VERCEL_URL = process.env.VERCEL_URL;
             
-            // Set webhook URL to your Vercel deployment
+            // Get your Vercel deployment URL
+            const VERCEL_URL = req.headers.host || process.env.VERCEL_URL;
+            
+            // Set webhook URL
             const webhookUrl = `https://${VERCEL_URL}/api/telegram-webhook`;
             await bot.telegram.setWebhook(webhookUrl);
 
-            // Store bot info in environment or database
-            // This is just an example - you'll need to implement proper storage
-            global.botConfig = {
-                token,
+            // Store bot config in KV storage
+            await kv.set(`bot:${token}`, {
                 agent,
                 systemPrompt
-            };
+            });
 
             res.status(200).json({ success: true, message: 'Bot deployed successfully' });
         } catch (error) {
