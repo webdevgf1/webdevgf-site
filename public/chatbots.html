@@ -720,15 +720,17 @@
         50% { opacity: 0; }
     }
 
-    .close-btn {
-    color: #64748b;
-    font-size: 1.5rem;
+    .close-button {
+    color: white;
+    background: none;
+    border: none;
+    font-size: 24px;
     cursor: pointer;
-    transition: color 0.3s ease;
+    padding: 0 10px;
 }
 
-.close-btn:hover {
-    color: #94a3b8;
+.close-button:hover {
+    opacity: 0.8;
 }
 
         .typing-animation {
@@ -1049,12 +1051,24 @@ function createAgentCard(agent) {
 window.onclick = function(event) {
     const deployModal = document.getElementById('deployModal');
     const faqModal = document.getElementById('faqModal');
+    const chatModal = document.getElementById('chatModal');
+    const pumpModal = document.getElementById('pumpModal');
+    const subdomainModal = document.getElementById('subdomainModal');
     
     if (event.target === deployModal) {
         closeDeployModal();
     }
     if (event.target === faqModal) {
         closeFAQ();
+    }
+    if (event.target === chatModal) {
+        closeChat();
+    }
+    if (event.target === pumpModal) {
+        closePumpModal();
+    }
+    if (event.target === subdomainModal) {
+        closeSubdomainModal();
     }
 }
 
@@ -1063,7 +1077,7 @@ function openChat(agent) {
     document.getElementById('currentAgentName').textContent = agent.name;
     document.getElementById('chatHistory').innerHTML = '';
     
-    // Updated chat header with new deployment buttons
+    // Updated chat header with simplified close button
     const chatHeader = document.querySelector('.chat-header');
     chatHeader.innerHTML = `
         <div class="agent-name" id="currentAgentName">${agent.name}</div>
@@ -1074,7 +1088,7 @@ function openChat(agent) {
                 <button class="deploy-subdomain" onclick="openSubdomainModal(currentAgent)">Deploy to Subdomain</button>
             ` : ''}
         </div>
-        <button class="close-button" onclick="closeChat()">&times;</button>
+        <button class="close-button" onclick="closeChat()">×</button>
     `;
     
     document.getElementById('chatModal').style.display = 'block';
