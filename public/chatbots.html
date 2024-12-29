@@ -1023,25 +1023,19 @@ function deployBot() {
 
 // Update window.onclick to handle clicking outside the deploy modal
 window.onclick = function(event) {
-    const chatModal = document.getElementById('chatModal');
-    const faqModal = document.getElementById('faqModal');
-    
-    // Main modal handlers
-    if (event.target === chatModal) {
+    if (event.target.classList.contains('chat-modal')) {
         closeChat();
     }
-    if (event.target === faqModal) {
+    if (event.target.classList.contains('modal')) {
         closeFAQ();
     }
-    
-    // Deployment modal handlers
-    if (event.target === document.getElementById('deployModal')) {
+    if (event.target.classList.contains('deploy-modal')) {
         closeDeployModal();
     }
-    if (event.target === document.getElementById('pumpModal')) {
+    if (event.target.classList.contains('pump-modal')) {
         closePumpModal();
     }
-    if (event.target === document.getElementById('subdomainModal')) {
+    if (event.target.classList.contains('subdomain-modal')) {
         closeSubdomainModal();
     }
 }
