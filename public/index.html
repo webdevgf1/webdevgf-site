@@ -264,6 +264,85 @@
     box-shadow: 0 4px 12px rgba(255, 75, 75, 0.2);
 }
 
+.sticker-button {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    z-index: 99;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.sticker-button img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
+}
+
+.sticker-button:hover {
+    transform: scale(1.1);
+}
+
+.sticker-modal {
+    max-width: 800px !important;
+}
+
+.sticker-terminal {
+    padding: 30px !important;
+}
+
+.sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.sticker-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.sticker-item:hover {
+    transform: translateY(-5px);
+}
+
+.sticker-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.download-btn {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+}
+
+.sticker-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #00f2fe;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
 .demo-button {
     background: linear-gradient(45deg, #4facfe, #00f2fe);
     border: none;
@@ -873,6 +952,38 @@
         </div>
     </div>
 
+    <div class="sticker-button">
+        <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771d5d76a711b1564d67f2d_stickers.png" alt="WebDevGF Stickers">
+    </div>
+    
+    <div id="stickerModal" class="modal">
+        <div class="modal-content sticker-modal">
+            <div class="modal-header">
+                <div class="terminal-title">WebDevGF Stickers!</div>
+                <span class="close-btn" onclick="closeStickerModal()">&times;</span>
+            </div>
+            <div class="terminal sticker-terminal">
+                <div class="sticker-grid">
+                    <div class="sticker-item">
+                        <img src="/api/placeholder/200/200" alt="Sticker 1">
+                        <button class="download-btn">Download</button>
+                    </div>
+                    <div class="sticker-item">
+                        <img src="/api/placeholder/200/200" alt="Sticker 2">
+                        <button class="download-btn">Download</button>
+                    </div>
+                    <div class="sticker-item">
+                        <img src="/api/placeholder/200/200" alt="Sticker 3">
+                        <button class="download-btn">Download</button>
+                    </div>
+                </div>
+                <div class="sticker-footer">
+                    <p>Let's spam the timeline webdevs! 🚀</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -1069,6 +1180,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }, 2000);
 
+    const stickerButton = document.querySelector('.sticker-button');
+    if (stickerButton) {
+        stickerButton.addEventListener('click', openStickerModal);
+    }
+
     // Existing 3D viewer code
     const viewer = document.getElementById('characterViewer');
     const loadingOverlay = document.querySelector('.loading-overlay');
@@ -1160,14 +1276,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => typeWriter(text, index + 1), 20);
             } else {
                 terminalText.innerHTML += '<span class="cursor"></span>';
-            }
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('faqModal');
-            if (event.target === modal) {
-                closeFAQ();
             }
         }
 
@@ -1358,17 +1466,25 @@ function confirmReset() {
 }
 
 // Update the existing window.onclick function
-const originalWindowClick = window.onclick;
 window.onclick = function(event) {
-    if (originalWindowClick) {
-        originalWindowClick(event);
-    }
-    
+    const customizeModal = document.getElementById('customizeModal');
+    const faqModal = document.getElementById('faqModal');
+    const bugReportModal = document.getElementById('bugReportModal');
     const resetModal = document.getElementById('resetModal');
-    if (event.target === resetModal) {
+    const stickerModal = document.getElementById('stickerModal');
+    
+    if (event.target === customizeModal) {
+        closeCustomize();
+    } else if (event.target === faqModal) {
+        closeFAQ();
+    } else if (event.target === bugReportModal) {
+        closeBugReport();
+    } else if (event.target === resetModal) {
         closeResetModal();
+    } else if (event.target === stickerModal) {
+        closeStickerModal();
     }
-};
+}
 
 // Load chat history when the page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -1503,21 +1619,6 @@ function selectMusic(musicId) {
     console.log('Selected music:', musicId);
 }
 
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const customizeModal = document.getElementById('customizeModal');
-    const faqModal = document.getElementById('faqModal');
-    const bugReportModal = document.getElementById('bugReportModal');
-    
-    if (event.target === customizeModal) {
-        closeCustomize();
-    } else if (event.target === faqModal) {
-        closeFAQ();
-    } else if (event.target === bugReportModal) {
-        closeBugReport();
-    }
-}
-
 // Background Options
 const backgrounds = {
 japan: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67706de4c10995186589b87d_japann.png",
@@ -1613,6 +1714,16 @@ function selectBackground(bgId) {
     const bgItems = document.querySelectorAll('#backgrounds .grid-item');
     bgItems.forEach(item => item.classList.remove('selected'));
     event.currentTarget.classList.add('selected');
+}
+
+function openStickerModal() {
+    const modal = document.getElementById('stickerModal');
+    modal.style.display = 'block';
+}
+
+function closeStickerModal() {
+    const modal = document.getElementById('stickerModal');
+    modal.style.display = 'none';
 }
 
 function selectAvatar(avatarId) {
