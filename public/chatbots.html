@@ -1085,15 +1085,23 @@ function openChat(agent) {
 function openPumpModal(bot) {
     currentDeployBot = bot;
     document.getElementById('pumpModal').style.display = 'block';
-    // Auto-fill the terminal with bot information
-    const terminalText = document.getElementById('pump-terminal-text');
-    const botInfo = `> Initializing deployment to pump.fun...
-> Bot Name: ${bot.name}
-> Description: ${bot.description}
-> System Prompt: ${bot.systemPrompt}
-> Generating deployment configuration...
-`;
-    typeWriterEffect(terminalText, botInfo);
+    
+    // Auto-fill the form fields with bot information
+    document.getElementById('pumpName').value = bot.name;
+    document.getElementById('pumpDescription').value = bot.description;
+    document.getElementById('pumpTicker').value = '';  // Let user input ticker
+}
+
+function deployToPump() {
+    const ticker = document.getElementById('pumpTicker').value.trim();
+    if (!ticker) {
+        alert('Please enter a ticker');
+        return;
+    }
+    
+    // Here you would handle the actual deployment
+    alert(`Deploying ${currentDeployBot.name} to pump.fun with ticker ${ticker}`);
+    closePumpModal();
 }
 
 function openSubdomainModal(bot) {
@@ -1517,10 +1525,25 @@ document.addEventListener('DOMContentLoaded', () => {
 <div id="pumpModal" class="pump-modal">
     <div class="deploy-modal-content">
         <h2 style="color: white; margin-bottom: 15px;">Deploy to pump.fun</h2>
-        <div class="pump-terminal" id="pump-terminal-text"></div>
+        
+        <div style="color: #94a3b8; margin-bottom: 20px;">
+            <div style="margin-bottom: 15px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Name:</label>
+                <input type="text" id="pumpName" class="bot-token-input" readonly>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Ticker:</label>
+                <input type="text" id="pumpTicker" class="bot-token-input" placeholder="Enter ticker">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Description:</label>
+                <textarea id="pumpDescription" class="bot-token-input" style="min-height: 100px; resize: vertical;" readonly></textarea>
+            </div>
+        </div>
+
         <div class="deploy-buttons">
             <button onclick="closePumpModal()" class="nav-button">Cancel</button>
-            <button class="deploy-pump">Deploy</button>
+            <button onclick="deployToPump()" class="deploy-pump">Deploy</button>
         </div>
     </div>
 </div>
