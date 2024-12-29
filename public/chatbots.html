@@ -1033,20 +1033,6 @@ function deployBot() {
     }, 2000);
 }
 
-// Update your createAgentCard function to include the Telegram button
-function createAgentCard(agent) {
-    const card = document.createElement('div');
-    card.className = 'agent-card';
-    card.innerHTML = `
-        <div class="agent-image" style="background-image: url(${agent.image})"></div>
-        <div class="agent-info">
-            <div class="agent-name">${agent.name}</div>
-            <div class="agent-description">${agent.description}</div>
-        </div>
-    `;
-    return card;
-}
-
 // Update window.onclick to handle clicking outside the deploy modal
 window.onclick = function(event) {
     const deployModal = document.getElementById('deployModal');
