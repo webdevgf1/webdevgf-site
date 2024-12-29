@@ -177,6 +177,12 @@
             z-index: 1000;
         }
 
+        .chat-header .deploy-telegram {
+    margin: 0 15px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
         .chat-container {
             position: relative;
             width: 90%;
@@ -891,12 +897,9 @@ function createAgentCard(agent) {
         <div class="agent-info">
             <div class="agent-name">${agent.name}</div>
             <div class="agent-description">${agent.description}</div>
-            <div style="display: flex; margin-top: 15px;">
-                <button onclick="openChat(${JSON.stringify(agent)})" class="nav-button">Chat</button>
-                <button onclick="openDeployModal(${JSON.stringify(agent)})" class="deploy-telegram">Telegram</button>
-            </div>
         </div>
     `;
+    card.onclick = () => openChat(agent);
     return card;
 }
 
@@ -913,13 +916,22 @@ window.onclick = function(event) {
     }
 }
 
-        function openChat(agent) {
-            currentAgent = agent;
-            document.getElementById('currentAgentName').textContent = agent.name;
-            document.getElementById('chatHistory').innerHTML = '';
-            document.getElementById('chatModal').style.display = 'block';
-            appendMessage('ai-message', `Hey, I'm ${agent.name}. What's on your mind?`);
-        }
+function openChat(agent) {
+    currentAgent = agent;
+    document.getElementById('currentAgentName').textContent = agent.name;
+    document.getElementById('chatHistory').innerHTML = '';
+    
+    // Update chat header to include Telegram button for custom agents
+    const chatHeader = document.querySelector('.chat-header');
+    chatHeader.innerHTML = `
+        <div class="agent-name" id="currentAgentName">${agent.name}</div>
+        ${agent.id > 10 ? `<button class="deploy-telegram" onclick="openDeployModal(currentAgent)">Deploy to Telegram</button>` : ''}
+        <button class="close-button" onclick="closeChat()">&times;</button>
+    `;
+    
+    document.getElementById('chatModal').style.display = 'block';
+    appendMessage('ai-message', `Hey, I'm ${agent.name}. What's on your mind?`);
+}
 
         function closeChat() {
             document.getElementById('chatModal').style.display = 'none';
