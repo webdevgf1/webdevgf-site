@@ -1,9 +1,17 @@
 {
   "name": "webdevgf-telegram-bots",
   "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
+    "axios": "^1.6.2",
     "telegraf": "^4.12.2",
     "redis": "^4.6.13",
-    "axios": "^1.6.2"
+    "node-fetch": "^3.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
