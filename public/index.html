@@ -470,6 +470,23 @@
     box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
 }
 
+.download-btn {
+    display: block;
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    color: white;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
+}
+
 .customize-terminal {
     padding: 0;
     display: flex;
@@ -1667,10 +1684,45 @@ function selectMusic(musicId) {
                     <button class="tab-btn active" onclick="switchTab('backgrounds')">Backgrounds</button>
                     <button class="tab-btn" onclick="switchTab('avatars')">Avatars COMING SOON</button>
                     <button class="tab-btn" onclick="switchTab('music')">Music</button>
+                    <button class="tab-btn" onclick="switchTab('stickers')">Stickers</button>
                 </div>
                 <div class="tab-content" id="backgrounds"></div>
                 <div class="tab-content" id="avatars" style="display: none;"></div>
                 <div class="tab-content" id="music" style="display: none;"></div>
+                <div class="tab-content" id="stickers" style="display: none;">
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="Higher">
+                            <span>Higher</span>
+                            <a href="#" class="download-btn" download>Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="LFG">
+                            <span>LFG</span>
+                            <a href="#" class="download-btn" download>Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" alt="Arigatou">
+                            <span>Arigatou</span>
+                            <a href="#" class="download-btn" download>Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="Moon">
+                            <span>Moon</span>
+                            <a href="#" class="download-btn" download>Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="Bonded">
+                            <span>Bonded</span>
+                            <a href="#" class="download-btn" download>Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" alt="Coffee Break">
+                            <span>Coffee Break</span>
+                            <a href="#" class="download-btn" download>Download</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
