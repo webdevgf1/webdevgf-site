@@ -1632,6 +1632,23 @@ function selectBackground(bgId) {
     event.currentTarget.classList.add('selected');
 }
 
+async function downloadSticker(url, filename) {
+   try {
+       const response = await fetch(url);
+       const blob = await response.blob();
+       const downloadUrl = window.URL.createObjectURL(blob);
+       const link = document.createElement('a');
+       link.href = downloadUrl;
+       link.download = filename;
+       document.body.appendChild(link);
+       link.click();
+       document.body.removeChild(link);
+       window.URL.revokeObjectURL(downloadUrl);
+   } catch (error) {
+       console.error('Download failed:', error);
+   }
+}
+
 function selectAvatar(avatarId) {
     const modelViewer = document.getElementById('characterViewer');
     const loadingOverlay = document.querySelector('.loading-overlay');
@@ -1694,34 +1711,34 @@ function selectMusic(musicId) {
                         <div class="grid-item">
                             <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="Higher">
                             <span>Higher</span>
-                            <a href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" class="download-btn" download="higher.png">Download</a>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png', 'higher.png')">Download</a>
                         </div>
                         <div class="grid-item">
                             <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="LFG">
                             <span>LFG</span>
-                            <a href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" class="download-btn" download="lfg.png">Download</a>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png', 'lfg.png')">Download</a>
                         </div>
                         <div class="grid-item">
                             <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" alt="Arigatou">
                             <span>Arigatou</span>
-                            <a href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" class="download-btn" download="arigatou.png">Download</a>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png', 'arigatou.png')">Download</a>
                         </div>
                         <div class="grid-item">
                             <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="Moon">
                             <span>Moon</span>
-                            <a href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" class="download-btn" download="moon.png">Download</a>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png', 'moon.png')">Download</a>
                         </div>
                         <div class="grid-item">
                             <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="Bonded">
                             <span>Bonded</span>
-                            <a href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" class="download-btn" download="bonded.png">Download</a>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png', 'bonded.png')">Download</a>
                         </div>
                         <div class="grid-item">
                             <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" alt="Coffee Break">
                             <span>Coffee Break</span>
-                            <a href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" class="download-btn" download="coffee.png">Download</a>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png', 'coffee.png')">Download</a>
                         </div>
-                    </div>
+                     </div>
                 </div>
             </div>
         </div>
