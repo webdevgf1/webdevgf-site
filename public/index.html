@@ -1190,44 +1190,43 @@ WebDevGF believes in learning by doing. She guides users through:
 > For more information or support, connect with us on Twitter or join our community!`;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initial loading animation
+    // Existing loading animation code
     const initialLoading = document.querySelector('.initial-loading');
     
-    // Wait for logo animation to complete
     setTimeout(() => {
         initialLoading.classList.add('fade-out');
-        
-        // Remove the loading screen from DOM after fade out
         setTimeout(() => {
             initialLoading.remove();
         }, 500);
     }, 2000);
 
+    // Add sticker button event listener
     const stickerButton = document.querySelector('.sticker-button');
     if (stickerButton) {
         stickerButton.addEventListener('click', openStickerModal);
     }
 
-    // Existing 3D viewer code
-    const viewer = document.getElementById('characterViewer');
-    const loadingOverlay = document.querySelector('.loading-overlay');
-    
-    viewer.addEventListener('load', () => {
-        viewer.cameraOrbit = "0deg 80deg 1.4m";
-        viewer.cameraTarget = "0m 1.6m 0m";
-        viewer.interactionPrompt = null;
-        
-        setTimeout(() => {
-            loadingOverlay.classList.add('fade-out');
-            setTimeout(() => {
-                loadingOverlay.style.display = 'none';
-            }, 300);
-        }, 1500);
+    // Add modal event listeners
+    window.addEventListener('click', (event) => {
+        const modals = {
+            'customizeModal': closeCustomize,
+            'faqModal': closeFAQ,
+            'bugReportModal': closeBugReport,
+            'resetModal': closeResetModal,
+            'stickerModal': closeStickerModal
+        };
 
-        // Type out the initial greeting
-        const initialMessage = document.querySelector('.ai-message');
-        typeMessage(initialMessage, initialMessage.textContent);
+        Object.entries(modals).forEach(([modalId, closeFunction]) => {
+            const modal = document.getElementById(modalId);
+            if (event.target === modal) {
+                closeFunction();
+            }
+        });
     });
+
+    // Initialize customization
+    initializeCustomization();
+});
 
     // Add the new initialization function here
     function initializeCustomization() {
@@ -1268,10 +1267,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // Call the initialization function
-    initializeCustomization();
-});
-
         // FAQ functions
         function openFAQ() {
             const modal = document.getElementById('faqModal');
@@ -1282,9 +1277,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function closeFAQ() {
-            const modal = document.getElementById('faqModal');
-            modal.style.display = 'none';
-        }
+    const modal = document.getElementById('faqModal');
+    if (modal) modal.style.display = 'none';
+}
 
         function typeWriter(text, index = 0) {
             const terminalText = document.getElementById('terminal-text');
@@ -1470,11 +1465,13 @@ function loadChatHistory() {
 
 // Reset chat functionality
 function resetChat() {
-    document.getElementById('resetModal').style.display = 'block';
+    const modal = document.getElementById('resetModal');
+    if (modal) modal.style.display = 'block';
 }
 
 function closeResetModal() {
-    document.getElementById('resetModal').style.display = 'none';
+    const modal = document.getElementById('resetModal');
+    if (modal) modal.style.display = 'none';
 }
 
 function confirmReset() {
@@ -1486,27 +1483,6 @@ function confirmReset() {
     `;
     localStorage.removeItem('webdevgf_chat_history');
     closeResetModal();
-}
-
-// Update the existing window.onclick function
-window.onclick = function(event) {
-    const customizeModal = document.getElementById('customizeModal');
-    const faqModal = document.getElementById('faqModal');
-    const bugReportModal = document.getElementById('bugReportModal');
-    const resetModal = document.getElementById('resetModal');
-    const stickerModal = document.getElementById('stickerModal');
-    
-    if (event.target === customizeModal) {
-        closeCustomize();
-    } else if (event.target === faqModal) {
-        closeFAQ();
-    } else if (event.target === bugReportModal) {
-        closeBugReport();
-    } else if (event.target === resetModal) {
-        closeResetModal();
-    } else if (event.target === stickerModal) {
-        closeStickerModal();
-    }
 }
 
 // Load chat history when the page loads
@@ -1568,26 +1544,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function openCustomize() {
     const modal = document.getElementById('customizeModal');
-    modal.style.display = 'block';
+    if (modal) modal.style.display = 'block';
 }
 
 function closeCustomize() {
     const modal = document.getElementById('customizeModal');
-    modal.style.display = 'none';
+    if (modal) modal.style.display = 'none';
 }
 
 function openBugReport() {
     const modal = document.getElementById('bugReportModal');
     const form = document.getElementById('bugReportForm');
     const success = document.getElementById('bugSubmitSuccess');
-    modal.style.display = 'block';
-    form.style.display = 'flex';
-    success.style.display = 'none';
+    
+    if (modal) {
+        modal.style.display = 'block';
+        if (form) form.style.display = 'flex';
+        if (success) success.style.display = 'none';
+    }
 }
 
 function closeBugReport() {
     const modal = document.getElementById('bugReportModal');
-    modal.style.display = 'none';
+    if (modal) modal.style.display = 'none';
 }
 
 function submitBugReport(event) {
@@ -1741,12 +1720,12 @@ function selectBackground(bgId) {
 
 function openStickerModal() {
     const modal = document.getElementById('stickerModal');
-    modal.style.display = 'block';
+    if (modal) modal.style.display = 'block';
 }
 
 function closeStickerModal() {
     const modal = document.getElementById('stickerModal');
-    modal.style.display = 'none';
+    if (modal) modal.style.display = 'none';
 }
 
 function selectAvatar(avatarId) {
