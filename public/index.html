@@ -872,7 +872,7 @@
     <a href="marketplace.html" class="nav-button">Marketplace</a>
     <button class="nav-button" onclick="openFAQ()">FAQ</button>
     <button class="nav-button">Connect</button>
-    <button class="nav-button" onclick="openBugReport()">Report Bug</button>
+    <button class="nav-button bug-report-btn">Report Bug</button>
 </div>
     </nav>
 
@@ -884,7 +884,7 @@
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
                 <span>WebDevGF</span>
-                <button class="customize-btn" onclick="openCustomize()">Customize</button>
+                <button class="customize-btn">Customize</button>
             </div>
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
@@ -934,7 +934,7 @@
                 <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()">Send</button>
                 <button onclick="handleDemoClick()" class="demo-button">Demo</button>
-                <button onclick="resetChat()" class="reset-button">Reset Chat</button>
+                <button class="reset-button">Reset Chat</button>
             </div>
         </div>
     </div>
@@ -1488,27 +1488,6 @@ function confirmReset() {
     closeResetModal();
 }
 
-// Update the existing window.onclick function
-window.onclick = function(event) {
-    const customizeModal = document.getElementById('customizeModal');
-    const faqModal = document.getElementById('faqModal');
-    const bugReportModal = document.getElementById('bugReportModal');
-    const resetModal = document.getElementById('resetModal');
-    const stickerModal = document.getElementById('stickerModal');
-    
-    if (event.target === customizeModal) {
-        closeCustomize();
-    } else if (event.target === faqModal) {
-        closeFAQ();
-    } else if (event.target === bugReportModal) {
-        closeBugReport();
-    } else if (event.target === resetModal) {
-        closeResetModal();
-    } else if (event.target === stickerModal) {
-        closeStickerModal();
-    }
-}
-
 // Load chat history when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     loadChatHistory();
@@ -1769,6 +1748,48 @@ function selectAvatar(avatarId) {
     avatarItems.forEach(item => item.classList.remove('selected'));
     event.currentTarget.classList.add('selected');
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Button event listeners
+    const customizeBtn = document.querySelector('.customize-btn');
+    if (customizeBtn) {
+        customizeBtn.addEventListener('click', function() {
+            document.getElementById('customizeModal').style.display = 'block';
+        });
+    }
+
+    const bugReportBtn = document.querySelector('.bug-report-btn');
+    if (bugReportBtn) {
+        bugReportBtn.addEventListener('click', function() {
+            document.getElementById('bugReportModal').style.display = 'block';
+        });
+    }
+
+    const resetBtn = document.querySelector('.reset-button');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+            document.getElementById('resetModal').style.display = 'block';
+        });
+    }
+
+    // Close buttons
+    const closeButtons = document.querySelectorAll('.close-btn');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+
+    // Click outside to close
+    window.addEventListener('click', function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    });
+});
 
 function selectMusic(musicId) {
     const musicContainer = document.getElementById('musicPlayer');
