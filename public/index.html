@@ -1190,7 +1190,7 @@ WebDevGF believes in learning by doing. She guides users through:
 > For more information or support, connect with us on Twitter or join our community!`;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Existing loading animation code
+    // Initial loading animation
     const initialLoading = document.querySelector('.initial-loading');
     
     setTimeout(() => {
@@ -1200,32 +1200,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }, 2000);
 
+    // Initialize customization
+    initializeCustomization();
+    
+    // Initialize viewer
+    initializeViewer();
+    
     // Add sticker button event listener
     const stickerButton = document.querySelector('.sticker-button');
     if (stickerButton) {
         stickerButton.addEventListener('click', openStickerModal);
     }
+});
 
-    // Add modal event listeners
-    window.addEventListener('click', (event) => {
-        const modals = {
-            'customizeModal': closeCustomize,
-            'faqModal': closeFAQ,
-            'bugReportModal': closeBugReport,
-            'resetModal': closeResetModal,
-            'stickerModal': closeStickerModal
-        };
-
-        Object.entries(modals).forEach(([modalId, closeFunction]) => {
-            const modal = document.getElementById(modalId);
-            if (event.target === modal) {
-                closeFunction();
-            }
-        });
-    });
-
-    // Initialize customization
-    initializeCustomization();
+// Add this outside the DOMContentLoaded event
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('modal')) {
+        if (event.target.id === 'customizeModal') closeCustomize();
+        if (event.target.id === 'faqModal') closeFAQ();
+        if (event.target.id === 'bugReportModal') closeBugReport();
+        if (event.target.id === 'resetModal') closeResetModal();
+        if (event.target.id === 'stickerModal') closeStickerModal();
+    }
 });
 
     // Add the new initialization function here
@@ -1768,6 +1764,25 @@ function selectMusic(musicId) {
         </iframe>
     `;
 }
+
+function initializeViewer() {
+    const viewer = document.getElementById('characterViewer');
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    
+    if (viewer) {
+        viewer.addEventListener('load', () => {
+            setTimeout(() => {
+                loadingOverlay.classList.add('fade-out');
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 300);
+            }, 1500);
+        });
+    }
+}
+
+// Call the initialization function
+initializeViewer();
     </script>
     <div id="customizeModal" class="modal">
         <div class="modal-content">
