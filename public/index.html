@@ -264,85 +264,6 @@
     box-shadow: 0 4px 12px rgba(255, 75, 75, 0.2);
 }
 
-.sticker-button {
-    position: fixed;
-    bottom: 80px;
-    left: 20px;
-    z-index: 99;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.sticker-button img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
-}
-
-.sticker-button:hover {
-    transform: scale(1.1);
-}
-
-.sticker-modal {
-    max-width: 800px
-}
-
-.sticker-terminal {
-    padding: 30px
-}
-
-.sticker-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.sticker-item {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.sticker-item:hover {
-    transform: translateY(-5px);
-}
-
-.sticker-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-.download-btn {
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.download-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
-}
-
-.sticker-footer {
-    text-align: center;
-    margin-top: 20px;
-    color: #00f2fe;
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
 .demo-button {
     background: linear-gradient(45deg, #4facfe, #00f2fe);
     border: none;
@@ -872,7 +793,7 @@
     <a href="marketplace.html" class="nav-button">Marketplace</a>
     <button class="nav-button" onclick="openFAQ()">FAQ</button>
     <button class="nav-button">Connect</button>
-    <button class="nav-button">Report Bug</button>
+    <button class="nav-button" onclick="openBugReport()">Report Bug</button>
 </div>
     </nav>
 
@@ -884,7 +805,7 @@
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
                 <span>WebDevGF</span>
-                <button class="customize-btn">Customize</button>
+                <button class="customize-btn" onclick="openCustomize()">Customize</button>
             </div>
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
@@ -934,7 +855,7 @@
                 <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()">Send</button>
                 <button onclick="handleDemoClick()" class="demo-button">Demo</button>
-                <button class="reset-button">Reset Chat</button>
+                <button onclick="resetChat()" class="reset-button">Reset Chat</button>
             </div>
         </div>
     </div>
@@ -948,47 +869,6 @@
             </div>
             <div class="terminal">
                 <div id="terminal-text"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="sticker-button">
-        <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771d5d76a711b1564d67f2d_stickers.png" alt="WebDevGF Stickers">
-    </div>
-    
-    <div id="stickerModal" class="modal">
-        <div class="modal-content sticker-modal">
-            <div class="modal-header">
-                <div class="terminal-title">WebDevGF Stickers!</div>
-                <span class="close-btn" onclick="closeStickerModal()">&times;</span>
-            </div>
-            <div class="terminal sticker-terminal">
-                <div class="terminal sticker-terminal">
-                    <div class="sticker-grid">
-                        <div class="sticker-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771d5d76a711b1564d67f2d_stickers.png" alt="Sticker 1">
-                            <button class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771d5d76a711b1564d67f2d_stickers.png', 'sticker1')">Download</button>
-                        </div>
-                        <div class="sticker-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="Sticker 2">
-                            <button class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png', 'sticker2')">Download</button>
-                        </div>
-                        <div class="sticker-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="Sticker 3">
-                            <button class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png', 'sticker3')">Download</button>
-                        </div>
-                        <div class="sticker-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="Sticker 4">
-                            <button class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png', 'sticker4')">Download</button>
-                        </div>
-                        <div class="sticker-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="Sticker 5">
-                            <button class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png', 'sticker5')">Download</button>
-                        </div>
-                    </div>
-                <div class="sticker-footer">
-                    <p>Let's spam the timeline webdevs! 🚀</p>
-                </div>
             </div>
         </div>
     </div>
@@ -1092,20 +972,6 @@ function extractLatestCode() {
     return latestCode;
 }
 
-function downloadSticker(url, name) {
-    fetch(url)
-        .then(response => response.blob())
-        .then(blob => {
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = `webdevgf-${name}.png`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        })
-        .catch(error => console.error('Error downloading sticker:', error));
-}
-
 // Event handler for demo button
 function handleDemoClick() {
     const code = extractLatestCode();
@@ -1190,9 +1056,6 @@ WebDevGF believes in learning by doing. She guides users through:
 > For more information or support, connect with us on Twitter or join our community!`;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // First load chat history
-    loadChatHistory();
-    
     // Initial loading animation
     const initialLoading = document.querySelector('.initial-loading');
     
@@ -1205,28 +1068,6 @@ document.addEventListener('DOMContentLoaded', () => {
             initialLoading.remove();
         }, 500);
     }, 2000);
-
-    // Initialize all modal buttons
-    const stickerButton = document.querySelector('.sticker-button');
-    if (stickerButton) {
-        stickerButton.addEventListener('click', openStickerModal);
-    }
-
-    const customizeButton = document.querySelector('.customize-btn');
-    if (customizeButton) {
-        customizeButton.addEventListener('click', openCustomize);
-    }
-
-    const bugReportButton = document.querySelector('[onclick="openBugReport()"]');
-    if (bugReportButton) {
-        bugReportButton.removeAttribute('onclick');
-        bugReportButton.addEventListener('click', openBugReport);
-    }
-
-    const resetButton = document.querySelector('.reset-button');
-    if (resetButton) {
-        resetButton.addEventListener('click', openResetModal);
-    }
 
     // Existing 3D viewer code
     const viewer = document.getElementById('characterViewer');
@@ -1248,53 +1089,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialMessage = document.querySelector('.ai-message');
         typeMessage(initialMessage, initialMessage.textContent);
     });
-
-    // Initialize customization options
-    // Update the HTML for backgrounds
-    const backgroundsElement = document.getElementById('backgrounds');
-    if (backgroundsElement) {
-        backgroundsElement.innerHTML = `
-            <div class="grid-container">
-                ${Object.entries(backgrounds).map(([id, url]) => `
-                    <div class="grid-item" onclick="selectBackground('${id}')">
-                        <img src="${url}" alt="${id} Background">
-                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-
-    // Update the HTML for avatars
-    const avatarsElement = document.getElementById('avatars');
-    if (avatarsElement) {
-        avatarsElement.innerHTML = `
-            <div class="grid-container">
-                ${Object.entries(avatars).map(([id, data]) => `
-                    <div class="grid-item" onclick="selectAvatar('${id}')">
-                        <img src="${data.preview}" alt="${id} Avatar">
-                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-
-    // Update the HTML for music
-    const musicElement = document.getElementById('music');
-    if (musicElement) {
-        musicElement.innerHTML = `
-            <div class="music-list">
-                ${Object.entries(musicTracks).map(([id, track]) => `
-                    <div class="music-item" onclick="selectMusic('${id}')">
-                        <span>${track.title}</span>
-                        <button class="play-btn">▶</button>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-});
 
     // Add the new initialization function here
     function initializeCustomization() {
@@ -1334,7 +1128,11 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
     }
-    
+
+    // Call the initialization function
+    initializeCustomization();
+});
+
         // FAQ functions
         function openFAQ() {
             const modal = document.getElementById('faqModal');
@@ -1362,6 +1160,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => typeWriter(text, index + 1), 20);
             } else {
                 terminalText.innerHTML += '<span class="cursor"></span>';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('faqModal');
+            if (event.target === modal) {
+                closeFAQ();
             }
         }
 
@@ -1533,12 +1339,7 @@ function loadChatHistory() {
 
 // Reset chat functionality
 function resetChat() {
-    openResetModal();
-}
-
-function openResetModal() {
-    const modal = document.getElementById('resetModal');
-    modal.style.display = 'block';
+    document.getElementById('resetModal').style.display = 'block';
 }
 
 function closeResetModal() {
@@ -1557,23 +1358,22 @@ function confirmReset() {
 }
 
 // Update the existing window.onclick function
+const originalWindowClick = window.onclick;
 window.onclick = function(event) {
-    const modals = {
-        customizeModal: closeCustomize,
-        faqModal: closeFAQ,
-        bugReportModal: closeBugReport,
-        resetModal: closeResetModal,
-        stickerModal: closeStickerModal
-    };
-
-    for (let modalId in modals) {
-        const modal = document.getElementById(modalId);
-        if (event.target === modal) {
-            modals[modalId]();
-            break;
-        }
+    if (originalWindowClick) {
+        originalWindowClick(event);
+    }
+    
+    const resetModal = document.getElementById('resetModal');
+    if (event.target === resetModal) {
+        closeResetModal();
     }
 };
+
+// Load chat history when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadChatHistory();
+});
 
         async function sendMessage() {
             const input = document.getElementById('userInput');
@@ -1703,6 +1503,21 @@ function selectMusic(musicId) {
     console.log('Selected music:', musicId);
 }
 
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const customizeModal = document.getElementById('customizeModal');
+    const faqModal = document.getElementById('faqModal');
+    const bugReportModal = document.getElementById('bugReportModal');
+    
+    if (event.target === customizeModal) {
+        closeCustomize();
+    } else if (event.target === faqModal) {
+        closeFAQ();
+    } else if (event.target === bugReportModal) {
+        closeBugReport();
+    }
+}
+
 // Background Options
 const backgrounds = {
 japan: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67706de4c10995186589b87d_japann.png",
@@ -1798,16 +1613,6 @@ function selectBackground(bgId) {
     const bgItems = document.querySelectorAll('#backgrounds .grid-item');
     bgItems.forEach(item => item.classList.remove('selected'));
     event.currentTarget.classList.add('selected');
-}
-
-function openStickerModal() {
-    const modal = document.getElementById('stickerModal');
-    modal.style.display = 'block';
-}
-
-function closeStickerModal() {
-    const modal = document.getElementById('stickerModal');
-    modal.style.display = 'none';
 }
 
 function selectAvatar(avatarId) {
