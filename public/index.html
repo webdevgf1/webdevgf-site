@@ -870,9 +870,9 @@
     <a href="https://pump.fun" target="_blank" class="nav-button">pump.fun</a>
     <a href="chatbots.html" class="nav-button">Chat Bots</a>
     <a href="marketplace.html" class="nav-button">Marketplace</a>
-    <button class="nav-button modal-trigger" data-modal="faqModal">FAQ</button>
+    <button class="nav-button" onclick="openFAQ()">FAQ</button>
     <button class="nav-button">Connect</button>
-    <button class="nav-button modal-trigger" data-modal="bugReportModal">Report Bug</button>
+    <button class="nav-button" onclick="openBugReport()">Report Bug</button>
 </div>
     </nav>
 
@@ -884,7 +884,7 @@
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
                 <span>WebDevGF</span>
-                <button class="customize-btn modal-trigger" data-modal="customizeModal">Customize</button>
+                <button class="customize-btn" onclick="openCustomize()">Customize</button>
             </div>
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
@@ -934,7 +934,7 @@
                 <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()">Send</button>
                 <button onclick="handleDemoClick()" class="demo-button">Demo</button>
-                <button class="reset-button modal-trigger" data-modal="resetModal">Reset Chat</button>
+                <button onclick="resetChat()" class="reset-button">Reset Chat</button>
             </div>
         </div>
     </div>
@@ -1189,6 +1189,46 @@ WebDevGF believes in learning by doing. She guides users through:
 
 > For more information or support, connect with us on Twitter or join our community!`;
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial loading animation
+    const initialLoading = document.querySelector('.initial-loading');
+    
+    // Wait for logo animation to complete
+    setTimeout(() => {
+        initialLoading.classList.add('fade-out');
+        
+        // Remove the loading screen from DOM after fade out
+        setTimeout(() => {
+            initialLoading.remove();
+        }, 500);
+    }, 2000);
+
+    const stickerButton = document.querySelector('.sticker-button');
+    if (stickerButton) {
+        stickerButton.addEventListener('click', openStickerModal);
+    }
+
+    // Existing 3D viewer code
+    const viewer = document.getElementById('characterViewer');
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    
+    viewer.addEventListener('load', () => {
+        viewer.cameraOrbit = "0deg 80deg 1.4m";
+        viewer.cameraTarget = "0m 1.6m 0m";
+        viewer.interactionPrompt = null;
+        
+        setTimeout(() => {
+            loadingOverlay.classList.add('fade-out');
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 300);
+        }, 1500);
+
+        // Type out the initial greeting
+        const initialMessage = document.querySelector('.ai-message');
+        typeMessage(initialMessage, initialMessage.textContent);
+    });
+
     // Add the new initialization function here
     function initializeCustomization() {
         // Update the HTML for backgrounds
@@ -1230,6 +1270,7 @@ WebDevGF believes in learning by doing. She guides users through:
 
     // Call the initialization function
     initializeCustomization();
+});
 
         // FAQ functions
         function openFAQ() {
@@ -1468,6 +1509,11 @@ window.onclick = function(event) {
     }
 }
 
+// Load chat history when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadChatHistory();
+});
+
         async function sendMessage() {
             const input = document.getElementById('userInput');
             const message = input.value.trim();
@@ -1672,91 +1718,6 @@ const musicTracks = {
         title: "Justin Bieber - Beauty And A Beat"
     }
 };
-
-function initializeModals() {
-    // Get all elements with modal-trigger class
-    const modalTriggers = document.querySelectorAll('.modal-trigger');
-    
-    modalTriggers.forEach(trigger => {
-        trigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            const modalId = trigger.getAttribute('data-modal');
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.style.display = 'block';
-            }
-        });
-    });
-
-    // Setup close buttons
-    document.querySelectorAll('.close-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const modal = btn.closest('.modal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        });
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', (event) => {
-        if (event.target.classList.contains('modal')) {
-            event.target.style.display = 'none';
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded');
-    initializeModals();
-    
-    const initialLoading = document.querySelector('.initial-loading');
-    console.log('Found loading screen:', !!initialLoading);
-    
-    if (initialLoading) {
-        setTimeout(() => {
-            console.log('Adding fade-out class');
-            initialLoading.classList.add('fade-out');
-            setTimeout(() => {
-                console.log('Removing loading screen');
-                initialLoading.remove();
-            }, 500);
-        }, 2000);
-    }
-});
-
-    // Initialize sticker button
-    const stickerButton = document.querySelector('.sticker-button');
-    if (stickerButton) {
-        stickerButton.addEventListener('click', openStickerModal);
-    }
-
-    // Initialize 3D viewer
-    const viewer = document.getElementById('characterViewer');
-    const loadingOverlay = document.querySelector('.loading-overlay');
-    
-    viewer.addEventListener('load', () => {
-        viewer.cameraOrbit = "0deg 80deg 1.4m";
-        viewer.cameraTarget = "0m 1.6m 0m";
-        viewer.interactionPrompt = null;
-        
-        setTimeout(() => {
-            loadingOverlay.classList.add('fade-out');
-            setTimeout(() => {
-                loadingOverlay.style.display = 'none';
-            }, 300);
-        }, 1500);
-
-        // Type out the initial greeting
-        const initialMessage = document.querySelector('.ai-message');
-        typeMessage(initialMessage, initialMessage.textContent);
-    });
-
-    // Initialize customization
-    initializeCustomization();
-    
-    // Load chat history
-    loadChatHistory();
 
 // Audio Player
 let currentAudio = null;
