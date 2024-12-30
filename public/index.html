@@ -1230,7 +1230,7 @@ WebDevGF believes in learning by doing. She guides users through:
 
     // Call the initialization function
     initializeCustomization();
-    
+
         // FAQ functions
         function openFAQ() {
             const modal = document.getElementById('faqModal');
@@ -1707,21 +1707,23 @@ function initializeModals() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize modals
+    console.log('DOM Content Loaded');
     initializeModals();
     
-    // Initial loading animation
     const initialLoading = document.querySelector('.initial-loading');
+    console.log('Found loading screen:', !!initialLoading);
     
-    // Wait for logo animation to complete
-    setTimeout(() => {
-        initialLoading.classList.add('fade-out');
-        
-        // Remove the loading screen from DOM after fade out
+    if (initialLoading) {
         setTimeout(() => {
-            initialLoading.remove();
-        }, 500);
-    }, 2000);
+            console.log('Adding fade-out class');
+            initialLoading.classList.add('fade-out');
+            setTimeout(() => {
+                console.log('Removing loading screen');
+                initialLoading.remove();
+            }, 500);
+        }, 2000);
+    }
+});
 
     // Initialize sticker button
     const stickerButton = document.querySelector('.sticker-button');
@@ -1755,7 +1757,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Load chat history
     loadChatHistory();
-});
 
 // Audio Player
 let currentAudio = null;
