@@ -872,7 +872,7 @@
     <a href="marketplace.html" class="nav-button">Marketplace</a>
     <button class="nav-button" onclick="openFAQ()">FAQ</button>
     <button class="nav-button">Connect</button>
-    <button class="nav-button" onclick="openBugReport()">Report Bug</button>
+    <button class="nav-button">Report Bug</button>
 </div>
     </nav>
 
@@ -884,7 +884,7 @@
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
                 <span>WebDevGF</span>
-                <button class="customize-btn" onclick="openCustomize()">Customize</button>
+                <button class="customize-btn">Customize</button>
             </div>
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
@@ -934,7 +934,7 @@
                 <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()">Send</button>
                 <button onclick="handleDemoClick()" class="demo-button">Demo</button>
-                <button onclick="resetChat()" class="reset-button">Reset Chat</button>
+                <button class="reset-button">Reset Chat</button>
             </div>
         </div>
     </div>
@@ -1190,6 +1190,9 @@ WebDevGF believes in learning by doing. She guides users through:
 > For more information or support, connect with us on Twitter or join our community!`;
 
 document.addEventListener('DOMContentLoaded', () => {
+    // First load chat history
+    loadChatHistory();
+    
     // Initial loading animation
     const initialLoading = document.querySelector('.initial-loading');
     
@@ -1203,9 +1206,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }, 2000);
 
+    // Initialize all modal buttons
     const stickerButton = document.querySelector('.sticker-button');
     if (stickerButton) {
         stickerButton.addEventListener('click', openStickerModal);
+    }
+
+    const customizeButton = document.querySelector('.customize-btn');
+    if (customizeButton) {
+        customizeButton.addEventListener('click', openCustomize);
+    }
+
+    const bugReportButton = document.querySelector('[onclick="openBugReport()"]');
+    if (bugReportButton) {
+        bugReportButton.removeAttribute('onclick');
+        bugReportButton.addEventListener('click', openBugReport);
+    }
+
+    const resetButton = document.querySelector('.reset-button');
+    if (resetButton) {
+        resetButton.addEventListener('click', openResetModal);
     }
 
     // Existing 3D viewer code
@@ -1228,6 +1248,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialMessage = document.querySelector('.ai-message');
         typeMessage(initialMessage, initialMessage.textContent);
     });
+
+    // Initialize customization options
+    // Update the HTML for backgrounds
+    const backgroundsElement = document.getElementById('backgrounds');
+    if (backgroundsElement) {
+        backgroundsElement.innerHTML = `
+            <div class="grid-container">
+                ${Object.entries(backgrounds).map(([id, url]) => `
+                    <div class="grid-item" onclick="selectBackground('${id}')">
+                        <img src="${url}" alt="${id} Background">
+                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // Update the HTML for avatars
+    const avatarsElement = document.getElementById('avatars');
+    if (avatarsElement) {
+        avatarsElement.innerHTML = `
+            <div class="grid-container">
+                ${Object.entries(avatars).map(([id, data]) => `
+                    <div class="grid-item" onclick="selectAvatar('${id}')">
+                        <img src="${data.preview}" alt="${id} Avatar">
+                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // Update the HTML for music
+    const musicElement = document.getElementById('music');
+    if (musicElement) {
+        musicElement.innerHTML = `
+            <div class="music-list">
+                ${Object.entries(musicTracks).map(([id, track]) => `
+                    <div class="music-item" onclick="selectMusic('${id}')">
+                        <span>${track.title}</span>
+                        <button class="play-btn">▶</button>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+});
 
     // Add the new initialization function here
     function initializeCustomization() {
@@ -1267,11 +1334,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
     }
-
-    // Call the initialization function
-    initializeCustomization();
-});
-
+    
         // FAQ functions
         function openFAQ() {
             const modal = document.getElementById('faqModal');
@@ -1511,11 +1574,6 @@ window.onclick = function(event) {
         }
     }
 };
-
-// Load chat history when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    loadChatHistory();
-});
 
         async function sendMessage() {
             const input = document.getElementById('userInput');
