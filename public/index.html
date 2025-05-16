@@ -835,7 +835,8 @@
     field-of-view="25deg"
     interpolation-decay="200"
     
-    environment-image="https://modelviewer.dev/shared-assets/environments/aircraft_workshop_01_1k.hdr"
+    environment-image="legacy"
+    skybox-image="legacy"
     exposure="1"
     
     shadow-intensity="0"
@@ -844,6 +845,13 @@
     interaction-policy="none"
     auto-rotate="false"
     rotation-per-second="0deg">
+    
+    <!-- Debug with colored lights to see if materials respond to color -->
+    <div slot="model-lighting">
+        <span class="light" intensity="2" color="#ff0000" style="transform: translate3d(2m, 2m, 2m)"></span>
+        <span class="light" intensity="2" color="#00ff00" style="transform: translate3d(-2m, 2m, 2m)"></span>
+        <span class="light" intensity="2" color="#0000ff" style="transform: translate3d(0m, 2m, -2m)"></span>
+    </div>
 </model-viewer>
         </div>
 
