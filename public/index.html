@@ -836,25 +836,26 @@
     interpolation-decay="200"
     environment-image="neutral"
     skybox-image="neutral"
-    exposure="2.5"                    
+    exposure="1.2"
     disable-zoom="true"
     disable-pan="true"
     interaction-policy="none"
     auto-rotate="false"
     rotation-per-second="0deg"
-    tone-mapping="commerce"
-    shadow-intensity="1"             
-    environment-intensity="1.5">      
+    tone-mapping="commerce">
     
-    <!-- Changed slot from "default" to "model-lighting" -->
-    <div class="model-lighting" slot="model-lighting">
-        <!-- Added intensity and color attributes to each light -->
-        <span class="light" intensity="3" color="#ffffff" style="transform: translate3d(0m, 2m, 4m)"></span>
-        <span class="light" intensity="2" color="#ffffff" style="transform: translate3d(0m, 4m, 0m)"></span>
-        <span class="light" intensity="1.5" color="#b0e0ff" style="transform: translate3d(4m, 2m, 0m)"></span>
-        <span class="light" intensity="1.5" color="#ffe0b0" style="transform: translate3d(-4m, 2m, 0m)"></span>
-        <!-- Added a bottom fill light to illuminate underside -->
-        <span class="light" intensity="0.8" color="#ffffff" style="transform: translate3d(0m, -1m, 2m)"></span>
+    <!-- Completely redone lighting setup with new positions -->
+    <div slot="model-lighting">
+        <!-- Front light - closer to camera -->
+        <span class="light" intensity="5" color="#ffffff" style="transform: translate3d(0m, 1.5m, 2m)"></span>
+        <!-- Top light - directly above -->
+        <span class="light" intensity="3" color="#ffffff" style="transform: translate3d(0m, 3m, 0m)"></span>
+        <!-- Right light - closer -->
+        <span class="light" intensity="2" color="#ffffff" style="transform: translate3d(1.5m, 1.5m, 0m)"></span>
+        <!-- Left light - closer -->
+        <span class="light" intensity="2" color="#ffffff" style="transform: translate3d(-1.5m, 1.5m, 0m)"></span>
+        <!-- Back light -->
+        <span class="light" intensity="2" color="#ffffff" style="transform: translate3d(0m, 1.5m, -1.5m)"></span>
     </div>
 </model-viewer>
         </div>
