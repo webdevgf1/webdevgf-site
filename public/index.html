@@ -834,29 +834,17 @@
     camera-orbit="0deg 80deg 1.4m"
     field-of-view="25deg"
     interpolation-decay="200"
-    environment-image="neutral"
-    skybox-image="neutral"
-    exposure="1.2"
+    
+    environment-image="legacy"
+    skybox-image="legacy"
+    exposure="1.5"
+    
+    shadow-intensity="0"
     disable-zoom="true"
     disable-pan="true"
     interaction-policy="none"
     auto-rotate="false"
-    rotation-per-second="0deg"
-    tone-mapping="commerce">
-    
-    <!-- Completely redone lighting setup with new positions -->
-    <div slot="model-lighting">
-        <!-- Front light - closer to camera -->
-        <span class="light" intensity="5" color="#ffffff" style="transform: translate3d(0m, 1.5m, 2m)"></span>
-        <!-- Top light - directly above -->
-        <span class="light" intensity="3" color="#ffffff" style="transform: translate3d(0m, 3m, 0m)"></span>
-        <!-- Right light - closer -->
-        <span class="light" intensity="2" color="#ffffff" style="transform: translate3d(1.5m, 1.5m, 0m)"></span>
-        <!-- Left light - closer -->
-        <span class="light" intensity="2" color="#ffffff" style="transform: translate3d(-1.5m, 1.5m, 0m)"></span>
-        <!-- Back light -->
-        <span class="light" intensity="2" color="#ffffff" style="transform: translate3d(0m, 1.5m, -1.5m)"></span>
-    </div>
+    rotation-per-second="0deg">
 </model-viewer>
         </div>
 
