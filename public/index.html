@@ -827,31 +827,23 @@
             </div>
             <model-viewer
     id="characterViewer"
-    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/anime.glb"
+    src="../amy.glb"
     animation-name="idle"
     autoplay
     camera-target="0 1.6 0"
     camera-orbit="0deg 80deg 1.4m"
     field-of-view="25deg"
     interpolation-decay="200"
-    
-    environment-image="legacy"
-    skybox-image="legacy"
-    exposure="1"
-    
+    environment-image="neutral"
+    skybox-image="neutral"
+    exposure="1.5"
     shadow-intensity="0"
     disable-zoom="true"
     disable-pan="true"
     interaction-policy="none"
     auto-rotate="false"
-    rotation-per-second="0deg">
-    
-    <!-- Debug with colored lights to see if materials respond to color -->
-    <div slot="model-lighting">
-        <span class="light" intensity="2" color="#ff0000" style="transform: translate3d(2m, 2m, 2m)"></span>
-        <span class="light" intensity="2" color="#00ff00" style="transform: translate3d(-2m, 2m, 2m)"></span>
-        <span class="light" intensity="2" color="#0000ff" style="transform: translate3d(0m, 2m, -2m)"></span>
-    </div>
+    rotation-per-second="0deg"
+    tone-mapping="commerce">
 </model-viewer>
         </div>
 
