@@ -787,21 +787,6 @@
             vertical-align: middle;
         }
 
-        .model-container {
-        position: relative;
-        width: 800px;
-        height: 740px;
-        overflow: hidden;
-    }
-    
-    #characterViewer {
-        position: absolute;
-        top: -350px;
-        left: 0;
-        width: 100%;
-        height: 120%;
-    }
-
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
@@ -840,28 +825,28 @@
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
             </div>
-            <div class="model-container">
-    <model-viewer
-        id="characterViewer"
-        src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
-        animation-name="idle"
-        autoplay
-        camera-target="0 1.0 0"
-        camera-orbit="0deg 90deg 2m"
-        field-of-view="30deg"
-        interpolation-decay="200"
-        environment-image="neutral"
-        skybox-image="neutral"
-        exposure="1.5"
-        shadow-intensity="0"
-        disable-zoom="true"
-        disable-pan="true"
-        interaction-policy="none"
-        auto-rotate="false"
-        rotation-per-second="0deg"
-        tone-mapping="commerce">
-    </model-viewer>
-</div>
+            <model-viewer
+    id="characterViewer"
+    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
+    animation-name="idle"
+    autoplay
+    camera-target="0 1.0 0"
+    camera-orbit="0deg 90deg 2m"
+    field-of-view="30deg"
+    interpolation-decay="200"
+    environment-image="neutral"
+    skybox-image="neutral"
+    exposure="1.5"
+    shadow-intensity="0"
+    disable-zoom="true"
+    disable-pan="true"
+    interaction-policy="none"
+    auto-rotate="false"
+    rotation-per-second="0deg"
+    tone-mapping="commerce"
+    style="--poster-color: transparent; margin-top: -350px; height: 150%;">
+</model-viewer>
+        </div>
 
         <div class="chat-interface">
             <div class="chat-history" id="chatHistory">
