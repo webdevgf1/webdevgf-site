@@ -830,8 +830,8 @@
     src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
     animation-name="idle"
     autoplay
-    camera-target="-95.816808289357103 9149.46842888749006 27.002578242763862"
-    camera-orbit="-0.08490790955648098rad 7.5884854746191626rad 220.89844624989948m"
+    camera-target="-0.816808289357103 9149.46842888749006 27.002578242763862"
+    camera-orbit="-0.08490790955648098rad 1.5884854746191626rad 220.89844624989948m"
     field-of-view="30.000000000000004deg"
     environment-image="neutral"
     skybox-image="neutral"
@@ -1060,17 +1060,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000);
 
     // Existing 3D viewer code
+    const viewer = document.getElementById('characterViewer');
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    
     viewer.addEventListener('load', () => {
-    // Basic reset that should show the model
-    viewer.cameraOrbit = "0deg 90deg 5m";
-    viewer.cameraTarget = "0m 0m 0m";
-    viewer.fieldOfView = "30deg";
-    
-    // Enable camera controls temporarily to find her
-    viewer.setAttribute('camera-controls', '');
-    
-    viewer.interactionPrompt = null;
-});
+        viewer.cameraOrbit = "0deg 80deg 1.4m";
+        viewer.cameraTarget = "0m 180m 0m";
+        viewer.interactionPrompt = null;
         
         setTimeout(() => {
             loadingOverlay.classList.add('fade-out');
