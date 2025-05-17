@@ -1060,13 +1060,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000);
 
     // Existing 3D viewer code
-    const viewer = document.getElementById('characterViewer');
-    const loadingOverlay = document.querySelector('.loading-overlay');
-    
     viewer.addEventListener('load', () => {
-        viewer.cameraOrbit = "0deg 150deg 0m";
-        viewer.cameraTarget = "80m 270m 66m";
-        viewer.interactionPrompt = null;
+    // Basic reset that should show the model
+    viewer.cameraOrbit = "0deg 90deg 5m";
+    viewer.cameraTarget = "0m 0m 0m";
+    viewer.fieldOfView = "30deg";
+    
+    // Enable camera controls temporarily to find her
+    viewer.setAttribute('camera-controls', '');
+    
+    viewer.interactionPrompt = null;
+});
         
         setTimeout(() => {
             loadingOverlay.classList.add('fade-out');
