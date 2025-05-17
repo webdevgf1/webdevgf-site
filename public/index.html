@@ -828,19 +828,14 @@
             <model-viewer
     id="characterViewer"
     src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
-    camera-controls           
-    min-camera-orbit="auto 0deg auto"
-    max-camera-orbit="auto 180deg auto"
-    min-field-of-view="10deg"
-    max-field-of-view="50deg"
-    interpolation-decay="200"
+    camera-controls        <!-- Add this line -->
+    animation-name="idle"
+    autoplay
     environment-image="neutral"
     skybox-image="neutral"
     exposure="1.5"
     shadow-intensity="0"
-    auto-rotate="false"
-    tone-mapping="commerce"
-    style="--poster-color: transparent; height: 740px;">
+    tone-mapping="commerce">
 </model-viewer>
         </div>
 
@@ -1759,6 +1754,67 @@ function selectMusic(musicId) {
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
+    <style>
+    #cameraInfo {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 10px;
+        font-family: monospace;
+        z-index: 1000;
+        border-radius: 5px;
+    }
+</style>
+
+<div id="cameraInfo">Camera info will appear here</div>
+
+<script>
+    // Wait for everything to load
+    window.addEventListener('load', function() {
+        const viewer = document.querySelector('#characterViewer');
+        const infoBox = document.getElementById('cameraInfo');
+        
+        // Enable camera controls
+        viewer.setAttribute('camera-controls', '');
+        
+        // Update the info box periodically
+        setInterval(function() {
+            try {
+                const orbit = viewer.getCameraOrbit();
+                const target = viewer.getCameraTarget();
+                const fov = viewer.getFieldOfView();
+                
+                infoBox.innerHTML = `
+                    <strong>Camera Orbit:</strong> ${orbit}<br>
+                    <strong>Camera Target:</strong> ${target}<br>
+                    <strong>Field of View:</strong> ${fov}deg<br>
+                    <br>
+                    <button onclick="copyCameraSettings()">Copy Settings</button>
+                `;
+            } catch (e) {
+                infoBox.innerHTML = 'Error: ' + e.message;
+            }
+        }, 500);
+        
+        // Add global function to copy settings
+        window.copyCameraSettings = function() {
+            const orbit = viewer.getCameraOrbit();
+            const target = viewer.getCameraTarget();
+            const fov = viewer.getFieldOfView();
+            
+            const settings = `
+camera-target="${target.x} ${target.y} ${target.z}"
+camera-orbit="${orbit.theta}rad ${orbit.phi}rad ${orbit.radius}m"
+field-of-view="${fov}deg"
+            `.trim();
+            
+            navigator.clipboard.writeText(settings);
+            alert('Settings copied to clipboard!');
+        };
+    });
+</script>
 </body>
 </html>
