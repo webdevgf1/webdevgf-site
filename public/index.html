@@ -213,6 +213,23 @@
             transform: scale(0.5);
             animation: logoAnimation 1.5s ease-out forwards;
         }
+
+        .loading-logo {
+    width: 300px;
+    height: auto;
+    opacity: 0;
+    transform: scale(0.5);
+    animation: logoAnimation 1.5s ease-out forwards;
+    object-fit: contain;
+    border-radius: 10px; /* Optional: adds rounded corners */
+}
+
+/* Make it responsive on mobile */
+@media (max-width: 768px) {
+    .loading-logo {
+        width: 250px;
+    }
+}
     
         @keyframes logoAnimation {
             0% {
@@ -796,7 +813,11 @@
 </head>
 <body>
 <div class="initial-loading">
-    <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6830930b17c8eb685de7d075_ZULAN-23-05-2025%20(2).png" alt="WebDevGF Logo" class="loading-logo">
+    <video autoplay muted loop playsinline class="loading-logo">
+        <source src="https://res.cloudinary.com/dxwbxipab/video/upload/q_auto,f_auto,w_600/v1748016211/Untitled_video_-_Made_with_Clipchamp_34_rpaq8l.mp4" type="video/mp4">
+        <!-- Fallback image if video fails to load -->
+        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6830930b17c8eb685de7d075_ZULAN-23-05-2025%20(2).png" alt="WebDevGF Logo" class="loading-logo">
+    </video>
 </div>
     <nav class="nav-bar">
         <div class="logo-container">
