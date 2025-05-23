@@ -185,49 +185,45 @@
             object-fit: cover;
             opacity: 0.6;
         }
-
+        
         .initial-loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0f1116;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.5s ease-out;
-        }
-    
-        .initial-loading.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-    
-        .loading-logo {
-            width: 300px; /* Adjusted for the new logo */
-            height: auto;
-            opacity: 0;
-            transform: scale(0.5);
-            animation: logoAnimation 1.5s ease-out forwards;
-        }
-    
-        @keyframes logoAnimation {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0f1116;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.loading-logo {
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    transform: scale(0.5);
+    animation: logoAnimation 1.5s ease-out forwards;
+    object-fit: cover;
+}
+
+@keyframes logoAnimation {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
         .chat-container {
             display: flex;
@@ -835,8 +831,8 @@
 </head>
 <body>
 <div class="initial-loading">
-    <video autoplay muted loop playsinline class="loading-logo">
-        <source src="https://res.cloudinary.com/dxwbxipab/video/upload/q_auto,f_auto/v1748016211/Untitled_video_-_Made_with_Clipchamp_34_rpaq8l.mp4" type="video/mp4">
+    <video autoplay muted loop playsinline preload="auto" class="loading-logo">
+        <source src="./intro.mp4" type="video/mp4">
         <!-- Fallback image if video fails to load -->
         <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6830930b17c8eb685de7d075_ZULAN-23-05-2025%20(2).png" alt="WebDevGF Logo" class="loading-logo">
     </video>
