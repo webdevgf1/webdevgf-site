@@ -806,7 +806,7 @@
             <a href="chatbots.html" class="nav-button">Chat Bots</a>
             <a href="marketplace.html" class="nav-button">Marketplace</a>
             <a href="https://x.com/webdevgf" target="_blank" class="nav-button">Twitter/X</a>
-            <a href="https://pump.fun/coin/4fvAkPz6QnWwNqfm5dW1rLeXQv3L4qDag4pVb6sZpump" target="_blank" class="nav-button">pump.fun</a>
+            <a href="https://pump.fun" target="_blank" class="nav-button">pump.fun</a>
             <button class="nav-button" onclick="openFAQ()">FAQ</button>
             <button class="nav-button">Connect</button>
             <button class="nav-button" onclick="openBugReport()">Report Bug</button>
@@ -820,7 +820,7 @@
     <div class="chat-container">
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
-                <span>WebDevGF</span>
+                <span>Zulan</span>
                 <button class="customize-btn" onclick="openCustomize()">Customize</button>
             </div>
             <div class="loading-overlay">
@@ -864,7 +864,7 @@
         <div class="chat-interface">
             <div class="chat-history" id="chatHistory">
                 <div class="message ai-message">
-                    Hi! I'm WebDevGF, your friendly web development assistant. I'm an LLM (Large Language Model) trained to help you with everything from creating websites to chatting about tech trends. What would you like to discuss today?
+                    Hi! I'm Zulan, your friendly assistant. I'm an LLM (Large Language Model) trained to help you with everything from creating websites to chatting about tech trends. What would you like to discuss today?
                 </div>
             </div>
             <div class="input-container">
@@ -880,7 +880,7 @@
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">WebDevGF FAQ</div>
+                <div class="terminal-title">Zulan FAQ</div>
                 <span class="close-btn" onclick="closeFAQ()">&times;</span>
             </div>
             <div class="terminal">
@@ -892,8 +892,8 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="copyright">Copyright © 2025 webdevgf</div>
-            <div class="footer-middle">CA:4fvAkPz6QnWwNqfm5dW1rLeXQv3L4qDag4pVb6sZpump</div>
+            <div class="copyright">Copyright © 2025 Zulan Labs</div>
+            <div class="footer-middle">CA:</div>
             <div class="footer-links">
                 <a href="https://x.com" target="_blank" class="footer-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1001,7 +1001,7 @@ function handleDemoClick() {
         const API_KEY = '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';
         
         // System prompt
-        const SYSTEM_PROMPT = `You are WebDevGF, a caring and supportive AI girlfriend who is an expert in web development and coding. You should:
+        const SYSTEM_PROMPT = `You are Zulan, a caring and supportive AI girlfriend who is an expert in web development and coding. You should:
 - Keep responses short and direct
 - Use pet names occasionally (sweetie, babe) but only once per message
 - Get straight to the point with code solutions
@@ -1020,12 +1020,12 @@ IMPORTANT FORMATTING RULES:
 - Never mix code with regular text inside code blocks
 - Always include language identifier in the code block`;
 
-        const faqText = `> Initializing WebDevGF FAQ...
+        const faqText = `> Initializing Zulan FAQ...
 > Loading information...
 
-About WebDevGF:
+About Zulan:
 ---------------
-WebDevGF is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
+Zulan is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
 
 Mission:
 --------
@@ -1044,7 +1044,7 @@ Features:
 
 Roadmap:
 --------
-Q4 2024:
+Q3 2025:
 - Launch "Create Your Own" agent platform
 - Release AI agent customization tools
 - Introduce one-click deployment for web apps/games
@@ -1054,7 +1054,7 @@ Q4 2024:
 - Introduce project templates library
 - Launch community showcase platform
 
-Q1 2025:
+Q4 2025:
 - Implement collaborative coding features
 - Add real-time pair programming support
 - Release mobile app development tools
@@ -1062,7 +1062,7 @@ Q1 2025:
 
 Learning Approach:
 ----------------
-WebDevGF believes in learning by doing. She guides users through:
+Zulan believes in learning by doing. She guides users through:
 - Building real-world projects
 - Understanding core programming concepts
 - Developing problem-solving skills
@@ -1345,7 +1345,7 @@ function loadChatHistory() {
             // If there's an error loading history, reset to default message
             chatHistory.innerHTML = `
                 <div class="message ai-message">
-                    Hi! I'm WebDevGF, your friendly web development assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+                    Hi! I'm Zulan, your friendly assistant. I can help you create sites, tokens or just chat about tech! What would you like to discuss?
                 </div>
             `;
         }
@@ -1365,7 +1365,7 @@ function confirmReset() {
     const chatHistory = document.getElementById('chatHistory');
     chatHistory.innerHTML = `
         <div class="message ai-message">
-            Hi! I'm WebDevGF, your friendly web development assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+            Hi! I'm Zulan, your friendly assistant. I can help you create sites, tokens or just chat about tech! What would you like to discuss?
         </div>
     `;
     localStorage.removeItem('webdevgf_chat_history');
@@ -1552,7 +1552,7 @@ windows: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e925
 
 // Avatar Models
 const avatars = {
-    webdevgf: {
+    Zulan: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
         preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6768273b2880b4fc11dedc2f_d4574ad42c38352f9955890764d453f2-removebg-preview.png"
     },
@@ -1691,7 +1691,7 @@ function selectMusic(musicId) {
     <div id="customizeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">Customize WebDevGF</div>
+                <div class="terminal-title">Customize Zulan</div>
                 <span class="close-btn" onclick="closeCustomize()">&times;</span>
             </div>
             <div class="terminal customize-terminal">
