@@ -797,7 +797,7 @@
 </head>
 <body>
 <div class="initial-loading">
-    <video autoplay muted loop playsinline preload="auto" class="loading-logo">
+    <video autoplay loop playsinline preload="auto" class="loading-logo">
         <source src="./intro.mp4" type="video/mp4">
         <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6830930b17c8eb685de7d075_ZULAN-23-05-2025%20(2).png" alt="WebDevGF Logo" class="loading-logo">
     </video>
@@ -1080,7 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             initialLoading.remove();
         }, 500);
-    }, 2000);
+    }, 5000);
 
     // Existing 3D viewer code
     const viewer = document.getElementById('characterViewer');
