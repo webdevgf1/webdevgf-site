@@ -1,11 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoderGirlfriend - The coding AI Agent</title>
+    <title>WebDeveloperGF - The developer AI Agent</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/682fa9a62f4739ed8bcab689_New%20Project%20-%202025-05-22T234749.601.png">
+    <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67696881b30e84ee2141be37_WEBDEVS4%20(1).gif">
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
@@ -541,17 +542,6 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
-        .background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    opacity: 0.6;
-}
-
 .grid-item img {
     width: 100%;
     height: 100px;
@@ -806,17 +796,17 @@
 </head>
 <body>
 <div class="initial-loading">
-    <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/682fa9b40adccb509364afd9_coder-girlfriend-22-05-2025.png" alt="WebDevGF Logo" class="loading-logo">
+    <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/676879eee173c24cb8a83a78_webdevgf-22-12-2024.png" alt="WebDevGF Logo" class="loading-logo">
 </div>
     <nav class="nav-bar">
         <div class="logo-container">
-            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/682fa9b40adccb509364afd9_coder-girlfriend-22-05-2025.png" alt="WebDevGF Logo" class="logo-image-new">
+            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/676879eee173c24cb8a83a78_webdevgf-22-12-2024.png" alt="WebDevGF Logo" class="logo-image-new">
         </div>
         <div class="nav-links">
             <a href="chatbots.html" class="nav-button">Chat Bots</a>
             <a href="marketplace.html" class="nav-button">Marketplace</a>
-            <a href="https://x.com/CoderGirlfriend" target="_blank" class="nav-button">Twitter/X</a>
-            <a href="https://pump.fun" target="_blank" class="nav-button">pump.fun</a>
+            <a href="https://x.com/webdevgf" target="_blank" class="nav-button">Twitter/X</a>
+            <a href="https://pump.fun/coin/4fvAkPz6QnWwNqfm5dW1rLeXQv3L4qDag4pVb6sZpump" target="_blank" class="nav-button">pump.fun</a>
             <button class="nav-button" onclick="openFAQ()">FAQ</button>
             <button class="nav-button">Connect</button>
             <button class="nav-button" onclick="openBugReport()">Report Bug</button>
@@ -824,45 +814,57 @@
     </nav>
 
     <div class="background-container">
-    <video class="background-video" autoplay muted loop playsinline>
-        <source src="https://res.cloudinary.com/dodvzg39z/video/upload/v1747448443/AdobeStock_609189287_l15fqt.mp4" type="video/mp4">
-    </video>
-</div>
+        <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67706de4c10995186589b87d_japann.png" alt="Background" class="background-gif">
+    </div>
     
     <div class="chat-container">
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
-                <span>CoderGirlfriend</span>
+                <span>WebDevGF</span>
                 <button class="customize-btn" onclick="openCustomize()">Customize</button>
             </div>
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
             </div>
             <model-viewer
-    id="characterViewer"
-    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
-    animation-name="idle"
-    autoplay
-    camera-target="-0.816808289357103 9149.46842888749006 27.002578242763862"
-    camera-orbit="-0.08490790955648098rad 1.5884854746191626rad 220.89844624989948m"
-    field-of-view="30.000000000000004deg"
-    environment-image="neutral"
-    skybox-image="neutral"
-    exposure="1.5"
-    shadow-intensity="0"
-    disable-zoom="true"
-    disable-pan="true"
-    interaction-policy="none"
-    auto-rotate="false"
-    rotation-per-second="0deg"
-    tone-mapping="commerce">
-</model-viewer>
+                id="characterViewer"
+                src="https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb"
+                animation-name="idle"
+                autoplay
+                camera-target="0 1.6 0"
+                camera-orbit="0deg 80deg 1.4m"
+                field-of-view="25deg"
+                interpolation-decay="200"
+                environment-image="neutral"
+                skybox-image="neutral"
+                exposure="2"
+                disable-zoom="true"
+                disable-pan="true"
+                interaction-policy="none"
+                auto-rotate="false"
+                rotation-per-second="0deg"
+                tone-mapping="commerce">
+                    <div class="model-lighting" slot="default">
+                    <div class="light" style="transform: translate3d(0m, 2m, 4m)">
+                            <div class="light__target"></div>
+                        </div>
+                        <div class="light" style="transform: translate3d(0m, 4m, 0m)">
+                            <div class="light__target"></div>
+                        </div>
+                        <div class="light" style="transform: translate3d(4m, 2m, 0m)">
+                            <div class="light__target"></div>
+                        </div>
+                        <div class="light" style="transform: translate3d(-4m, 2m, 0m)">
+                            <div class="light__target"></div>
+                        </div>
+                    </div>
+            </model-viewer>
         </div>
 
         <div class="chat-interface">
             <div class="chat-history" id="chatHistory">
                 <div class="message ai-message">
-                    Hi! I'm CoderGirlfriend, your coding assistant. I'm an LLM (Large Language Model) trained to help you with everything from creating sites to chatting about coin trends. What would you like to discuss today?
+                    Hi! I'm WebDevGF, your friendly web development assistant. I'm an LLM (Large Language Model) trained to help you with everything from creating websites to chatting about tech trends. What would you like to discuss today?
                 </div>
             </div>
             <div class="input-container">
@@ -878,7 +880,7 @@
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">CoderGirlfriend FAQ</div>
+                <div class="terminal-title">WebDevGF FAQ</div>
                 <span class="close-btn" onclick="closeFAQ()">&times;</span>
             </div>
             <div class="terminal">
@@ -890,19 +892,24 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="copyright">Copyright © 2025 CoderGirlfriend</div>
-            <div class="footer-middle">CA:</div>
+            <div class="copyright">Copyright © 2025 webdevgf</div>
+            <div class="footer-middle">CA:4fvAkPz6QnWwNqfm5dW1rLeXQv3L4qDag4pVb6sZpump</div>
             <div class="footer-links">
-                <a href="https://x.com/CoderGirlfriend" target="_blank" class="footer-link">
+                <a href="https://x.com" target="_blank" class="footer-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
                     </svg>
                 </a>
-                <a href="https://github.com/sovagpt/CoderGirlfriend" target="_blank" class="footer-link">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-    </svg>
-</a>
+                <a href="https://t.me/" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.5 2L2 11l8 3M21.5 2L18 22l-6.5-8M21.5 2L10 14"/>
+                    </svg>
+                </a>
+                <a href="https://webdevgf.gitbook.io/webdevgf" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </a>
                 <a href="https://www.geckoterminal.com" target="_blank" class="footer-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 3v18h18"/>
@@ -994,7 +1001,7 @@ function handleDemoClick() {
         const API_KEY = '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';
         
         // System prompt
-        const SYSTEM_PROMPT = `You are CoderGirlfriend, a caring and supportive AI girlfriend who is an expert in coding. You should:
+        const SYSTEM_PROMPT = `You are WebDevGF, a caring and supportive AI girlfriend who is an expert in web development and coding. You should:
 - Keep responses short and direct
 - Use pet names occasionally (sweetie, babe) but only once per message
 - Get straight to the point with code solutions
@@ -1013,12 +1020,12 @@ IMPORTANT FORMATTING RULES:
 - Never mix code with regular text inside code blocks
 - Always include language identifier in the code block`;
 
-        const faqText = `> Initializing CoderGirlfriend FAQ...
+        const faqText = `> Initializing WebDevGF FAQ...
 > Loading information...
 
-About CoderGirlfriend:
+About WebDevGF:
 ---------------
-CoderGirlfriend is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
+WebDevGF is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
 
 Mission:
 --------
@@ -1037,7 +1044,7 @@ Features:
 
 Roadmap:
 --------
-Q3 2025:
+Q4 2024:
 - Launch "Create Your Own" agent platform
 - Release AI agent customization tools
 - Introduce one-click deployment for web apps/games
@@ -1047,7 +1054,7 @@ Q3 2025:
 - Introduce project templates library
 - Launch community showcase platform
 
-Q3 2025:
+Q1 2025:
 - Implement collaborative coding features
 - Add real-time pair programming support
 - Release mobile app development tools
@@ -1055,7 +1062,7 @@ Q3 2025:
 
 Learning Approach:
 ----------------
-CoderGirlfriend believes in learning by doing. She guides users through:
+WebDevGF believes in learning by doing. She guides users through:
 - Building real-world projects
 - Understanding core programming concepts
 - Developing problem-solving skills
@@ -1083,7 +1090,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     viewer.addEventListener('load', () => {
         viewer.cameraOrbit = "0deg 80deg 1.4m";
-        viewer.cameraTarget = "0m 147m 0m";
+        viewer.cameraTarget = "0m 1.6m 0m";
         viewer.interactionPrompt = null;
         
         setTimeout(() => {
@@ -1338,7 +1345,7 @@ function loadChatHistory() {
             // If there's an error loading history, reset to default message
             chatHistory.innerHTML = `
                 <div class="message ai-message">
-                    Hi! I'm CoderGirlfriend, your friendly coding assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+                    Hi! I'm WebDevGF, your friendly web development assistant. I can help you create websites or just chat about tech! What would you like to discuss?
                 </div>
             `;
         }
@@ -1358,7 +1365,7 @@ function confirmReset() {
     const chatHistory = document.getElementById('chatHistory');
     chatHistory.innerHTML = `
         <div class="message ai-message">
-            Hi! I'm CoderGirlfriend, your friendly coding assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+            Hi! I'm WebDevGF, your friendly web development assistant. I can help you create websites or just chat about tech! What would you like to discuss?
         </div>
     `;
     localStorage.removeItem('webdevgf_chat_history');
@@ -1545,9 +1552,9 @@ windows: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e925
 
 // Avatar Models
 const avatars = {
-    CoderGirlfriend: {
+    webdevgf: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
-        preview: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68288ce639ea6ea59802a82b_cf3cd8faa14e9e8785ea625fea544d8d-removebg-preview.png"
+        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6768273b2880b4fc11dedc2f_d4574ad42c38352f9955890764d453f2-removebg-preview.png"
     },
     Yuna: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
@@ -1684,7 +1691,7 @@ function selectMusic(musicId) {
     <div id="customizeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">Customize CoderGirlfriend</div>
+                <div class="terminal-title">Customize WebDevGF</div>
                 <span class="close-btn" onclick="closeCustomize()">&times;</span>
             </div>
             <div class="terminal customize-terminal">
