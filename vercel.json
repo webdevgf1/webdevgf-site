@@ -5,28 +5,6 @@
       "maxDuration": 60
     }
   },
-  "rewrites": [
-    {
-      "source": "/marketplace",
-      "destination": "/marketplace.html"
-    },
-    {
-      "source": "/chatbots",
-      "destination": "/chatbots.html"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/marketplace.html",
-      "destination": "/marketplace",
-      "statusCode": 301
-    },
-    {
-      "source": "/chatbots.html",
-      "destination": "/chatbots",
-      "statusCode": 301
-    }
-  ],
   "routes": [
     {
       "src": "/api/telegram-webhook/(.*)",
@@ -35,6 +13,18 @@
     {
       "src": "/api/deploy-telegram-bot",
       "dest": "/api/deploy-telegram-bot.js"
+    },
+    {
+      "src": "/marketplace",
+      "dest": "/public/marketplace.html"
+    },
+    {
+      "src": "/chatbots",
+      "dest": "/public/chatbots.html"
+    },
+    {
+      "src": "/",
+      "dest": "/public/index.html"
     }
   ]
 }
