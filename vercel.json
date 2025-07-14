@@ -5,7 +5,28 @@
       "maxDuration": 60
     }
   },
-  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/marketplace",
+      "destination": "/public/marketplace.html"
+    },
+    {
+      "source": "/chatbots",
+      "destination": "/public/chatbots.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/marketplace.html",
+      "destination": "/marketplace",
+      "permanent": true
+    },
+    {
+      "source": "/chatbots.html",
+      "destination": "/chatbots", 
+      "permanent": true
+    }
+  ],
   "routes": [
     {
       "src": "/api/telegram-webhook/(.*)",
