@@ -15,8 +15,26 @@
       "dest": "/api/deploy-telegram-bot.js"
     },
     {
+      "src": "/marketplace",
+      "dest": "/public/marketplace.html"
+    },
+    {
       "src": "/chatbots",
       "dest": "/public/chatbots.html"
+    },
+    {
+      "src": "/marketplace.html",
+      "status": 301,
+      "headers": {
+        "Location": "/marketplace"
+      }
+    },
+    {
+      "src": "/chatbots.html",
+      "status": 301,
+      "headers": {
+        "Location": "/chatbots"
+      }
     },
     {
       "src": "/",
