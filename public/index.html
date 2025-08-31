@@ -1075,22 +1075,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingOverlay = document.querySelector('.loading-overlay');
     
     viewer.addEventListener('load', () => {
-        viewer.cameraOrbit = "0deg 80deg 1.4m";
-        viewer.cameraTarget = "0m 1.6m 0m";
-        viewer.interactionPrompt = null;
-        
+    viewer.cameraOrbit = "0deg 70deg 1.8m";
+    viewer.cameraTarget = "0m 1.2m 0m";
+    viewer.interactionPrompt = null;
+    
+    setTimeout(() => {
+        loadingOverlay.classList.add('fade-out');
         setTimeout(() => {
-            loadingOverlay.classList.add('fade-out');
-            setTimeout(() => {
-                loadingOverlay.style.display = 'none';
-            }, 300);
-        }, 1500);
+            loadingOverlay.style.display = 'none';
+        }, 300);
+    }, 1500);
 
-        // Type out the initial greeting
-        const initialMessage = document.querySelector('.ai-message');
-        typeMessage(initialMessage, initialMessage.textContent);
-    });
-
+    // Type out the initial greeting
+    const initialMessage = document.querySelector('.ai-message');
+    typeMessage(initialMessage, initialMessage.textContent);
+});
+    
     // Add the new initialization function here
     function initializeCustomization() {
         // Update the HTML for backgrounds
@@ -1775,6 +1775,7 @@ function selectMusic(musicId) {
     </div>    
 </body>
 </html>
+
 
 
 
