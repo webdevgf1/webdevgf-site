@@ -27,6 +27,62 @@
             position: relative;
         }
 
+        .drag-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .drag-handle {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 242, 254, 0.8);
+            border: 2px solid #00f2fe;
+            border-radius: 50%;
+            cursor: move;
+            pointer-events: all;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            user-select: none;
+        }
+
+        .drag-handle:hover {
+            background: rgba(0, 242, 254, 1);
+            transform: scale(1.1);
+        }
+
+        .drag-handle.vertical {
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+
+        .drag-handle.horizontal {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .instructions {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            color: #00f2fe;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 5;
+        }
+
         model-viewer {
             width: 100%;
             height: 100%;
@@ -130,6 +186,10 @@
 <body>
     <div class="debug-container">
         <div class="model-container">
+            <div class="instructions">
+                Use blue handles to drag model up/down/left/right<br>
+                Mouse wheel: zoom | Right-click drag: camera orbit
+            </div>
             <model-viewer
                 id="debugViewer"
                 src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
@@ -147,6 +207,10 @@
                 camera-controls
                 touch-action="pan-y">
             </model-viewer>
+            <div class="drag-overlay">
+                <div class="drag-handle vertical" id="verticalDrag">↕</div>
+                <div class="drag-handle horizontal" id="horizontalDrag">↔</div>
+            </div>
         </div>
 
         <div class="debug-panel">
@@ -454,7 +518,91 @@ Model Position: ${posX.value}m, ${posY.value}m, ${posZ.value}m
         // Initialize
         viewer.addEventListener('load', () => {
             updateCamera();
+            setupDragHandles();
         });
+
+        function setupDragHandles() {
+            const verticalDrag = document.getElementById('verticalDrag');
+            const horizontalDrag = document.getElementById('horizontalDrag');
+            
+            let isDragging = false;
+            let startY, startX;
+            let startPosY, startPosX;
+
+            // Vertical drag handle
+            verticalDrag.addEventListener('mousedown', (e) => {
+                isDragging = 'vertical';
+                startY = e.clientY;
+                startPosY = parseFloat(posY.value);
+                e.preventDefault();
+            });
+
+            // Horizontal drag handle  
+            horizontalDrag.addEventListener('mousedown', (e) => {
+                isDragging = 'horizontal';
+                startX = e.clientX;
+                startPosX = parseFloat(posX.value);
+                e.preventDefault();
+            });
+
+            // Mouse move handler
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                if (isDragging === 'vertical') {
+                    const deltaY = (startY - e.clientY) * 0.005; // Invert and scale
+                    const newPosY = Math.max(-2, Math.min(2, startPosY + deltaY));
+                    posY.value = newPosY;
+                    updateCamera();
+                } else if (isDragging === 'horizontal') {
+                    const deltaX = (e.clientX - startX) * 0.005;
+                    const newPosX = Math.max(-3, Math.min(3, startPosX + deltaX));
+                    posX.value = newPosX;
+                    updateCamera();
+                }
+            });
+
+            // Mouse up handler
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // Touch support for mobile
+            verticalDrag.addEventListener('touchstart', (e) => {
+                isDragging = 'vertical';
+                startY = e.touches[0].clientY;
+                startPosY = parseFloat(posY.value);
+                e.preventDefault();
+            });
+
+            horizontalDrag.addEventListener('touchstart', (e) => {
+                isDragging = 'horizontal';
+                startX = e.touches[0].clientX;
+                startPosX = parseFloat(posX.value);
+                e.preventDefault();
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+
+                if (isDragging === 'vertical') {
+                    const deltaY = (startY - e.touches[0].clientY) * 0.005;
+                    const newPosY = Math.max(-2, Math.min(2, startPosY + deltaY));
+                    posY.value = newPosY;
+                    updateCamera();
+                } else if (isDragging === 'horizontal') {
+                    const deltaX = (e.touches[0].clientX - startX) * 0.005;
+                    const newPosX = Math.max(-3, Math.min(3, startPosX + deltaX));
+                    posX.value = newPosX;
+                    updateCamera();
+                }
+                e.preventDefault();
+            });
+
+            document.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+        }
     </script>
 </body>
 </html>
