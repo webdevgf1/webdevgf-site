@@ -476,27 +476,26 @@
                 <div class="loading-text">INITIALIZING...</div>
             </div>
             <div class="camera-debug" id="cameraDebug">
-                <div>Camera Target: <span id="targetDisplay">0m 1.2m 0m</span></div>
-                <div>Camera Orbit: <span id="orbitDisplay">0deg 75deg 2.5m</span></div>
-                <div>Controls: Arrow/WASD=rotate, Q/E=zoom, R/F=target, C=toggle</div>
+                <div>Model Position: <span id="positionDisplay">x:0, y:0, z:0</span></div>
+                <div>Model Scale: <span id="scaleDisplay">1.0</span></div>
+                <div>Controls: WASD=move, Q/E=up/down, R/F=scale, C=toggle</div>
             </div>
             <model-viewer
                 id="characterViewer"
                 src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
                 animation-name="idle"
                 autoplay
-                camera-target="0 1.2 0"
+                camera-target="0 0 0"
                 camera-orbit="0deg 75deg 2.5m"
                 field-of-view="30deg"
                 interpolation-decay="200"
                 environment-image="neutral"
                 skybox-image="neutral"
                 exposure="2"
-                camera-controls
-                touch-action="pan-y"
-                disable-zoom="false"
-                disable-pan="false"
-                interaction-policy="always-allow"
+                disable-zoom="true"
+                disable-pan="true"
+                interaction-policy="none"
+                camera-controls="false"
                 auto-rotate="false"
                 rotation-per-second="0deg"
                 tone-mapping="commerce">
@@ -596,85 +595,92 @@ IMPORTANT FORMATTING RULES:
             const loadingOverlay = document.querySelector('.loading-overlay');
             
             viewer.addEventListener('load', () => {
-                // Set initial camera position
-                viewer.cameraTarget = "0m 1.2m 0m";
+                // Fix camera in place
+                viewer.cameraTarget = "0m 0m 0m";
                 viewer.cameraOrbit = "0deg 75deg 2.5m";
                 viewer.fieldOfView = "30deg";
                 viewer.interactionPrompt = null;
                 
-                // Force enable camera controls
-                viewer.cameraControls = true;
-                viewer.disableZoom = false;
-                viewer.disablePan = false;
-                viewer.interactionPolicy = "always-allow";
+                // Model transform variables
+                let modelX = 0;
+                let modelY = 0;
+                let modelZ = 0;
+                let modelScale = 1.0;
                 
                 // Show debug info
                 const debugPanel = document.getElementById('cameraDebug');
-                const targetDisplay = document.getElementById('targetDisplay');
-                const orbitDisplay = document.getElementById('orbitDisplay');
+                const positionDisplay = document.getElementById('positionDisplay');
+                const scaleDisplay = document.getElementById('scaleDisplay');
                 
                 debugPanel.style.display = 'block';
                 
-                // Function to update debug display
-                const updateDebugDisplay = () => {
-                    targetDisplay.textContent = viewer.cameraTarget;
-                    orbitDisplay.textContent = viewer.cameraOrbit;
+                // Function to update model transform
+                const updateModelTransform = () => {
+                    // Apply transforms to the model
+                    viewer.style.transform = `
+                        translateX(${modelX * 100}px) 
+                        translateY(${modelY * -100}px) 
+                        translateZ(${modelZ * 100}px) 
+                        scale(${modelScale})
+                    `;
+                    
+                    positionDisplay.textContent = `x:${modelX.toFixed(2)}, y:${modelY.toFixed(2)}, z:${modelZ.toFixed(2)}`;
+                    scaleDisplay.textContent = modelScale.toFixed(2);
                 };
                 
-                updateDebugDisplay();
+                updateModelTransform();
                 
-                console.log("Model loaded! Debug panel visible. Use keyboard controls to adjust camera.");
+                console.log("Model loaded! Use keyboard to move the character:");
                 
-                // Add keyboard controls
+                // Add keyboard controls to move the model
                 document.addEventListener('keydown', (e) => {
                     const step = 0.1;
-                    const currentOrbit = viewer.cameraOrbit.split(' ');
-                    const currentTarget = viewer.cameraTarget.split(' ');
-                    
-                    let azimuth = parseFloat(currentOrbit[0]);
-                    let elevation = parseFloat(currentOrbit[1]);
-                    let distance = parseFloat(currentOrbit[2]);
-                    let targetY = parseFloat(currentTarget[1].replace('m', ''));
+                    const scaleStep = 0.1;
                     
                     switch(e.key.toLowerCase()) {
-                        case 'arrowleft':
                         case 'a':
-                            azimuth -= 10;
+                        case 'arrowleft':
+                            modelX -= step;
                             break;
-                        case 'arrowright':
                         case 'd':
-                            azimuth += 10;
+                        case 'arrowright':
+                            modelX += step;
                             break;
-                        case 'arrowup':
                         case 'w':
-                            elevation = Math.min(90, elevation + 5);
+                        case 'arrowup':
+                            modelZ -= step; // Move model closer (towards camera)
                             break;
-                        case 'arrowdown':
                         case 's':
-                            elevation = Math.max(0, elevation - 5);
+                        case 'arrowdown':
+                            modelZ += step; // Move model away
                             break;
                         case 'q':
-                            distance = Math.max(0.5, distance - 0.2);
+                            modelY += step; // Move model up
                             break;
                         case 'e':
-                            distance += 0.2;
+                            modelY -= step; // Move model down
                             break;
                         case 'r':
-                            targetY += 0.1;
+                            modelScale = Math.min(3.0, modelScale + scaleStep); // Scale up
                             break;
                         case 'f':
-                            targetY -= 0.1;
+                            modelScale = Math.max(0.1, modelScale - scaleStep); // Scale down
                             break;
                         case 'c':
                             // Toggle debug panel
                             debugPanel.style.display = debugPanel.style.display === 'none' ? 'block' : 'none';
                             break;
+                        case ' ':
+                            // Spacebar - reset to center
+                            modelX = 0;
+                            modelY = 0; 
+                            modelZ = 0;
+                            modelScale = 1.0;
+                            break;
                     }
                     
-                    if (e.key.toLowerCase().match(/[wasdqerf]/) || e.key.startsWith('Arrow')) {
-                        viewer.cameraOrbit = `${azimuth}deg ${elevation}deg ${distance}m`;
-                        viewer.cameraTarget = `0m ${targetY}m 0m`;
-                        updateDebugDisplay();
+                    if (e.key.toLowerCase().match(/[wasdqerf ]/) || e.key.startsWith('Arrow')) {
+                        updateModelTransform();
                         e.preventDefault();
                     }
                 });
