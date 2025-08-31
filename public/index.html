@@ -825,16 +825,16 @@
     src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
     animation-name="idle"
     autoplay
-    camera-target="0m 0m 0m"
-    camera-orbit="0deg 90deg 10m"
-    field-of-view="75deg"
+    camera-target="0m 0.5m 0m"
+    camera-orbit="0deg 80deg 3.5m"
+    field-of-view="25deg"
     interpolation-decay="200"
     environment-image="neutral"
     skybox-image="neutral"
     exposure="2"
-    disable-zoom="false"
-    disable-pan="false"
-    interaction-policy="always-allow"
+    disable-zoom="true"
+    disable-pan="true"
+    interaction-policy="none"
     auto-rotate="false"
     rotation-per-second="0deg"
     tone-mapping="commerce">
@@ -1073,8 +1073,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingOverlay = document.querySelector('.loading-overlay');
     
     viewer.addEventListener('load', () => {
-    viewer.cameraOrbit = "0deg 70deg 1.8m";
-    viewer.cameraTarget = "0m 1.2m 0m";
+    viewer.cameraOrbit = "0deg 80deg 3.5m";
+    viewer.cameraTarget = "0m 0.5m 0m";
     viewer.interactionPrompt = null;
     
     setTimeout(() => {
@@ -1773,6 +1773,7 @@ function selectMusic(musicId) {
     </div>    
 </body>
 </html>
+
 
 
 
