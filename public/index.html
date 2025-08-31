@@ -479,9 +479,9 @@
                 src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
                 animation-name="idle"
                 autoplay
-                camera-target="0 20 0"
-                camera-orbit="0deg 20deg 1.5m"
-                field-of-view="50deg"
+                camera-target="0 25 0"
+                camera-orbit="0deg 15deg 1.3m"
+                field-of-view="55deg"
                 interpolation-decay="200"
                 environment-image="neutral"
                 skybox-image="neutral"
@@ -589,14 +589,14 @@ IMPORTANT FORMATTING RULES:
             const loadingOverlay = document.querySelector('.loading-overlay');
             
             viewer.addEventListener('load', () => {
-                // Look even higher up and get closer with a lower angle
-                viewer.cameraTarget = "0m 15m 0m";  // Looking way up
-                viewer.cameraOrbit = "0deg 30deg 1.8m";  // Lower angle, closer distance
-                viewer.fieldOfView = "45deg";  // Wider field of view
+                // Looking even higher to get her full body in view
+                viewer.cameraTarget = "0m 25m 0m";  // Even higher up
+                viewer.cameraOrbit = "0deg 15deg 1.3m";  // Lower angle, closer
+                viewer.fieldOfView = "55deg";  // Wider to capture full body
                 viewer.interactionPrompt = null;
                 
-                console.log("Looking higher up - camera target: 0m 15m 0m, orbit: 0deg 30deg 1.8m");
-                console.log("Should show more of the character now - keep dragging to adjust if needed");
+                console.log("Looking higher up - camera target: 0m 25m 0m, orbit: 0deg 15deg 1.3m");
+                console.log("Should now show more of her torso and hopefully face");
                 
                 setTimeout(() => {
                     loadingOverlay.classList.add('fade-out');
