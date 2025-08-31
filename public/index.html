@@ -1083,13 +1083,11 @@ document.addEventListener('DOMContentLoaded', () => {
             loadingOverlay.style.display = 'none';
         }, 300);
     }, 1500);
+
+    // Type out the initial greeting
+    const initialMessage = document.querySelector('.ai-message');
+    typeMessage(initialMessage, initialMessage.textContent);
 });
-
-        // Type out the initial greeting
-        const initialMessage = document.querySelector('.ai-message');
-        typeMessage(initialMessage, initialMessage.textContent);
-    });
-
     // Add the new initialization function here
     function initializeCustomization() {
         // Update the HTML for backgrounds
@@ -1774,6 +1772,7 @@ function selectMusic(musicId) {
     </div>    
 </body>
 </html>
+
 
 
 
