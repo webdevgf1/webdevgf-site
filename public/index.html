@@ -205,6 +205,22 @@
             </div>
 
             <div class="control-group">
+                <h3>Model Position</h3>
+                <div class="slider-container">
+                    <label>Move Left/Right: <span id="posXVal">0</span>m</label>
+                    <input type="range" class="slider" id="posX" min="-3" max="3" step="0.1" value="0">
+                </div>
+                <div class="slider-container">
+                    <label>Move Up/Down: <span id="posYVal">0</span>m</label>
+                    <input type="range" class="slider" id="posY" min="-2" max="2" step="0.1" value="0">
+                </div>
+                <div class="slider-container">
+                    <label>Move Forward/Back: <span id="posZVal">0</span>m</label>
+                    <input type="range" class="slider" id="posZ" min="-3" max="3" step="0.1" value="0">
+                </div>
+            </div>
+
+            <div class="control-group">
                 <h3>Quick Presets</h3>
                 <div class="preset-buttons">
                     <button class="preset-btn" onclick="applyPreset('close')">Close Up</button>
@@ -236,6 +252,9 @@
         const orbitD = document.getElementById('orbitD');
         const fov = document.getElementById('fov');
         const scale = document.getElementById('scale');
+        const posX = document.getElementById('posX');
+        const posY = document.getElementById('posY');
+        const posZ = document.getElementById('posZ');
 
         // Value display elements
         const targetXVal = document.getElementById('targetXVal');
@@ -246,6 +265,9 @@
         const orbitDVal = document.getElementById('orbitDVal');
         const fovVal = document.getElementById('fovVal');
         const scaleVal = document.getElementById('scaleVal');
+        const posXVal = document.getElementById('posXVal');
+        const posYVal = document.getElementById('posYVal');
+        const posZVal = document.getElementById('posZVal');
 
         // Track camera changes from user interaction
         function updateFromViewer() {
@@ -282,12 +304,28 @@
             const orbitDValue = parseFloat(orbitD.value);
             const fovValue = parseFloat(fov.value);
             const scaleValue = parseFloat(scale.value);
+            const posXValue = parseFloat(posX.value);
+            const posYValue = parseFloat(posY.value);
+            const posZValue = parseFloat(posZ.value);
 
             // Update viewer
             viewer.cameraTarget = `${targetXValue}m ${targetYValue}m ${targetZValue}m`;
             viewer.cameraOrbit = `${orbitHValue}deg ${orbitVValue}deg ${orbitDValue}m`;
             viewer.fieldOfView = `${fovValue}deg`;
             viewer.scale = `${scaleValue} ${scaleValue} ${scaleValue}`;
+            
+            // Apply model position using CSS transform
+            const modelNode = viewer.querySelector('model');
+            if (viewer.model) {
+                const scene = viewer.model.scene;
+                scene.position.set(posXValue, posYValue, posZValue);
+            } else {
+                // If model isn't loaded yet, apply when it loads
+                viewer.addEventListener('load', () => {
+                    const scene = viewer.model.scene;
+                    scene.position.set(posXValue, posYValue, posZValue);
+                }, { once: true });
+            }
 
             updateDisplays();
         }
@@ -302,6 +340,9 @@
             orbitDVal.textContent = parseFloat(orbitD.value);
             fovVal.textContent = parseFloat(fov.value);
             scaleVal.textContent = parseFloat(scale.value);
+            posXVal.textContent = parseFloat(posX.value);
+            posYVal.textContent = parseFloat(posY.value);
+            posZVal.textContent = parseFloat(posZ.value);
 
             // Update current values display
             currentValues.innerHTML = `
@@ -309,6 +350,7 @@ Camera Target: ${targetX.value}m ${targetY.value}m ${targetZ.value}m
 Camera Orbit: ${orbitH.value}° ${orbitV.value}° ${orbitD.value}m
 Field of View: ${fov.value}°
 Model Scale: ${scale.value}x
+Model Position: ${posX.value}m, ${posY.value}m, ${posZ.value}m
             `;
 
             // Generate code
@@ -324,6 +366,9 @@ Model Scale: ${scale.value}x
             const orbitDValue = parseFloat(orbitD.value);
             const fovValue = parseFloat(fov.value);
             const scaleValue = parseFloat(scale.value);
+            const posXValue = parseFloat(posX.value);
+            const posYValue = parseFloat(posY.value);
+            const posZValue = parseFloat(posZ.value);
 
             const htmlCode = `<model-viewer
     id="characterViewer"
@@ -347,6 +392,11 @@ Model Scale: ${scale.value}x
     viewer.cameraTarget = "${targetXValue}m ${targetYValue}m ${targetZValue}m";
     viewer.fieldOfView = "${fovValue}deg";
     viewer.scale = "${scaleValue} ${scaleValue} ${scaleValue}";
+    
+    // Position the model
+    const scene = viewer.model.scene;
+    scene.position.set(${posXValue}, ${posYValue}, ${posZValue});
+    
     // ... rest of your code
 });`;
 
@@ -356,21 +406,21 @@ Model Scale: ${scale.value}x
         function applyPreset(preset) {
             switch(preset) {
                 case 'close':
-                    setValues(0, 0.8, 0, 0, 85, 1.5, 30, 1.0);
+                    setValues(0, 0.8, 0, 0, 85, 1.5, 30, 1.0, 0, -0.3, 0);
                     break;
                 case 'medium':
-                    setValues(0, 1.0, 0, 0, 75, 2.5, 40, 1.0);
+                    setValues(0, 1.0, 0, 0, 75, 2.5, 40, 1.0, 0, -0.2, 0);
                     break;
                 case 'wide':
-                    setValues(0, 1.2, 0, 0, 70, 4, 60, 1.0);
+                    setValues(0, 1.2, 0, 0, 70, 4, 60, 1.0, 0, -0.1, 0);
                     break;
                 case 'webcam':
-                    setValues(0, 0.6, 0, 0, 80, 2, 35, 1.2);
+                    setValues(0, 0.6, 0, 0, 80, 2, 35, 1.2, 0, -0.5, 0);
                     break;
             }
         }
 
-        function setValues(tx, ty, tz, oh, ov, od, f, s) {
+        function setValues(tx, ty, tz, oh, ov, od, f, s, px, py, pz) {
             targetX.value = tx;
             targetY.value = ty;
             targetZ.value = tz;
@@ -379,6 +429,9 @@ Model Scale: ${scale.value}x
             orbitD.value = od;
             fov.value = f;
             scale.value = s;
+            posX.value = px;
+            posY.value = py;
+            posZ.value = pz;
             updateCamera();
         }
 
@@ -391,7 +444,7 @@ Model Scale: ${scale.value}x
         }
 
         // Add event listeners
-        [targetX, targetY, targetZ, orbitH, orbitV, orbitD, fov, scale].forEach(slider => {
+        [targetX, targetY, targetZ, orbitH, orbitV, orbitD, fov, scale, posX, posY, posZ].forEach(slider => {
             slider.addEventListener('input', updateCamera);
         });
 
