@@ -151,7 +151,6 @@
             background-color: transparent;
             --poster-color: transparent;
             margin-top: -50px;
-            transform: translateY(0px);
         }
 
         .loading-overlay {
@@ -475,17 +474,12 @@
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
             </div>
-            <div class="camera-debug" id="cameraDebug">
-                <div>Model Position: <span id="positionDisplay">x:0, y:0, z:0</span></div>
-                <div>Model Scale: <span id="scaleDisplay">1.0</span></div>
-                <div>Controls: WASD=move, Q/E=up/down, R/F=scale, C=toggle</div>
-            </div>
             <model-viewer
                 id="characterViewer"
                 src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
                 animation-name="idle"
                 autoplay
-                camera-target="0 0 0"
+                camera-target="0 -6.6 0"
                 camera-orbit="0deg 75deg 2.5m"
                 field-of-view="30deg"
                 interpolation-decay="200"
@@ -595,95 +589,13 @@ IMPORTANT FORMATTING RULES:
             const loadingOverlay = document.querySelector('.loading-overlay');
             
             viewer.addEventListener('load', () => {
-                // Fix camera in place
+                // Fix camera in place - model position is now set via CSS
                 viewer.cameraTarget = "0m 0m 0m";
                 viewer.cameraOrbit = "0deg 75deg 2.5m";
                 viewer.fieldOfView = "30deg";
                 viewer.interactionPrompt = null;
                 
-                // Model transform variables
-                let modelX = 0;
-                let modelY = 0;
-                let modelZ = 0;
-                let modelScale = 1.0;
-                
-                // Show debug info
-                const debugPanel = document.getElementById('cameraDebug');
-                const positionDisplay = document.getElementById('positionDisplay');
-                const scaleDisplay = document.getElementById('scaleDisplay');
-                
-                debugPanel.style.display = 'block';
-                
-                // Function to update model transform
-                const updateModelTransform = () => {
-                    // Apply transforms to the model
-                    viewer.style.transform = `
-                        translateX(${modelX * 100}px) 
-                        translateY(${modelY * -100}px) 
-                        translateZ(${modelZ * 100}px) 
-                        scale(${modelScale})
-                    `;
-                    
-                    positionDisplay.textContent = `x:${modelX.toFixed(2)}, y:${modelY.toFixed(2)}, z:${modelZ.toFixed(2)}`;
-                    scaleDisplay.textContent = modelScale.toFixed(2);
-                };
-                
-                updateModelTransform();
-                
-                console.log("Model loaded! Use keyboard to move the character:");
-                
-                // Add keyboard controls to move the model
-                document.addEventListener('keydown', (e) => {
-                    const step = 0.1;
-                    const scaleStep = 0.1;
-                    
-                    switch(e.key.toLowerCase()) {
-                        case 'a':
-                        case 'arrowleft':
-                            modelX -= step;
-                            break;
-                        case 'd':
-                        case 'arrowright':
-                            modelX += step;
-                            break;
-                        case 'w':
-                        case 'arrowup':
-                            modelZ -= step; // Move model closer (towards camera)
-                            break;
-                        case 's':
-                        case 'arrowdown':
-                            modelZ += step; // Move model away
-                            break;
-                        case 'q':
-                            modelY += step; // Move model up
-                            break;
-                        case 'e':
-                            modelY -= step; // Move model down
-                            break;
-                        case 'r':
-                            modelScale = Math.min(3.0, modelScale + scaleStep); // Scale up
-                            break;
-                        case 'f':
-                            modelScale = Math.max(0.1, modelScale - scaleStep); // Scale down
-                            break;
-                        case 'c':
-                            // Toggle debug panel
-                            debugPanel.style.display = debugPanel.style.display === 'none' ? 'block' : 'none';
-                            break;
-                        case ' ':
-                            // Spacebar - reset to center
-                            modelX = 0;
-                            modelY = 0; 
-                            modelZ = 0;
-                            modelScale = 1.0;
-                            break;
-                    }
-                    
-                    if (e.key.toLowerCase().match(/[wasdqerf ]/) || e.key.startsWith('Arrow')) {
-                        updateModelTransform();
-                        e.preventDefault();
-                    }
-                });
+                console.log("Model loaded! Character positioned at y:-6.60 (locked in CSS)");
                 
                 setTimeout(() => {
                     loadingOverlay.classList.add('fade-out');
