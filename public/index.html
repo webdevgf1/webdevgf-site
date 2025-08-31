@@ -1073,9 +1073,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingOverlay = document.querySelector('.loading-overlay');
     
     viewer.addEventListener('load', () => {
-    viewer.cameraOrbit = "0deg 75deg 2.2m"; /* Increased distance and adjusted angle */
-    viewer.cameraTarget = "0m 0.8m 0m"; /* Lowered the target from 1.6m to 0.8m */
+    viewer.cameraOrbit = "0deg 85deg 3m"; /* Much higher angle and further distance */
+    viewer.cameraTarget = "0m 0m 0m"; /* Center on origin/ground level */
     viewer.interactionPrompt = null;
+    
+    // Also try adjusting the field of view
+    viewer.fieldOfView = "35deg"; /* Wider view */
     
     setTimeout(() => {
         loadingOverlay.classList.add('fade-out');
@@ -1772,6 +1775,7 @@ function selectMusic(musicId) {
     </div>    
 </body>
 </html>
+
 
 
 
