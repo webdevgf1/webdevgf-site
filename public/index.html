@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Model Positioning Tool</title>
+    <title>Model Positioning Tool</title>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
     <style>
         body {
@@ -25,7 +25,7 @@
             background: rgba(0,0,0,0.7);
             border-radius: 10px;
             position: relative;
-            overflow: hidden;
+            border: 2px solid rgba(0,242,254,0.3);
         }
 
         model-viewer {
@@ -34,7 +34,7 @@
             background-color: transparent;
         }
 
-        .drag-area {
+        .drag-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -43,18 +43,23 @@
             z-index: 10;
             cursor: move;
             background: rgba(0,242,254,0.1);
-            border: 2px dashed rgba(0,242,254,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
             color: #00f2fe;
             user-select: none;
+            opacity: 0.6;
+            transition: opacity 0.3s;
         }
 
-        .drag-area:hover {
+        .drag-overlay:hover {
+            opacity: 1;
+        }
+
+        .drag-overlay.dragging {
+            opacity: 1;
             background: rgba(0,242,254,0.2);
-            border-color: rgba(0,242,254,0.5);
         }
 
         .controls {
@@ -62,6 +67,7 @@
             background: rgba(255,255,255,0.1);
             border-radius: 10px;
             padding: 20px;
+            overflow-y: auto;
         }
 
         .control-group {
@@ -74,82 +80,100 @@
         .control-group h3 {
             margin: 0 0 15px 0;
             color: #00f2fe;
+            font-size: 16px;
         }
 
         .slider-row {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .slider-row label {
-            width: 100px;
-            font-size: 14px;
+            width: 90px;
+            font-size: 13px;
+            color: #ccc;
         }
 
         .slider {
             flex: 1;
-            height: 30px;
+            height: 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            outline: none;
+            cursor: pointer;
         }
 
         .value {
-            width: 50px;
+            width: 45px;
             text-align: center;
             font-family: monospace;
+            font-size: 12px;
+            color: #00f2fe;
+            font-weight: bold;
+        }
+
+        .preset-btn, .reset-btn, .copy-btn {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 3px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+
+        .reset-btn {
+            background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
             font-size: 14px;
         }
 
-        .reset-btn, .preset-btn {
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            border: none;
-            padding: 8px 16px;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            font-size: 12px;
-        }
-
-        .reset-btn:hover, .preset-btn:hover {
-            opacity: 0.8;
+        .preset-btn:hover, .reset-btn:hover, .copy-btn:hover {
+            transform: translateY(-2px);
         }
 
         .code-output {
             background: rgba(0,0,0,0.8);
             padding: 15px;
             border-radius: 8px;
-            font-family: monospace;
-            font-size: 11px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
             white-space: pre-wrap;
-            max-height: 300px;
+            max-height: 250px;
             overflow-y: auto;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin-top: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            line-height: 1.4;
         }
 
-        .copy-btn {
-            background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
-            border: none;
-            padding: 10px 20px;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .copy-btn:hover {
-            opacity: 0.8;
+        .status {
+            background: rgba(0,0,0,0.8);
+            color: #00f2fe;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            border-left: 4px solid #00f2fe;
         }
 
         .instructions {
-            background: rgba(0,0,0,0.8);
-            padding: 15px;
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid rgba(40, 167, 69, 0.4);
+            color: #28a745;
+            padding: 12px;
             border-radius: 8px;
             margin-bottom: 20px;
-            color: #00f2fe;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.4;
         }
     </style>
@@ -163,193 +187,237 @@
                 animation-name="idle"
                 autoplay
                 camera-target="0m 0m 0m"
-                camera-orbit="0deg 75deg 3m"
+                camera-orbit="0deg 75deg 4m"
                 field-of-view="45deg"
                 environment-image="neutral"
                 exposure="2"
                 disable-zoom="false"
                 disable-pan="true"
-                interaction-policy="allow-when-focused">
+                interaction-policy="allow-when-focused"
+                camera-controls>
             </model-viewer>
-            <div class="drag-area" id="dragArea">
+            <div class="drag-overlay" id="dragOverlay">
                 DRAG TO MOVE MODEL
             </div>
         </div>
 
         <div class="controls">
             <div class="instructions">
-                <strong>How to use:</strong><br>
-                • Drag anywhere in the left area to move the model<br>
-                • Use sliders for fine-tuning<br>
-                • Mouse wheel to zoom in/out<br>
-                • Try presets for quick positioning
+                <strong>Instructions:</strong><br>
+                • Drag in the left area to move the model<br>
+                • Use sliders for precise control<br>
+                • Mouse wheel on model to zoom<br>
+                • Try presets for quick setup
+            </div>
+
+            <div class="status" id="status">
+                Model loading...
             </div>
 
             <div class="control-group">
-                <h3>Model Position</h3>
+                <h3>Position Controls</h3>
                 <div class="slider-row">
-                    <label>Left/Right:</label>
-                    <input type="range" class="slider" id="posX" min="-10" max="10" step="0.2" value="0">
+                    <label>X (Left/Right):</label>
+                    <input type="range" class="slider" id="posX" min="-5" max="5" step="0.1" value="0">
                     <span class="value" id="posXVal">0.0</span>
                 </div>
                 <div class="slider-row">
-                    <label>Up/Down:</label>
-                    <input type="range" class="slider" id="posY" min="-8" max="8" step="0.2" value="0">
-                    <span class="value" id="posYVal">0.0</span>
+                    <label>Y (Up/Down):</label>
+                    <input type="range" class="slider" id="posY" min="-5" max="5" step="0.1" value="-2">
+                    <span class="value" id="posYVal">-2.0</span>
                 </div>
                 <div class="slider-row">
-                    <label>Near/Far:</label>
-                    <input type="range" class="slider" id="posZ" min="-10" max="10" step="0.2" value="0">
+                    <label>Z (Near/Far):</label>
+                    <input type="range" class="slider" id="posZ" min="-5" max="5" step="0.1" value="0">
                     <span class="value" id="posZVal">0.0</span>
                 </div>
             </div>
 
             <div class="control-group">
-                <h3>Model Scale</h3>
+                <h3>Scale & Camera</h3>
                 <div class="slider-row">
-                    <label>Size:</label>
-                    <input type="range" class="slider" id="scale" min="0.5" max="8" step="0.1" value="1.0">
-                    <span class="value" id="scaleVal">1.0</span>
+                    <label>Model Size:</label>
+                    <input type="range" class="slider" id="scale" min="0.5" max="4" step="0.1" value="1.5">
+                    <span class="value" id="scaleVal">1.5</span>
                 </div>
-            </div>
-
-            <div class="control-group">
-                <h3>Camera</h3>
                 <div class="slider-row">
-                    <label>Distance:</label>
-                    <input type="range" class="slider" id="distance" min="1" max="10" step="0.1" value="3">
-                    <span class="value" id="distanceVal">3.0</span>
+                    <label>Camera Dist:</label>
+                    <input type="range" class="slider" id="distance" min="1" max="8" step="0.1" value="4">
+                    <span class="value" id="distanceVal">4.0</span>
                 </div>
                 <div class="slider-row">
                     <label>Field of View:</label>
-                    <input type="range" class="slider" id="fov" min="15" max="90" step="1" value="45">
+                    <input type="range" class="slider" id="fov" min="20" max="80" step="1" value="45">
                     <span class="value" id="fovVal">45</span>
                 </div>
             </div>
 
             <div class="control-group">
-                <h3>Quick Presets</h3>
-                <button class="preset-btn" onclick="applyPreset('webcam')">Webcam View</button>
+                <h3>Quick Setup</h3>
+                <button class="preset-btn" onclick="applyPreset('webcam')">Webcam</button>
                 <button class="preset-btn" onclick="applyPreset('portrait')">Portrait</button>
-                <button class="preset-btn" onclick="applyPreset('full')">Full Body</button>
-                <button class="reset-btn" onclick="resetPosition()">Reset All</button>
+                <button class="preset-btn" onclick="applyPreset('fullbody')">Full Body</button>
+                <button class="reset-btn" onclick="resetAll()">Reset</button>
             </div>
 
             <div class="control-group">
                 <h3>Generated Code</h3>
-                <div class="code-output" id="codeOutput">Loading...</div>
-                <button class="copy-btn" onclick="copyCode()">Copy Code to Clipboard</button>
+                <div class="code-output" id="codeOutput">Waiting for model to load...</div>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Code</button>
             </div>
         </div>
     </div>
 
     <script>
         const viewer = document.getElementById('modelViewer');
-        const dragArea = document.getElementById('dragArea');
+        const dragOverlay = document.getElementById('dragOverlay');
+        const status = document.getElementById('status');
         const codeOutput = document.getElementById('codeOutput');
-        
+
         // Control elements
-        const posX = document.getElementById('posX');
-        const posY = document.getElementById('posY');
-        const posZ = document.getElementById('posZ');
-        const scale = document.getElementById('scale');
-        const distance = document.getElementById('distance');
-        const fov = document.getElementById('fov');
+        const controls = {
+            posX: document.getElementById('posX'),
+            posY: document.getElementById('posY'),
+            posZ: document.getElementById('posZ'),
+            scale: document.getElementById('scale'),
+            distance: document.getElementById('distance'),
+            fov: document.getElementById('fov')
+        };
 
         // Value displays
-        const posXVal = document.getElementById('posXVal');
-        const posYVal = document.getElementById('posYVal');
-        const posZVal = document.getElementById('posZVal');
-        const scaleVal = document.getElementById('scaleVal');
-        const distanceVal = document.getElementById('distanceVal');
-        const fovVal = document.getElementById('fovVal');
+        const displays = {
+            posXVal: document.getElementById('posXVal'),
+            posYVal: document.getElementById('posYVal'),
+            posZVal: document.getElementById('posZVal'),
+            scaleVal: document.getElementById('scaleVal'),
+            distanceVal: document.getElementById('distanceVal'),
+            fovVal: document.getElementById('fovVal')
+        };
 
+        let modelLoaded = false;
         let isDragging = false;
-        let dragStartX, dragStartY;
-        let startPosX, startPosY;
+        let dragStart = { x: 0, y: 0 };
+        let dragStartPos = { x: 0, y: 0 };
+
+        // Wait for model to load
+        viewer.addEventListener('load', () => {
+            modelLoaded = true;
+            status.textContent = 'Model loaded! Ready to position.';
+            status.style.background = 'rgba(40, 167, 69, 0.3)';
+            status.style.color = '#28a745';
+            
+            // Initialize position
+            updateModel();
+            
+            console.log('Model loaded:', viewer.model);
+        });
+
+        viewer.addEventListener('error', (event) => {
+            status.textContent = 'Error loading model: ' + event.detail.error;
+            status.style.background = 'rgba(220, 53, 69, 0.3)';
+            status.style.color = '#dc3545';
+        });
 
         // Drag functionality
-        dragArea.addEventListener('mousedown', startDrag);
-        document.addEventListener('mousemove', drag);
+        dragOverlay.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', handleDrag);
         document.addEventListener('mouseup', endDrag);
 
         function startDrag(e) {
+            if (!modelLoaded) return;
+            
             isDragging = true;
-            dragStartX = e.clientX;
-            dragStartY = e.clientY;
-            startPosX = parseFloat(posX.value);
-            startPosY = parseFloat(posY.value);
-            dragArea.style.cursor = 'grabbing';
+            dragStart.x = e.clientX;
+            dragStart.y = e.clientY;
+            dragStartPos.x = parseFloat(controls.posX.value);
+            dragStartPos.y = parseFloat(controls.posY.value);
+            
+            dragOverlay.classList.add('dragging');
+            dragOverlay.style.cursor = 'grabbing';
             e.preventDefault();
         }
 
-        function drag(e) {
+        function handleDrag(e) {
             if (!isDragging) return;
 
-            const deltaX = (e.clientX - dragStartX) * 0.02; // Scale factor for sensitivity
-            const deltaY = (dragStartY - e.clientY) * 0.02; // Invert Y axis
+            const sensitivity = 0.01;
+            const deltaX = (e.clientX - dragStart.x) * sensitivity;
+            const deltaY = -(e.clientY - dragStart.y) * sensitivity; // Invert Y
 
-            const newX = Math.max(-10, Math.min(10, startPosX + deltaX));
-            const newY = Math.max(-8, Math.min(8, startPosY + deltaY));
+            const newX = Math.max(-5, Math.min(5, dragStartPos.x + deltaX));
+            const newY = Math.max(-5, Math.min(5, dragStartPos.y + deltaY));
 
-            posX.value = newX;
-            posY.value = newY;
+            controls.posX.value = newX;
+            controls.posY.value = newY;
             
             updateModel();
         }
 
         function endDrag() {
             isDragging = false;
-            dragArea.style.cursor = 'move';
+            dragOverlay.classList.remove('dragging');
+            dragOverlay.style.cursor = 'move';
         }
 
-        // Update model position and properties
+        // Update model and displays
         function updateModel() {
-            const x = parseFloat(posX.value);
-            const y = parseFloat(posY.value);
-            const z = parseFloat(posZ.value);
-            const s = parseFloat(scale.value);
-            const d = parseFloat(distance.value);
-            const f = parseFloat(fov.value);
+            if (!modelLoaded) return;
 
-            // Update value displays
-            posXVal.textContent = x.toFixed(1);
-            posYVal.textContent = y.toFixed(1);
-            posZVal.textContent = z.toFixed(1);
-            scaleVal.textContent = s.toFixed(1);
-            distanceVal.textContent = d.toFixed(1);
-            fovVal.textContent = f.toString();
+            const values = {
+                x: parseFloat(controls.posX.value),
+                y: parseFloat(controls.posY.value),
+                z: parseFloat(controls.posZ.value),
+                scale: parseFloat(controls.scale.value),
+                distance: parseFloat(controls.distance.value),
+                fov: parseFloat(controls.fov.value)
+            };
 
-            // Apply to model-viewer
-            viewer.cameraOrbit = `0deg 75deg ${d}m`;
-            viewer.fieldOfView = `${f}deg`;
-            viewer.scale = `${s} ${s} ${s}`;
+            // Update displays
+            displays.posXVal.textContent = values.x.toFixed(1);
+            displays.posYVal.textContent = values.y.toFixed(1);
+            displays.posZVal.textContent = values.z.toFixed(1);
+            displays.scaleVal.textContent = values.scale.toFixed(1);
+            displays.distanceVal.textContent = values.distance.toFixed(1);
+            displays.fovVal.textContent = values.fov.toString();
 
-            // Move model using Three.js when available
+            // Apply camera settings
+            viewer.cameraOrbit = `0deg 75deg ${values.distance}m`;
+            viewer.fieldOfView = `${values.fov}deg`;
+            
+            // Apply scale and position
             if (viewer.model && viewer.model.scene) {
-                viewer.model.scene.position.set(x, y, z);
+                const scene = viewer.model.scene;
+                
+                // Set scale
+                scene.scale.set(values.scale, values.scale, values.scale);
+                
+                // Set position
+                scene.position.set(values.x, values.y, values.z);
+                
+                status.textContent = `Position: (${values.x.toFixed(1)}, ${values.y.toFixed(1)}, ${values.z.toFixed(1)}) Scale: ${values.scale.toFixed(1)}x`;
             }
 
             generateCode();
         }
 
-        // Generate code output
+        // Generate code
         function generateCode() {
-            const x = parseFloat(posX.value);
-            const y = parseFloat(posY.value);
-            const z = parseFloat(posZ.value);
-            const s = parseFloat(scale.value);
-            const d = parseFloat(distance.value);
-            const f = parseFloat(fov.value);
+            const values = {
+                x: parseFloat(controls.posX.value),
+                y: parseFloat(controls.posY.value),
+                z: parseFloat(controls.posZ.value),
+                scale: parseFloat(controls.scale.value),
+                distance: parseFloat(controls.distance.value),
+                fov: parseFloat(controls.fov.value)
+            };
 
             const htmlCode = `<model-viewer
     id="characterViewer"
     src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
     animation-name="idle"
     autoplay
-    camera-orbit="0deg 75deg ${d}m"
-    field-of-view="${f}deg"
-    scale="${s} ${s} ${s}"
+    camera-orbit="0deg 75deg ${values.distance}m"
+    field-of-view="${values.fov}deg"
     environment-image="neutral"
     exposure="2"
     disable-zoom="true"
@@ -358,82 +426,81 @@
 </model-viewer>`;
 
             const jsCode = `viewer.addEventListener('load', () => {
-    viewer.cameraOrbit = "0deg 75deg ${d}m";
-    viewer.fieldOfView = "${f}deg";
-    viewer.scale = "${s} ${s} ${s}";
+    viewer.cameraOrbit = "0deg 75deg ${values.distance}m";
+    viewer.fieldOfView = "${values.fov}deg";
     
-    // Position the model
+    // Position and scale the model
     const scene = viewer.model.scene;
-    scene.position.set(${x}, ${y}, ${z});
+    scene.scale.set(${values.scale}, ${values.scale}, ${values.scale});
+    scene.position.set(${values.x}, ${values.y}, ${values.z});
     
-    // ... rest of your code
+    // ... rest of your existing code
 });`;
 
             codeOutput.textContent = `HTML:\n${htmlCode}\n\nJavaScript:\n${jsCode}`;
         }
 
         // Preset functions
-        function applyPreset(preset) {
-            switch(preset) {
+        function applyPreset(type) {
+            switch(type) {
                 case 'webcam':
-                    setValues(0, -2, 0, 1.8, 2.5, 35);
+                    setValues(0, -1.5, 0, 1.8, 3, 35);
                     break;
                 case 'portrait':
-                    setValues(0, -1, 0, 1.4, 3, 40);
+                    setValues(0, -1, 0, 1.5, 3.5, 40);
                     break;
-                case 'full':
-                    setValues(0, 0, 0, 1.0, 4, 50);
+                case 'fullbody':
+                    setValues(0, -0.5, 0, 1.2, 5, 50);
                     break;
             }
         }
 
-        function resetPosition() {
-            setValues(0, 0, 0, 1.0, 3, 45);
+        function resetAll() {
+            setValues(0, -2, 0, 1.5, 4, 45);
         }
 
-        function setValues(x, y, z, s, d, f) {
-            posX.value = x;
-            posY.value = y;
-            posZ.value = z;
-            scale.value = s;
-            distance.value = d;
-            fov.value = f;
+        function setValues(x, y, z, scale, distance, fov) {
+            controls.posX.value = x;
+            controls.posY.value = y;
+            controls.posZ.value = z;
+            controls.scale.value = scale;
+            controls.distance.value = distance;
+            controls.fov.value = fov;
             updateModel();
         }
 
-        function copyCode() {
-            navigator.clipboard.writeText(codeOutput.textContent);
-            const btn = event.target;
-            const originalText = btn.textContent;
-            btn.textContent = 'Code Copied!';
-            setTimeout(() => btn.textContent = originalText, 2000);
+        function copyToClipboard() {
+            navigator.clipboard.writeText(codeOutput.textContent).then(() => {
+                const btn = event.target;
+                const original = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.style.background = 'linear-gradient(45deg, #28a745, #20c997)';
+                setTimeout(() => {
+                    btn.textContent = original;
+                    btn.style.background = 'linear-gradient(45deg, #28a745, #20c997)';
+                }, 2000);
+            });
         }
 
-        // Event listeners for sliders
-        [posX, posY, posZ, scale, distance, fov].forEach(slider => {
-            slider.addEventListener('input', updateModel);
+        // Add slider event listeners
+        Object.values(controls).forEach(control => {
+            control.addEventListener('input', updateModel);
         });
 
-        // Initialize when model loads
-        viewer.addEventListener('load', () => {
-            updateModel();
-            // Hide drag overlay after model loads
-            setTimeout(() => {
-                dragArea.style.opacity = '0.3';
-                dragArea.innerHTML = '';
-            }, 2000);
+        // Hide drag overlay after interaction
+        setTimeout(() => {
+            if (modelLoaded) {
+                dragOverlay.style.opacity = '0.3';
+            }
+        }, 3000);
+
+        dragOverlay.addEventListener('mouseenter', () => {
+            dragOverlay.style.opacity = '0.8';
         });
 
-        // Show drag area on hover
-        dragArea.addEventListener('mouseenter', () => {
-            dragArea.style.opacity = '0.8';
-            dragArea.innerHTML = 'DRAG TO MOVE';
-        });
-
-        dragArea.addEventListener('mouseleave', () => {
+        dragOverlay.addEventListener('mouseleave', () => {
             if (!isDragging) {
-                dragArea.style.opacity = '0.1';
-                dragArea.innerHTML = '';
+                dragOverlay.style.opacity = '0.3';
             }
         });
     </script>
