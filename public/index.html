@@ -825,36 +825,34 @@
     src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
     animation-name="idle"
     autoplay
-    camera-target="0m 1.8m 0m"
-    camera-orbit="0deg 75deg 2.2m"
-    field-of-view="35deg"
-    min-camera-orbit="auto auto 1.5m"
-    max-camera-orbit="auto auto 3m"
+    camera-target="0m 0m 0m"
+    camera-orbit="0deg 90deg 10m"
+    field-of-view="75deg"
     interpolation-decay="200"
     environment-image="neutral"
     skybox-image="neutral"
     exposure="2"
     disable-zoom="false"
-    disable-pan="true"
-    interaction-policy="allow-when-focused"
+    disable-pan="false"
+    interaction-policy="always-allow"
     auto-rotate="false"
     rotation-per-second="0deg"
     tone-mapping="commerce">
-                    <div class="model-lighting" slot="default">
-                    <div class="light" style="transform: translate3d(0m, 2m, 4m)">
-                            <div class="light__target"></div>
-                        </div>
-                        <div class="light" style="transform: translate3d(0m, 4m, 0m)">
-                            <div class="light__target"></div>
-                        </div>
-                        <div class="light" style="transform: translate3d(4m, 2m, 0m)">
-                            <div class="light__target"></div>
-                        </div>
-                        <div class="light" style="transform: translate3d(-4m, 2m, 0m)">
-                            <div class="light__target"></div>
-                        </div>
-                    </div>
-            </model-viewer>
+        <div class="model-lighting" slot="default">
+        <div class="light" style="transform: translate3d(0m, 2m, 4m)">
+                <div class="light__target"></div>
+            </div>
+            <div class="light" style="transform: translate3d(0m, 4m, 0m)">
+                <div class="light__target"></div>
+            </div>
+            <div class="light" style="transform: translate3d(4m, 2m, 0m)">
+                <div class="light__target"></div>
+            </div>
+            <div class="light" style="transform: translate3d(-4m, 2m, 0m)">
+                <div class="light__target"></div>
+            </div>
+        </div>
+</model-viewer>
         </div>
 
         <div class="chat-interface">
@@ -1775,6 +1773,7 @@ function selectMusic(musicId) {
     </div>    
 </body>
 </html>
+
 
 
 
