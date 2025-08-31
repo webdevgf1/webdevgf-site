@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Viewer Camera Debug</title>
+    <title>Simple Model Positioning Tool</title>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
     <style>
         body {
@@ -14,73 +14,18 @@
             padding: 20px;
         }
 
-        .debug-container {
+        .container {
             display: flex;
             gap: 20px;
             height: 90vh;
         }
 
-        .model-container {
+        .model-section {
             flex: 2;
             background: rgba(0,0,0,0.7);
             border-radius: 10px;
             position: relative;
-        }
-
-        .drag-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .drag-handle {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: rgba(0, 242, 254, 0.8);
-            border: 2px solid #00f2fe;
-            border-radius: 50%;
-            cursor: move;
-            pointer-events: all;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: white;
-            user-select: none;
-        }
-
-        .drag-handle:hover {
-            background: rgba(0, 242, 254, 1);
-            transform: scale(1.1);
-        }
-
-        .drag-handle.vertical {
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-        }
-
-        .drag-handle.horizontal {
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .instructions {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.8);
-            color: #00f2fe;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            z-index: 5;
+            overflow: hidden;
         }
 
         model-viewer {
@@ -89,12 +34,34 @@
             background-color: transparent;
         }
 
-        .debug-panel {
+        .drag-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            cursor: move;
+            background: rgba(0,242,254,0.1);
+            border: 2px dashed rgba(0,242,254,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #00f2fe;
+            user-select: none;
+        }
+
+        .drag-area:hover {
+            background: rgba(0,242,254,0.2);
+            border-color: rgba(0,242,254,0.5);
+        }
+
+        .controls {
             flex: 1;
             background: rgba(255,255,255,0.1);
             border-radius: 10px;
             padding: 20px;
-            overflow-y: auto;
         }
 
         .control-group {
@@ -105,53 +72,60 @@
         }
 
         .control-group h3 {
-            margin: 0 0 10px 0;
+            margin: 0 0 15px 0;
             color: #00f2fe;
         }
 
-        .slider-container {
-            margin: 10px 0;
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
-        .slider-container label {
-            display: block;
-            margin-bottom: 5px;
+        .slider-row label {
+            width: 100px;
             font-size: 14px;
         }
 
         .slider {
-            width: 100%;
-            margin-bottom: 10px;
+            flex: 1;
+            height: 30px;
         }
 
-        .value-display {
-            background: rgba(0,0,0,0.5);
-            padding: 10px;
-            border-radius: 5px;
+        .value {
+            width: 50px;
+            text-align: center;
             font-family: monospace;
-            font-size: 12px;
-            margin-bottom: 15px;
+            font-size: 14px;
         }
 
-        .preset-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .preset-btn {
+        .reset-btn, .preset-btn {
             background: linear-gradient(45deg, #00f2fe, #4facfe);
             border: none;
-            padding: 8px 12px;
+            padding: 8px 16px;
             color: white;
             border-radius: 5px;
             cursor: pointer;
+            margin: 5px;
             font-size: 12px;
         }
 
-        .preset-btn:hover {
+        .reset-btn:hover, .preset-btn:hover {
             opacity: 0.8;
+        }
+
+        .code-output {
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 10px;
         }
 
         .copy-btn {
@@ -169,440 +143,299 @@
             opacity: 0.8;
         }
 
-        .output-code {
+        .instructions {
             background: rgba(0,0,0,0.8);
             padding: 15px;
             border-radius: 8px;
-            font-family: monospace;
-            font-size: 11px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+            color: #00f2fe;
+            font-size: 14px;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
-    <div class="debug-container">
-        <div class="model-container">
-            <div class="instructions">
-                Use blue handles to drag model up/down/left/right<br>
-                Mouse wheel: zoom | Right-click drag: camera orbit
-            </div>
+    <div class="container">
+        <div class="model-section">
             <model-viewer
-                id="debugViewer"
+                id="modelViewer"
                 src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
                 animation-name="idle"
                 autoplay
-                camera-target="0m 1.2m 0m"
-                camera-orbit="0deg 75deg 2.5m"
-                field-of-view="40deg"
+                camera-target="0m 0m 0m"
+                camera-orbit="0deg 75deg 3m"
+                field-of-view="45deg"
                 environment-image="neutral"
                 exposure="2"
                 disable-zoom="false"
-                disable-pan="false"
-                interaction-policy="always-allow"
-                auto-rotate="false"
-                camera-controls
-                touch-action="pan-y">
+                disable-pan="true"
+                interaction-policy="allow-when-focused">
             </model-viewer>
-            <div class="drag-overlay">
-                <div class="drag-handle vertical" id="verticalDrag">↕</div>
-                <div class="drag-handle horizontal" id="horizontalDrag">↔</div>
+            <div class="drag-area" id="dragArea">
+                DRAG TO MOVE MODEL
             </div>
         </div>
 
-        <div class="debug-panel">
-            <h2>Camera Debug Controls</h2>
-            
-            <div class="value-display" id="currentValues">
-                Loading...
+        <div class="controls">
+            <div class="instructions">
+                <strong>How to use:</strong><br>
+                • Drag anywhere in the left area to move the model<br>
+                • Use sliders for fine-tuning<br>
+                • Mouse wheel to zoom in/out<br>
+                • Try presets for quick positioning
             </div>
 
             <div class="control-group">
-                <h3>Camera Target (X, Y, Z)</h3>
-                <div class="slider-container">
-                    <label>Target X: <span id="targetXVal">0</span>m</label>
-                    <input type="range" class="slider" id="targetX" min="-5" max="5" step="0.1" value="0">
+                <h3>Model Position</h3>
+                <div class="slider-row">
+                    <label>Left/Right:</label>
+                    <input type="range" class="slider" id="posX" min="-10" max="10" step="0.2" value="0">
+                    <span class="value" id="posXVal">0.0</span>
                 </div>
-                <div class="slider-container">
-                    <label>Target Y: <span id="targetYVal">1.2</span>m</label>
-                    <input type="range" class="slider" id="targetY" min="-2" max="4" step="0.1" value="1.2">
+                <div class="slider-row">
+                    <label>Up/Down:</label>
+                    <input type="range" class="slider" id="posY" min="-8" max="8" step="0.2" value="0">
+                    <span class="value" id="posYVal">0.0</span>
                 </div>
-                <div class="slider-container">
-                    <label>Target Z: <span id="targetZVal">0</span>m</label>
-                    <input type="range" class="slider" id="targetZ" min="-5" max="5" step="0.1" value="0">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <h3>Camera Orbit</h3>
-                <div class="slider-container">
-                    <label>Horizontal: <span id="orbitHVal">0</span>°</label>
-                    <input type="range" class="slider" id="orbitH" min="-180" max="180" step="5" value="0">
-                </div>
-                <div class="slider-container">
-                    <label>Vertical: <span id="orbitVVal">75</span>°</label>
-                    <input type="range" class="slider" id="orbitV" min="0" max="180" step="5" value="75">
-                </div>
-                <div class="slider-container">
-                    <label>Distance: <span id="orbitDVal">2.5</span>m</label>
-                    <input type="range" class="slider" id="orbitD" min="0.5" max="10" step="0.1" value="2.5">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <h3>Field of View</h3>
-                <div class="slider-container">
-                    <label>FOV: <span id="fovVal">40</span>°</label>
-                    <input type="range" class="slider" id="fov" min="10" max="120" step="1" value="40">
+                <div class="slider-row">
+                    <label>Near/Far:</label>
+                    <input type="range" class="slider" id="posZ" min="-10" max="10" step="0.2" value="0">
+                    <span class="value" id="posZVal">0.0</span>
                 </div>
             </div>
 
             <div class="control-group">
                 <h3>Model Scale</h3>
-                <div class="slider-container">
-                    <label>Scale: <span id="scaleVal">1.0</span>x</label>
-                    <input type="range" class="slider" id="scale" min="0.1" max="5.0" step="0.1" value="1.0">
+                <div class="slider-row">
+                    <label>Size:</label>
+                    <input type="range" class="slider" id="scale" min="0.5" max="8" step="0.1" value="1.0">
+                    <span class="value" id="scaleVal">1.0</span>
                 </div>
             </div>
 
             <div class="control-group">
-                <h3>Model Position</h3>
-                <div class="slider-container">
-                    <label>Move Left/Right: <span id="posXVal">0</span>m</label>
-                    <input type="range" class="slider" id="posX" min="-3" max="3" step="0.1" value="0">
+                <h3>Camera</h3>
+                <div class="slider-row">
+                    <label>Distance:</label>
+                    <input type="range" class="slider" id="distance" min="1" max="10" step="0.1" value="3">
+                    <span class="value" id="distanceVal">3.0</span>
                 </div>
-                <div class="slider-container">
-                    <label>Move Up/Down: <span id="posYVal">0</span>m</label>
-                    <input type="range" class="slider" id="posY" min="-2" max="2" step="0.1" value="0">
-                </div>
-                <div class="slider-container">
-                    <label>Move Forward/Back: <span id="posZVal">0</span>m</label>
-                    <input type="range" class="slider" id="posZ" min="-3" max="3" step="0.1" value="0">
+                <div class="slider-row">
+                    <label>Field of View:</label>
+                    <input type="range" class="slider" id="fov" min="15" max="90" step="1" value="45">
+                    <span class="value" id="fovVal">45</span>
                 </div>
             </div>
 
             <div class="control-group">
                 <h3>Quick Presets</h3>
-                <div class="preset-buttons">
-                    <button class="preset-btn" onclick="applyPreset('close')">Close Up</button>
-                    <button class="preset-btn" onclick="applyPreset('medium')">Medium</button>
-                    <button class="preset-btn" onclick="applyPreset('wide')">Wide Shot</button>
-                    <button class="preset-btn" onclick="applyPreset('webcam')">Webcam</button>
-                </div>
+                <button class="preset-btn" onclick="applyPreset('webcam')">Webcam View</button>
+                <button class="preset-btn" onclick="applyPreset('portrait')">Portrait</button>
+                <button class="preset-btn" onclick="applyPreset('full')">Full Body</button>
+                <button class="reset-btn" onclick="resetPosition()">Reset All</button>
             </div>
 
             <div class="control-group">
                 <h3>Generated Code</h3>
-                <div class="output-code" id="outputCode"></div>
-                <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+                <div class="code-output" id="codeOutput">Loading...</div>
+                <button class="copy-btn" onclick="copyCode()">Copy Code to Clipboard</button>
             </div>
         </div>
     </div>
 
     <script>
-        const viewer = document.getElementById('debugViewer');
-        const currentValues = document.getElementById('currentValues');
-        const outputCode = document.getElementById('outputCode');
-
-        // Slider elements
-        const targetX = document.getElementById('targetX');
-        const targetY = document.getElementById('targetY');
-        const targetZ = document.getElementById('targetZ');
-        const orbitH = document.getElementById('orbitH');
-        const orbitV = document.getElementById('orbitV');
-        const orbitD = document.getElementById('orbitD');
-        const fov = document.getElementById('fov');
-        const scale = document.getElementById('scale');
+        const viewer = document.getElementById('modelViewer');
+        const dragArea = document.getElementById('dragArea');
+        const codeOutput = document.getElementById('codeOutput');
+        
+        // Control elements
         const posX = document.getElementById('posX');
         const posY = document.getElementById('posY');
         const posZ = document.getElementById('posZ');
+        const scale = document.getElementById('scale');
+        const distance = document.getElementById('distance');
+        const fov = document.getElementById('fov');
 
-        // Value display elements
-        const targetXVal = document.getElementById('targetXVal');
-        const targetYVal = document.getElementById('targetYVal');
-        const targetZVal = document.getElementById('targetZVal');
-        const orbitHVal = document.getElementById('orbitHVal');
-        const orbitVVal = document.getElementById('orbitVVal');
-        const orbitDVal = document.getElementById('orbitDVal');
-        const fovVal = document.getElementById('fovVal');
-        const scaleVal = document.getElementById('scaleVal');
+        // Value displays
         const posXVal = document.getElementById('posXVal');
         const posYVal = document.getElementById('posYVal');
         const posZVal = document.getElementById('posZVal');
+        const scaleVal = document.getElementById('scaleVal');
+        const distanceVal = document.getElementById('distanceVal');
+        const fovVal = document.getElementById('fovVal');
 
-        // Track camera changes from user interaction
-        function updateFromViewer() {
-            const orbit = viewer.getCameraOrbit();
-            const target = viewer.getCameraTarget();
-            const fovValue = viewer.getFieldOfView();
-            
-            // Update sliders to match viewer
-            if (orbit) {
-                orbitH.value = orbit.theta * 180 / Math.PI;
-                orbitV.value = orbit.phi * 180 / Math.PI;
-                orbitD.value = orbit.radius;
-            }
-            
-            if (target) {
-                targetX.value = target.x;
-                targetY.value = target.y;
-                targetZ.value = target.z;
-            }
-            
-            if (fovValue) {
-                fov.value = fovValue * 180 / Math.PI;
-            }
-            
-            updateDisplays();
+        let isDragging = false;
+        let dragStartX, dragStartY;
+        let startPosX, startPosY;
+
+        // Drag functionality
+        dragArea.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', endDrag);
+
+        function startDrag(e) {
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            startPosX = parseFloat(posX.value);
+            startPosY = parseFloat(posY.value);
+            dragArea.style.cursor = 'grabbing';
+            e.preventDefault();
         }
 
-        function updateCamera() {
-            const targetXValue = parseFloat(targetX.value);
-            const targetYValue = parseFloat(targetY.value);
-            const targetZValue = parseFloat(targetZ.value);
-            const orbitHValue = parseFloat(orbitH.value);
-            const orbitVValue = parseFloat(orbitV.value);
-            const orbitDValue = parseFloat(orbitD.value);
-            const fovValue = parseFloat(fov.value);
-            const scaleValue = parseFloat(scale.value);
-            const posXValue = parseFloat(posX.value);
-            const posYValue = parseFloat(posY.value);
-            const posZValue = parseFloat(posZ.value);
+        function drag(e) {
+            if (!isDragging) return;
 
-            // Update viewer
-            viewer.cameraTarget = `${targetXValue}m ${targetYValue}m ${targetZValue}m`;
-            viewer.cameraOrbit = `${orbitHValue}deg ${orbitVValue}deg ${orbitDValue}m`;
-            viewer.fieldOfView = `${fovValue}deg`;
-            viewer.scale = `${scaleValue} ${scaleValue} ${scaleValue}`;
+            const deltaX = (e.clientX - dragStartX) * 0.02; // Scale factor for sensitivity
+            const deltaY = (dragStartY - e.clientY) * 0.02; // Invert Y axis
+
+            const newX = Math.max(-10, Math.min(10, startPosX + deltaX));
+            const newY = Math.max(-8, Math.min(8, startPosY + deltaY));
+
+            posX.value = newX;
+            posY.value = newY;
             
-            // Apply model position using CSS transform
-            const modelNode = viewer.querySelector('model');
-            if (viewer.model) {
-                const scene = viewer.model.scene;
-                scene.position.set(posXValue, posYValue, posZValue);
-            } else {
-                // If model isn't loaded yet, apply when it loads
-                viewer.addEventListener('load', () => {
-                    const scene = viewer.model.scene;
-                    scene.position.set(posXValue, posYValue, posZValue);
-                }, { once: true });
-            }
-
-            updateDisplays();
+            updateModel();
         }
 
-        function updateDisplays() {
+        function endDrag() {
+            isDragging = false;
+            dragArea.style.cursor = 'move';
+        }
+
+        // Update model position and properties
+        function updateModel() {
+            const x = parseFloat(posX.value);
+            const y = parseFloat(posY.value);
+            const z = parseFloat(posZ.value);
+            const s = parseFloat(scale.value);
+            const d = parseFloat(distance.value);
+            const f = parseFloat(fov.value);
+
             // Update value displays
-            targetXVal.textContent = parseFloat(targetX.value);
-            targetYVal.textContent = parseFloat(targetY.value);
-            targetZVal.textContent = parseFloat(targetZ.value);
-            orbitHVal.textContent = parseFloat(orbitH.value);
-            orbitVVal.textContent = parseFloat(orbitV.value);
-            orbitDVal.textContent = parseFloat(orbitD.value);
-            fovVal.textContent = parseFloat(fov.value);
-            scaleVal.textContent = parseFloat(scale.value);
-            posXVal.textContent = parseFloat(posX.value);
-            posYVal.textContent = parseFloat(posY.value);
-            posZVal.textContent = parseFloat(posZ.value);
+            posXVal.textContent = x.toFixed(1);
+            posYVal.textContent = y.toFixed(1);
+            posZVal.textContent = z.toFixed(1);
+            scaleVal.textContent = s.toFixed(1);
+            distanceVal.textContent = d.toFixed(1);
+            fovVal.textContent = f.toString();
 
-            // Update current values display
-            currentValues.innerHTML = `
-Camera Target: ${targetX.value}m ${targetY.value}m ${targetZ.value}m
-Camera Orbit: ${orbitH.value}° ${orbitV.value}° ${orbitD.value}m
-Field of View: ${fov.value}°
-Model Scale: ${scale.value}x
-Model Position: ${posX.value}m, ${posY.value}m, ${posZ.value}m
-            `;
+            // Apply to model-viewer
+            viewer.cameraOrbit = `0deg 75deg ${d}m`;
+            viewer.fieldOfView = `${f}deg`;
+            viewer.scale = `${s} ${s} ${s}`;
 
-            // Generate code
+            // Move model using Three.js when available
+            if (viewer.model && viewer.model.scene) {
+                viewer.model.scene.position.set(x, y, z);
+            }
+
             generateCode();
         }
 
+        // Generate code output
         function generateCode() {
-            const targetXValue = parseFloat(targetX.value);
-            const targetYValue = parseFloat(targetY.value);
-            const targetZValue = parseFloat(targetZ.value);
-            const orbitHValue = parseFloat(orbitH.value);
-            const orbitVValue = parseFloat(orbitV.value);
-            const orbitDValue = parseFloat(orbitD.value);
-            const fovValue = parseFloat(fov.value);
-            const scaleValue = parseFloat(scale.value);
-            const posXValue = parseFloat(posX.value);
-            const posYValue = parseFloat(posY.value);
-            const posZValue = parseFloat(posZ.value);
+            const x = parseFloat(posX.value);
+            const y = parseFloat(posY.value);
+            const z = parseFloat(posZ.value);
+            const s = parseFloat(scale.value);
+            const d = parseFloat(distance.value);
+            const f = parseFloat(fov.value);
 
             const htmlCode = `<model-viewer
     id="characterViewer"
     src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
     animation-name="idle"
     autoplay
-    camera-target="${targetXValue}m ${targetYValue}m ${targetZValue}m"
-    camera-orbit="${orbitHValue}deg ${orbitVValue}deg ${orbitDValue}m"
-    field-of-view="${fovValue}deg"
-    scale="${scaleValue} ${scaleValue} ${scaleValue}"
+    camera-orbit="0deg 75deg ${d}m"
+    field-of-view="${f}deg"
+    scale="${s} ${s} ${s}"
     environment-image="neutral"
     exposure="2"
     disable-zoom="true"
     disable-pan="true"
-    interaction-policy="none"
-    camera-controls>
+    interaction-policy="none">
 </model-viewer>`;
 
             const jsCode = `viewer.addEventListener('load', () => {
-    viewer.cameraOrbit = "${orbitHValue}deg ${orbitVValue}deg ${orbitDValue}m";
-    viewer.cameraTarget = "${targetXValue}m ${targetYValue}m ${targetZValue}m";
-    viewer.fieldOfView = "${fovValue}deg";
-    viewer.scale = "${scaleValue} ${scaleValue} ${scaleValue}";
+    viewer.cameraOrbit = "0deg 75deg ${d}m";
+    viewer.fieldOfView = "${f}deg";
+    viewer.scale = "${s} ${s} ${s}";
     
     // Position the model
     const scene = viewer.model.scene;
-    scene.position.set(${posXValue}, ${posYValue}, ${posZValue});
+    scene.position.set(${x}, ${y}, ${z});
     
     // ... rest of your code
 });`;
 
-            outputCode.textContent = `HTML:\n${htmlCode}\n\nJavaScript:\n${jsCode}`;
+            codeOutput.textContent = `HTML:\n${htmlCode}\n\nJavaScript:\n${jsCode}`;
         }
 
+        // Preset functions
         function applyPreset(preset) {
             switch(preset) {
-                case 'close':
-                    setValues(0, 0.8, 0, 0, 85, 1.5, 30, 1.0, 0, -0.3, 0);
-                    break;
-                case 'medium':
-                    setValues(0, 1.0, 0, 0, 75, 2.5, 40, 1.0, 0, -0.2, 0);
-                    break;
-                case 'wide':
-                    setValues(0, 1.2, 0, 0, 70, 4, 60, 1.0, 0, -0.1, 0);
-                    break;
                 case 'webcam':
-                    setValues(0, 0.6, 0, 0, 80, 2, 35, 1.2, 0, -0.5, 0);
+                    setValues(0, -2, 0, 1.8, 2.5, 35);
+                    break;
+                case 'portrait':
+                    setValues(0, -1, 0, 1.4, 3, 40);
+                    break;
+                case 'full':
+                    setValues(0, 0, 0, 1.0, 4, 50);
                     break;
             }
         }
 
-        function setValues(tx, ty, tz, oh, ov, od, f, s, px, py, pz) {
-            targetX.value = tx;
-            targetY.value = ty;
-            targetZ.value = tz;
-            orbitH.value = oh;
-            orbitV.value = ov;
-            orbitD.value = od;
-            fov.value = f;
+        function resetPosition() {
+            setValues(0, 0, 0, 1.0, 3, 45);
+        }
+
+        function setValues(x, y, z, s, d, f) {
+            posX.value = x;
+            posY.value = y;
+            posZ.value = z;
             scale.value = s;
-            posX.value = px;
-            posY.value = py;
-            posZ.value = pz;
-            updateCamera();
+            distance.value = d;
+            fov.value = f;
+            updateModel();
         }
 
         function copyCode() {
-            navigator.clipboard.writeText(outputCode.textContent);
+            navigator.clipboard.writeText(codeOutput.textContent);
             const btn = event.target;
             const originalText = btn.textContent;
-            btn.textContent = 'Copied!';
+            btn.textContent = 'Code Copied!';
             setTimeout(() => btn.textContent = originalText, 2000);
         }
 
-        // Add event listeners
-        [targetX, targetY, targetZ, orbitH, orbitV, orbitD, fov, scale, posX, posY, posZ].forEach(slider => {
-            slider.addEventListener('input', updateCamera);
+        // Event listeners for sliders
+        [posX, posY, posZ, scale, distance, fov].forEach(slider => {
+            slider.addEventListener('input', updateModel);
         });
 
-        // Listen for camera changes from user interaction
-        viewer.addEventListener('camera-change', updateFromViewer);
-
-        // Initialize
+        // Initialize when model loads
         viewer.addEventListener('load', () => {
-            updateCamera();
-            setupDragHandles();
+            updateModel();
+            // Hide drag overlay after model loads
+            setTimeout(() => {
+                dragArea.style.opacity = '0.3';
+                dragArea.innerHTML = '';
+            }, 2000);
         });
 
-        function setupDragHandles() {
-            const verticalDrag = document.getElementById('verticalDrag');
-            const horizontalDrag = document.getElementById('horizontalDrag');
-            
-            let isDragging = false;
-            let startY, startX;
-            let startPosY, startPosX;
+        // Show drag area on hover
+        dragArea.addEventListener('mouseenter', () => {
+            dragArea.style.opacity = '0.8';
+            dragArea.innerHTML = 'DRAG TO MOVE';
+        });
 
-            // Vertical drag handle
-            verticalDrag.addEventListener('mousedown', (e) => {
-                isDragging = 'vertical';
-                startY = e.clientY;
-                startPosY = parseFloat(posY.value);
-                e.preventDefault();
-            });
-
-            // Horizontal drag handle  
-            horizontalDrag.addEventListener('mousedown', (e) => {
-                isDragging = 'horizontal';
-                startX = e.clientX;
-                startPosX = parseFloat(posX.value);
-                e.preventDefault();
-            });
-
-            // Mouse move handler
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-
-                if (isDragging === 'vertical') {
-                    const deltaY = (startY - e.clientY) * 0.005; // Invert and scale
-                    const newPosY = Math.max(-2, Math.min(2, startPosY + deltaY));
-                    posY.value = newPosY;
-                    updateCamera();
-                } else if (isDragging === 'horizontal') {
-                    const deltaX = (e.clientX - startX) * 0.005;
-                    const newPosX = Math.max(-3, Math.min(3, startPosX + deltaX));
-                    posX.value = newPosX;
-                    updateCamera();
-                }
-            });
-
-            // Mouse up handler
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-
-            // Touch support for mobile
-            verticalDrag.addEventListener('touchstart', (e) => {
-                isDragging = 'vertical';
-                startY = e.touches[0].clientY;
-                startPosY = parseFloat(posY.value);
-                e.preventDefault();
-            });
-
-            horizontalDrag.addEventListener('touchstart', (e) => {
-                isDragging = 'horizontal';
-                startX = e.touches[0].clientX;
-                startPosX = parseFloat(posX.value);
-                e.preventDefault();
-            });
-
-            document.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-
-                if (isDragging === 'vertical') {
-                    const deltaY = (startY - e.touches[0].clientY) * 0.005;
-                    const newPosY = Math.max(-2, Math.min(2, startPosY + deltaY));
-                    posY.value = newPosY;
-                    updateCamera();
-                } else if (isDragging === 'horizontal') {
-                    const deltaX = (e.touches[0].clientX - startX) * 0.005;
-                    const newPosX = Math.max(-3, Math.min(3, startPosX + deltaX));
-                    posX.value = newPosX;
-                    updateCamera();
-                }
-                e.preventDefault();
-            });
-
-            document.addEventListener('touchend', () => {
-                isDragging = false;
-            });
-        }
+        dragArea.addEventListener('mouseleave', () => {
+            if (!isDragging) {
+                dragArea.style.opacity = '0.1';
+                dragArea.innerHTML = '';
+            }
+        });
     </script>
 </body>
 </html>
