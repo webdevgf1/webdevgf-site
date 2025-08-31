@@ -479,17 +479,17 @@
                 src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
                 animation-name="idle"
                 autoplay
-                camera-target="0 -6.6 0"
-                camera-orbit="0deg 75deg 2.5m"
-                field-of-view="30deg"
+                camera-target="0 -2 0"
+                camera-orbit="0deg 45deg 2m"
+                field-of-view="40deg"
                 interpolation-decay="200"
                 environment-image="neutral"
                 skybox-image="neutral"
                 exposure="2"
-                disable-zoom="true"
-                disable-pan="true"
-                interaction-policy="none"
-                camera-controls="false"
+                disable-zoom="false"
+                disable-pan="false"
+                interaction-policy="always-allow"
+                camera-controls="true"
                 auto-rotate="false"
                 rotation-per-second="0deg"
                 tone-mapping="commerce">
@@ -589,13 +589,14 @@ IMPORTANT FORMATTING RULES:
             const loadingOverlay = document.querySelector('.loading-overlay');
             
             viewer.addEventListener('load', () => {
-                // Fix camera in place - model position is now set via CSS
-                viewer.cameraTarget = "0m 0m 0m";
-                viewer.cameraOrbit = "0deg 75deg 2.5m";
-                viewer.fieldOfView = "30deg";
+                // Try looking way up - maybe the character is floating high in the model
+                viewer.cameraTarget = "0m 10m 0m";
+                viewer.cameraOrbit = "0deg 45deg 2m";
+                viewer.fieldOfView = "40deg";
                 viewer.interactionPrompt = null;
                 
-                console.log("Model loaded! Character positioned at y:-6.60 (locked in CSS)");
+                console.log("Trying to look up at character - camera target: 0m 10m 0m");
+                console.log("You should now be able to drag to look around and find the character");
                 
                 setTimeout(() => {
                     loadingOverlay.classList.add('fade-out');
