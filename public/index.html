@@ -143,7 +143,9 @@
                 disable-zoom="false"
                 disable-pan="false"
                 interaction-policy="always-allow"
-                auto-rotate="false">
+                auto-rotate="false"
+                camera-controls
+                touch-action="pan-y">
             </model-viewer>
         </div>
 
@@ -195,6 +197,14 @@
             </div>
 
             <div class="control-group">
+                <h3>Model Scale</h3>
+                <div class="slider-container">
+                    <label>Scale: <span id="scaleVal">1.0</span>x</label>
+                    <input type="range" class="slider" id="scale" min="0.1" max="5.0" step="0.1" value="1.0">
+                </div>
+            </div>
+
+            <div class="control-group">
                 <h3>Quick Presets</h3>
                 <div class="preset-buttons">
                     <button class="preset-btn" onclick="applyPreset('close')">Close Up</button>
@@ -225,6 +235,7 @@
         const orbitV = document.getElementById('orbitV');
         const orbitD = document.getElementById('orbitD');
         const fov = document.getElementById('fov');
+        const scale = document.getElementById('scale');
 
         // Value display elements
         const targetXVal = document.getElementById('targetXVal');
@@ -234,6 +245,33 @@
         const orbitVVal = document.getElementById('orbitVVal');
         const orbitDVal = document.getElementById('orbitDVal');
         const fovVal = document.getElementById('fovVal');
+        const scaleVal = document.getElementById('scaleVal');
+
+        // Track camera changes from user interaction
+        function updateFromViewer() {
+            const orbit = viewer.getCameraOrbit();
+            const target = viewer.getCameraTarget();
+            const fovValue = viewer.getFieldOfView();
+            
+            // Update sliders to match viewer
+            if (orbit) {
+                orbitH.value = orbit.theta * 180 / Math.PI;
+                orbitV.value = orbit.phi * 180 / Math.PI;
+                orbitD.value = orbit.radius;
+            }
+            
+            if (target) {
+                targetX.value = target.x;
+                targetY.value = target.y;
+                targetZ.value = target.z;
+            }
+            
+            if (fovValue) {
+                fov.value = fovValue * 180 / Math.PI;
+            }
+            
+            updateDisplays();
+        }
 
         function updateCamera() {
             const targetXValue = parseFloat(targetX.value);
@@ -243,26 +281,34 @@
             const orbitVValue = parseFloat(orbitV.value);
             const orbitDValue = parseFloat(orbitD.value);
             const fovValue = parseFloat(fov.value);
+            const scaleValue = parseFloat(scale.value);
 
             // Update viewer
             viewer.cameraTarget = `${targetXValue}m ${targetYValue}m ${targetZValue}m`;
             viewer.cameraOrbit = `${orbitHValue}deg ${orbitVValue}deg ${orbitDValue}m`;
             viewer.fieldOfView = `${fovValue}deg`;
+            viewer.scale = `${scaleValue} ${scaleValue} ${scaleValue}`;
 
-            // Update displays
-            targetXVal.textContent = targetXValue;
-            targetYVal.textContent = targetYValue;
-            targetZVal.textContent = targetZValue;
-            orbitHVal.textContent = orbitHValue;
-            orbitVVal.textContent = orbitVValue;
-            orbitDVal.textContent = orbitDValue;
-            fovVal.textContent = fovValue;
+            updateDisplays();
+        }
+
+        function updateDisplays() {
+            // Update value displays
+            targetXVal.textContent = parseFloat(targetX.value);
+            targetYVal.textContent = parseFloat(targetY.value);
+            targetZVal.textContent = parseFloat(targetZ.value);
+            orbitHVal.textContent = parseFloat(orbitH.value);
+            orbitVVal.textContent = parseFloat(orbitV.value);
+            orbitDVal.textContent = parseFloat(orbitD.value);
+            fovVal.textContent = parseFloat(fov.value);
+            scaleVal.textContent = parseFloat(scale.value);
 
             // Update current values display
             currentValues.innerHTML = `
-Camera Target: ${targetXValue}m ${targetYValue}m ${targetZValue}m
-Camera Orbit: ${orbitHValue}° ${orbitVValue}° ${orbitDValue}m
-Field of View: ${fovValue}°
+Camera Target: ${targetX.value}m ${targetY.value}m ${targetZ.value}m
+Camera Orbit: ${orbitH.value}° ${orbitV.value}° ${orbitD.value}m
+Field of View: ${fov.value}°
+Model Scale: ${scale.value}x
             `;
 
             // Generate code
@@ -277,6 +323,7 @@ Field of View: ${fovValue}°
             const orbitVValue = parseFloat(orbitV.value);
             const orbitDValue = parseFloat(orbitD.value);
             const fovValue = parseFloat(fov.value);
+            const scaleValue = parseFloat(scale.value);
 
             const htmlCode = `<model-viewer
     id="characterViewer"
@@ -286,17 +333,20 @@ Field of View: ${fovValue}°
     camera-target="${targetXValue}m ${targetYValue}m ${targetZValue}m"
     camera-orbit="${orbitHValue}deg ${orbitVValue}deg ${orbitDValue}m"
     field-of-view="${fovValue}deg"
+    scale="${scaleValue} ${scaleValue} ${scaleValue}"
     environment-image="neutral"
     exposure="2"
     disable-zoom="true"
     disable-pan="true"
-    interaction-policy="none">
+    interaction-policy="none"
+    camera-controls>
 </model-viewer>`;
 
             const jsCode = `viewer.addEventListener('load', () => {
     viewer.cameraOrbit = "${orbitHValue}deg ${orbitVValue}deg ${orbitDValue}m";
     viewer.cameraTarget = "${targetXValue}m ${targetYValue}m ${targetZValue}m";
     viewer.fieldOfView = "${fovValue}deg";
+    viewer.scale = "${scaleValue} ${scaleValue} ${scaleValue}";
     // ... rest of your code
 });`;
 
@@ -306,21 +356,21 @@ Field of View: ${fovValue}°
         function applyPreset(preset) {
             switch(preset) {
                 case 'close':
-                    setValues(0, 0.8, 0, 0, 85, 1.5, 30);
+                    setValues(0, 0.8, 0, 0, 85, 1.5, 30, 1.0);
                     break;
                 case 'medium':
-                    setValues(0, 1.0, 0, 0, 75, 2.5, 40);
+                    setValues(0, 1.0, 0, 0, 75, 2.5, 40, 1.0);
                     break;
                 case 'wide':
-                    setValues(0, 1.2, 0, 0, 70, 4, 60);
+                    setValues(0, 1.2, 0, 0, 70, 4, 60, 1.0);
                     break;
                 case 'webcam':
-                    setValues(0, 0.6, 0, 0, 80, 2, 35);
+                    setValues(0, 0.6, 0, 0, 80, 2, 35, 1.2);
                     break;
             }
         }
 
-        function setValues(tx, ty, tz, oh, ov, od, f) {
+        function setValues(tx, ty, tz, oh, ov, od, f, s) {
             targetX.value = tx;
             targetY.value = ty;
             targetZ.value = tz;
@@ -328,6 +378,7 @@ Field of View: ${fovValue}°
             orbitV.value = ov;
             orbitD.value = od;
             fov.value = f;
+            scale.value = s;
             updateCamera();
         }
 
@@ -340,9 +391,12 @@ Field of View: ${fovValue}°
         }
 
         // Add event listeners
-        [targetX, targetY, targetZ, orbitH, orbitV, orbitD, fov].forEach(slider => {
+        [targetX, targetY, targetZ, orbitH, orbitV, orbitD, fov, scale].forEach(slider => {
             slider.addEventListener('input', updateCamera);
         });
+
+        // Listen for camera changes from user interaction
+        viewer.addEventListener('camera-change', updateFromViewer);
 
         // Initialize
         viewer.addEventListener('load', () => {
