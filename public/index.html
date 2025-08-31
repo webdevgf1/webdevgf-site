@@ -179,6 +179,20 @@
             pointer-events: none;
         }
 
+        .camera-debug {
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #00f2fe;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            z-index: 10;
+            display: none;
+        }
+
         .chat-interface {
             flex: 1;
             background-color: rgba(0, 0, 0, 0.5);
@@ -461,6 +475,11 @@
             <div class="loading-overlay">
                 <div class="loading-text">INITIALIZING...</div>
             </div>
+            <div class="camera-debug" id="cameraDebug">
+                <div>Camera Target: <span id="targetDisplay">0m 1.2m 0m</span></div>
+                <div>Camera Orbit: <span id="orbitDisplay">0deg 75deg 2.5m</span></div>
+                <div>Controls: Arrow/WASD=rotate, Q/E=zoom, R/F=target, C=toggle</div>
+            </div>
             <model-viewer
                 id="characterViewer"
                 src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
@@ -589,14 +608,24 @@ IMPORTANT FORMATTING RULES:
                 viewer.disablePan = false;
                 viewer.interactionPolicy = "always-allow";
                 
-                console.log("Model loaded! Controls enabled:");
-                console.log("- Click and drag to rotate");
-                console.log("- Mouse wheel to zoom");
-                console.log("- Arrow keys to adjust view");
-                console.log("- WASD keys for fine adjustments");
-                console.log("Initial camera - Target:", viewer.cameraTarget, "Orbit:", viewer.cameraOrbit);
+                // Show debug info
+                const debugPanel = document.getElementById('cameraDebug');
+                const targetDisplay = document.getElementById('targetDisplay');
+                const orbitDisplay = document.getElementById('orbitDisplay');
                 
-                // Add keyboard controls as backup
+                debugPanel.style.display = 'block';
+                
+                // Function to update debug display
+                const updateDebugDisplay = () => {
+                    targetDisplay.textContent = viewer.cameraTarget;
+                    orbitDisplay.textContent = viewer.cameraOrbit;
+                };
+                
+                updateDebugDisplay();
+                
+                console.log("Model loaded! Debug panel visible. Use keyboard controls to adjust camera.");
+                
+                // Add keyboard controls
                 document.addEventListener('keydown', (e) => {
                     const step = 0.1;
                     const currentOrbit = viewer.cameraOrbit.split(' ');
@@ -607,49 +636,45 @@ IMPORTANT FORMATTING RULES:
                     let distance = parseFloat(currentOrbit[2]);
                     let targetY = parseFloat(currentTarget[1].replace('m', ''));
                     
-                    switch(e.key) {
-                        case 'ArrowLeft':
+                    switch(e.key.toLowerCase()) {
+                        case 'arrowleft':
                         case 'a':
-                        case 'A':
                             azimuth -= 10;
                             break;
-                        case 'ArrowRight':
+                        case 'arrowright':
                         case 'd':
-                        case 'D':
                             azimuth += 10;
                             break;
-                        case 'ArrowUp':
+                        case 'arrowup':
                         case 'w':
-                        case 'W':
                             elevation = Math.min(90, elevation + 5);
                             break;
-                        case 'ArrowDown':
+                        case 'arrowdown':
                         case 's':
-                        case 'S':
                             elevation = Math.max(0, elevation - 5);
                             break;
                         case 'q':
-                        case 'Q':
                             distance = Math.max(0.5, distance - 0.2);
                             break;
                         case 'e':
-                        case 'E':
                             distance += 0.2;
                             break;
                         case 'r':
-                        case 'R':
                             targetY += 0.1;
                             break;
                         case 'f':
-                        case 'F':
                             targetY -= 0.1;
+                            break;
+                        case 'c':
+                            // Toggle debug panel
+                            debugPanel.style.display = debugPanel.style.display === 'none' ? 'block' : 'none';
                             break;
                     }
                     
-                    if (e.key.match(/[wasdqerfWASDQERF]|Arrow/)) {
+                    if (e.key.toLowerCase().match(/[wasdqerf]/) || e.key.startsWith('Arrow')) {
                         viewer.cameraOrbit = `${azimuth}deg ${elevation}deg ${distance}m`;
                         viewer.cameraTarget = `0m ${targetY}m 0m`;
-                        console.log("Camera updated - Target:", viewer.cameraTarget, "Orbit:", viewer.cameraOrbit);
+                        updateDebugDisplay();
                         e.preventDefault();
                     }
                 });
