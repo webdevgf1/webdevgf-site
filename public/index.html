@@ -821,23 +821,25 @@
                 <div class="loading-text">INITIALIZING...</div>
             </div>
             <model-viewer
-                id="characterViewer"
-                src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
-                animation-name="idle"
-                autoplay
-                camera-target="1 5.0 0"
-                camera-orbit="0deg 70deg 1.4m"
-                field-of-view="25deg"
-                interpolation-decay="200"
-                environment-image="neutral"
-                skybox-image="neutral"
-                exposure="2"
-                disable-zoom="true"
-                disable-pan="true"
-                interaction-policy="none"
-                auto-rotate="false"
-                rotation-per-second="0deg"
-                tone-mapping="commerce">
+    id="characterViewer"
+    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
+    animation-name="idle"
+    autoplay
+    camera-target="0m 1.8m 0m"
+    camera-orbit="0deg 75deg 2.2m"
+    field-of-view="35deg"
+    min-camera-orbit="auto auto 1.5m"
+    max-camera-orbit="auto auto 3m"
+    interpolation-decay="200"
+    environment-image="neutral"
+    skybox-image="neutral"
+    exposure="2"
+    disable-zoom="false"
+    disable-pan="true"
+    interaction-policy="allow-when-focused"
+    auto-rotate="false"
+    rotation-per-second="0deg"
+    tone-mapping="commerce">
                     <div class="model-lighting" slot="default">
                     <div class="light" style="transform: translate3d(0m, 2m, 4m)">
                             <div class="light__target"></div>
@@ -1773,6 +1775,7 @@ function selectMusic(musicId) {
     </div>    
 </body>
 </html>
+
 
 
 
