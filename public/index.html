@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Working Model Positioning Tool</title>
+    <title>Simple Model Positioner</title>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
     <style>
         body {
@@ -20,7 +20,7 @@
             height: 90vh;
         }
 
-        .model-section {
+        .viewer-container {
             flex: 2;
             background: rgba(0,0,0,0.7);
             border-radius: 10px;
@@ -28,35 +28,16 @@
             overflow: hidden;
         }
 
-        #modelViewer {
+        .model-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        model-viewer {
             width: 100%;
             height: 100%;
             background-color: transparent;
-            transition: transform 0.1s ease;
-        }
-
-        .drag-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 10;
-            cursor: move;
-            background: rgba(0,242,254,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: #00f2fe;
-            user-select: none;
-            opacity: 0.7;
-            border: 2px dashed rgba(0,242,254,0.3);
-        }
-
-        .drag-overlay:hover {
-            opacity: 1;
-            background: rgba(0,242,254,0.15);
         }
 
         .controls {
@@ -64,354 +45,358 @@
             background: rgba(255,255,255,0.1);
             border-radius: 10px;
             padding: 20px;
-            overflow-y: auto;
         }
 
-        .control-group {
-            margin-bottom: 20px;
+        .control-section {
+            margin-bottom: 25px;
             padding: 15px;
             background: rgba(255,255,255,0.05);
             border-radius: 8px;
         }
 
-        .control-group h3 {
+        .control-section h3 {
             margin: 0 0 15px 0;
             color: #00f2fe;
+            font-size: 16px;
         }
 
-        .slider-row {
+        .control-row {
             display: flex;
             align-items: center;
+            margin-bottom: 15px;
             gap: 10px;
-            margin-bottom: 10px;
         }
 
-        .slider-row label {
-            width: 100px;
+        .control-row label {
+            width: 120px;
             font-size: 14px;
         }
 
-        .slider {
+        .control-row input[type="range"] {
             flex: 1;
-            height: 20px;
+            height: 25px;
         }
 
-        .value {
-            width: 50px;
+        .value-display {
+            width: 60px;
             text-align: center;
             font-family: monospace;
-            font-size: 12px;
             color: #00f2fe;
             font-weight: bold;
+            font-size: 14px;
+        }
+
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .btn {
             background: linear-gradient(45deg, #00f2fe, #4facfe);
             border: none;
-            padding: 8px 16px;
+            padding: 10px 15px;
             color: white;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            margin: 3px;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 500;
         }
 
         .btn:hover {
             transform: translateY(-1px);
+            opacity: 0.9;
         }
 
-        .reset-btn {
-            background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
+        .btn.reset {
+            background: linear-gradient(45deg, #ff6b6b, #ff4757);
+        }
+
+        .output-area {
+            background: rgba(0,0,0,0.6);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .code-block {
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin: 10px 0;
         }
 
         .copy-btn {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            width: 100%;
-            margin-top: 10px;
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            border: none;
             padding: 12px;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        .code-output {
-            background: rgba(0,0,0,0.8);
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 10px;
-            white-space: pre-wrap;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .status {
+        .status-bar {
             background: rgba(0,0,0,0.8);
             color: #00f2fe;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 12px;
+            padding: 12px;
+            border-radius: 6px;
             text-align: center;
+            margin-bottom: 20px;
+            font-size: 13px;
+            border-left: 4px solid #00f2fe;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="model-section">
-            <model-viewer
-                id="modelViewer"
-                src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
-                animation-name="idle"
-                autoplay
-                camera-orbit="0deg 75deg 3m"
-                field-of-view="45deg"
-                environment-image="neutral"
-                exposure="2"
-                camera-controls>
-            </model-viewer>
-            <div class="drag-overlay" id="dragOverlay">
-                DRAG TO MOVE MODEL
+        <div class="viewer-container">
+            <div class="model-wrapper">
+                <model-viewer 
+                    id="viewer"
+                    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
+                    animation-name="idle" 
+                    autoplay
+                    camera-controls
+                    disable-zoom="false">
+                </model-viewer>
             </div>
         </div>
 
         <div class="controls">
-            <div class="status" id="status">Ready to position model</div>
+            <div class="status-bar" id="status">
+                Loading model...
+            </div>
 
-            <div class="control-group">
-                <h3>Position (pixels)</h3>
-                <div class="slider-row">
-                    <label>Move X:</label>
-                    <input type="range" class="slider" id="moveX" min="-300" max="300" step="5" value="0">
-                    <span class="value" id="moveXVal">0</span>
+            <div class="control-section">
+                <h3>Camera Position</h3>
+                <div class="control-row">
+                    <label>Target X:</label>
+                    <input type="range" id="targetX" min="-5" max="5" step="0.1" value="0">
+                    <span class="value-display" id="targetX-val">0.0</span>
                 </div>
-                <div class="slider-row">
-                    <label>Move Y:</label>
-                    <input type="range" class="slider" id="moveY" min="-300" max="300" step="5" value="-100">
-                    <span class="value" id="moveYVal">-100</span>
+                <div class="control-row">
+                    <label>Target Y:</label>
+                    <input type="range" id="targetY" min="-3" max="5" step="0.1" value="0.5">
+                    <span class="value-display" id="targetY-val">0.5</span>
+                </div>
+                <div class="control-row">
+                    <label>Target Z:</label>
+                    <input type="range" id="targetZ" min="-5" max="5" step="0.1" value="0">
+                    <span class="value-display" id="targetZ-val">0.0</span>
                 </div>
             </div>
 
-            <div class="control-group">
-                <h3>Scale & Camera</h3>
-                <div class="slider-row">
-                    <label>Size:</label>
-                    <input type="range" class="slider" id="scale" min="0.5" max="3" step="0.1" value="1.5">
-                    <span class="value" id="scaleVal">1.5</span>
+            <div class="control-section">
+                <h3>Camera Angle & Distance</h3>
+                <div class="control-row">
+                    <label>Horizontal Angle:</label>
+                    <input type="range" id="orbitH" min="-180" max="180" step="5" value="0">
+                    <span class="value-display" id="orbitH-val">0°</span>
                 </div>
-                <div class="slider-row">
+                <div class="control-row">
+                    <label>Vertical Angle:</label>
+                    <input type="range" id="orbitV" min="10" max="170" step="5" value="80">
+                    <span class="value-display" id="orbitV-val">80°</span>
+                </div>
+                <div class="control-row">
                     <label>Distance:</label>
-                    <input type="range" class="slider" id="distance" min="1" max="6" step="0.1" value="3">
-                    <span class="value" id="distanceVal">3</span>
+                    <input type="range" id="orbitD" min="0.5" max="8" step="0.1" value="3">
+                    <span class="value-display" id="orbitD-val">3.0m</span>
                 </div>
-                <div class="slider-row">
-                    <label>FOV:</label>
-                    <input type="range" class="slider" id="fov" min="20" max="80" step="2" value="45">
-                    <span class="value" id="fovVal">45</span>
+                <div class="control-row">
+                    <label>Field of View:</label>
+                    <input type="range" id="fov" min="15" max="120" step="1" value="30">
+                    <span class="value-display" id="fov-val">30°</span>
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="control-section">
                 <h3>Quick Presets</h3>
-                <button class="btn" onclick="setWebcam()">Webcam View</button>
-                <button class="btn" onclick="setPortrait()">Portrait</button>
-                <button class="btn" onclick="setFullBody()">Full Body</button>
-                <button class="btn reset-btn" onclick="resetPosition()">Reset</button>
+                <div class="preset-buttons">
+                    <button class="btn" onclick="setPreset('webcam')">Webcam</button>
+                    <button class="btn" onclick="setPreset('portrait')">Portrait</button>
+                    <button class="btn" onclick="setPreset('fullbody')">Full Body</button>
+                    <button class="btn reset" onclick="setPreset('reset')">Reset</button>
+                </div>
             </div>
 
-            <div class="control-group">
-                <h3>Your Code</h3>
-                <div class="code-output" id="codeOutput"></div>
-                <button class="btn copy-btn" onclick="copyCode()">Copy Code</button>
+            <div class="control-section">
+                <h3>Generated Code</h3>
+                <div class="output-area">
+                    <div class="code-block" id="codeOutput">
+                        Waiting for adjustments...
+                    </div>
+                    <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Code</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const viewer = document.getElementById('modelViewer');
-        const dragOverlay = document.getElementById('dragOverlay');
+        const viewer = document.getElementById('viewer');
         const status = document.getElementById('status');
         const codeOutput = document.getElementById('codeOutput');
 
-        // Get all controls
-        const moveX = document.getElementById('moveX');
-        const moveY = document.getElementById('moveY');
-        const scale = document.getElementById('scale');
-        const distance = document.getElementById('distance');
-        const fov = document.getElementById('fov');
+        // Get all sliders
+        const sliders = {
+            targetX: document.getElementById('targetX'),
+            targetY: document.getElementById('targetY'),
+            targetZ: document.getElementById('targetZ'),
+            orbitH: document.getElementById('orbitH'),
+            orbitV: document.getElementById('orbitV'),
+            orbitD: document.getElementById('orbitD'),
+            fov: document.getElementById('fov')
+        };
 
-        // Get all value displays
-        const moveXVal = document.getElementById('moveXVal');
-        const moveYVal = document.getElementById('moveYVal');
-        const scaleVal = document.getElementById('scaleVal');
-        const distanceVal = document.getElementById('distanceVal');
-        const fovVal = document.getElementById('fovVal');
+        let isLoaded = false;
 
-        let isDragging = false;
-        let dragStartX, dragStartY;
-        let startMoveX, startMoveY;
+        // Update everything when sliders change
+        function updateViewer() {
+            if (!isLoaded) return;
 
-        // Drag functionality
-        dragOverlay.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            dragStartX = e.clientX;
-            dragStartY = e.clientY;
-            startMoveX = parseInt(moveX.value);
-            startMoveY = parseInt(moveY.value);
-            dragOverlay.style.cursor = 'grabbing';
-            e.preventDefault();
-        });
+            const values = {
+                targetX: parseFloat(sliders.targetX.value),
+                targetY: parseFloat(sliders.targetY.value),
+                targetZ: parseFloat(sliders.targetZ.value),
+                orbitH: parseFloat(sliders.orbitH.value),
+                orbitV: parseFloat(sliders.orbitV.value),
+                orbitD: parseFloat(sliders.orbitD.value),
+                fov: parseFloat(sliders.fov.value)
+            };
 
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
+            // Update value displays
+            Object.keys(values).forEach(key => {
+                const display = document.getElementById(key + '-val');
+                if (key === 'orbitH' || key === 'orbitV' || key === 'fov') {
+                    display.textContent = values[key] + '°';
+                } else if (key === 'orbitD') {
+                    display.textContent = values[key] + 'm';
+                } else {
+                    display.textContent = values[key].toFixed(1);
+                }
+            });
 
-            const deltaX = e.clientX - dragStartX;
-            const deltaY = e.clientY - dragStartY;
-
-            const newX = Math.max(-300, Math.min(300, startMoveX + deltaX));
-            const newY = Math.max(-300, Math.min(300, startMoveY + deltaY));
-
-            moveX.value = newX;
-            moveY.value = newY;
-            updateModel();
-        });
-
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            dragOverlay.style.cursor = 'move';
-        });
-
-        // Update model position and camera
-        function updateModel() {
-            const x = parseInt(moveX.value);
-            const y = parseInt(moveY.value);
-            const s = parseFloat(scale.value);
-            const d = parseFloat(distance.value);
-            const f = parseInt(fov.value);
-
-            // Update displays
-            moveXVal.textContent = x;
-            moveYVal.textContent = y;
-            scaleVal.textContent = s;
-            distanceVal.textContent = d;
-            fovVal.textContent = f;
-
-            // Apply CSS transform to move the model viewer
-            viewer.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
-            
-            // Update camera
-            viewer.cameraOrbit = `0deg 75deg ${d}m`;
-            viewer.fieldOfView = `${f}deg`;
+            // Apply to viewer
+            viewer.cameraTarget = `${values.targetX}m ${values.targetY}m ${values.targetZ}m`;
+            viewer.cameraOrbit = `${values.orbitH}deg ${values.orbitV}deg ${values.orbitD}m`;
+            viewer.fieldOfView = `${values.fov}deg`;
 
             // Update status
-            status.textContent = `Position: (${x}, ${y}) Scale: ${s}x Distance: ${d}m`;
+            status.textContent = `Target: (${values.targetX.toFixed(1)}, ${values.targetY.toFixed(1)}, ${values.targetZ.toFixed(1)}) | Orbit: ${values.orbitH}° ${values.orbitV}° ${values.orbitD}m`;
 
             generateCode();
         }
 
-        // Generate the code
+        // Generate code output
         function generateCode() {
-            const x = parseInt(moveX.value);
-            const y = parseInt(moveY.value);
-            const s = parseFloat(scale.value);
-            const d = parseFloat(distance.value);
-            const f = parseInt(fov.value);
+            const values = {
+                targetX: parseFloat(sliders.targetX.value),
+                targetY: parseFloat(sliders.targetY.value),
+                targetZ: parseFloat(sliders.targetZ.value),
+                orbitH: parseFloat(sliders.orbitH.value),
+                orbitV: parseFloat(sliders.orbitV.value),
+                orbitD: parseFloat(sliders.orbitD.value),
+                fov: parseFloat(sliders.fov.value)
+            };
 
-            const code = `<div class="model-viewer-container" style="transform: translate(${x}px, ${y}px) scale(${s});">
-    <model-viewer
-        id="characterViewer"
-        src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
-        animation-name="idle"
-        autoplay
-        camera-orbit="0deg 75deg ${d}m"
-        field-of-view="${f}deg"
-        environment-image="neutral"
-        exposure="2"
-        disable-zoom="true"
-        disable-pan="true"
-        interaction-policy="none">
-    </model-viewer>
-</div>
+            const html = `<model-viewer
+    id="characterViewer"
+    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
+    animation-name="idle"
+    autoplay
+    camera-target="${values.targetX}m ${values.targetY}m ${values.targetZ}m"
+    camera-orbit="${values.orbitH}deg ${values.orbitV}deg ${values.orbitD}m"
+    field-of-view="${values.fov}deg"
+    environment-image="neutral"
+    exposure="2"
+    disable-zoom="true"
+    disable-pan="true"
+    interaction-policy="none">
+</model-viewer>`;
 
-<style>
-.model-viewer-container {
-    width: 800px;
-    height: 740px;
-    transition: transform 0.3s ease;
-}
-</style>`;
+            const js = `viewer.addEventListener('load', () => {
+    viewer.cameraTarget = "${values.targetX}m ${values.targetY}m ${values.targetZ}m";
+    viewer.cameraOrbit = "${values.orbitH}deg ${values.orbitV}deg ${values.orbitD}m";
+    viewer.fieldOfView = "${values.fov}deg";
+    
+    // ... rest of your code
+});`;
 
-            codeOutput.textContent = code;
+            codeOutput.textContent = `HTML:\n${html}\n\nJavaScript:\n${js}`;
         }
 
-        // Preset functions
-        function setWebcam() {
-            moveX.value = 0;
-            moveY.value = -120;
-            scale.value = 1.8;
-            distance.value = 2.5;
-            fov.value = 35;
-            updateModel();
+        // Preset configurations
+        function setPreset(preset) {
+            const presets = {
+                webcam: {
+                    targetX: 0, targetY: 1.2, targetZ: 0,
+                    orbitH: 0, orbitV: 80, orbitD: 2.5, fov: 30
+                },
+                portrait: {
+                    targetX: 0, targetY: 1.0, targetZ: 0,
+                    orbitH: 0, orbitV: 75, orbitD: 3.5, fov: 35
+                },
+                fullbody: {
+                    targetX: 0, targetY: 0.5, targetZ: 0,
+                    orbitH: 0, orbitV: 70, orbitD: 5, fov: 45
+                },
+                reset: {
+                    targetX: 0, targetY: 0.5, targetZ: 0,
+                    orbitH: 0, orbitV: 80, orbitD: 3, fov: 30
+                }
+            };
+
+            const config = presets[preset];
+            if (!config) return;
+
+            Object.keys(config).forEach(key => {
+                if (sliders[key]) {
+                    sliders[key].value = config[key];
+                }
+            });
+
+            updateViewer();
         }
 
-        function setPortrait() {
-            moveX.value = 0;
-            moveY.value = -80;
-            scale.value = 1.4;
-            distance.value = 3;
-            fov.value = 40;
-            updateModel();
+        function copyToClipboard() {
+            navigator.clipboard.writeText(codeOutput.textContent).then(() => {
+                const btn = event.target;
+                const original = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => btn.textContent = original, 2500);
+            });
         }
 
-        function setFullBody() {
-            moveX.value = 0;
-            moveY.value = -40;
-            scale.value = 1.0;
-            distance.value = 4;
-            fov.value = 50;
-            updateModel();
-        }
-
-        function resetPosition() {
-            moveX.value = 0;
-            moveY.value = -100;
-            scale.value = 1.5;
-            distance.value = 3;
-            fov.value = 45;
-            updateModel();
-        }
-
-        function copyCode() {
-            navigator.clipboard.writeText(codeOutput.textContent);
-            const btn = event.target;
-            const original = btn.textContent;
-            btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = original, 2000);
-        }
-
-        // Add event listeners to all sliders
-        [moveX, moveY, scale, distance, fov].forEach(slider => {
-            slider.addEventListener('input', updateModel);
+        // Set up event listeners
+        Object.values(sliders).forEach(slider => {
+            slider.addEventListener('input', updateViewer);
         });
 
-        // Initialize
+        // Initialize when model loads
         viewer.addEventListener('load', () => {
-            updateModel();
-            status.textContent = 'Model loaded! Drag or use sliders to position.';
-            
-            // Hide drag overlay after a few seconds
-            setTimeout(() => {
-                dragOverlay.style.opacity = '0.3';
-            }, 3000);
+            isLoaded = true;
+            status.textContent = 'Model loaded! Adjust sliders to position.';
+            status.style.background = 'rgba(46, 204, 113, 0.2)';
+            status.style.borderLeftColor = '#2ecc71';
+            status.style.color = '#2ecc71';
+            updateViewer();
         });
 
-        // Show drag overlay on hover
-        dragOverlay.addEventListener('mouseenter', () => {
-            dragOverlay.style.opacity = '1';
-        });
-
-        dragOverlay.addEventListener('mouseleave', () => {
-            if (!isDragging) {
-                dragOverlay.style.opacity = '0.3';
-            }
+        viewer.addEventListener('error', () => {
+            status.textContent = 'Error loading model';
+            status.style.background = 'rgba(231, 76, 60, 0.2)';
+            status.style.borderLeftColor = '#e74c3c';
+            status.style.color = '#e74c3c';
         });
     </script>
 </body>
