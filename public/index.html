@@ -44,106 +44,10 @@
         }
 
         .logo-image-new {
-    height: 40px;
-    width: auto;
-    transition: all 0.3s ease;
-}
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 600;
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 0.5px;
+            height: 40px;
+            width: auto;
+            transition: all 0.3s ease;
         }
-
-        .bug-report-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    color: #00f2fe;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.bug-input, .bug-textarea, .bug-select {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 0.75rem;
-    color: white;
-    font-family: 'Quicksand', sans-serif;
-    width: 100%;
-}
-
-.bug-textarea {
-    min-height: 150px;
-    resize: vertical;
-}
-
-.bug-submit {
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-}
-
-.bug-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
-}
-
-.bug-success {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    text-align: center;
-    color: #00f2fe;
-}
-
-/* Checkmark animation */
-.checkmark {
-    width: 56px;
-    height: 56px;
-    margin-bottom: 1rem;
-}
-
-.checkmark-circle {
-    stroke-dasharray: 166;
-    stroke-dashoffset: 166;
-    stroke-width: 2;
-    stroke: #00f2fe;
-    fill: none;
-    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-}
-
-.checkmark-check {
-    transform-origin: 50% 50%;
-    stroke-dasharray: 48;
-    stroke-dashoffset: 48;
-    stroke: #00f2fe;
-    stroke-width: 2;
-    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-}
-
-@keyframes stroke {
-    100% {
-        stroke-dashoffset: 0;
-    }
-}
 
         .nav-links {
             display: flex;
@@ -194,96 +98,9 @@
             justify-content: center;
             align-items: flex-start;
             margin: auto;
-            padding-top: 3rem;  /* Reduced from 4rem to move everything up more */
+            padding-top: 3rem;
             margin-bottom: 60px;
         }
-
-        .input-container {
-    display: flex;
-    gap: 10px;
-}
-
-.reset-button {
-    background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
-    border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    color: white;
-    cursor: pointer;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.reset-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(255, 75, 75, 0.2);
-}
-
-.demo-button {
-    background: linear-gradient(45deg, #4facfe, #00f2fe);
-    border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    color: white;
-    cursor: pointer;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    margin-left: 10px;
-}
-
-.demo-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
-}
-
-/* Add spacing between buttons */
-.input-container button {
-    margin-left: 10px;
-}
-
-.input-container button:first-child {
-    margin-left: 0;
-}
-
-.reset-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-}
-
-.reset-modal-content {
-    position: relative;
-    background-color: #0f1116;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    margin: 20% auto;
-    padding: 20px;
-    text-align: center;
-}
-
-.reset-modal-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.confirm-reset {
-    background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
-}
-
-.cancel-reset {
-    background: linear-gradient(45deg, #4facfe, #00f2fe);
-}
 
         .model-viewer-container {
             width: 800px;
@@ -307,60 +124,60 @@
             font-size: 14px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .initial-loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #0f1116;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    opacity: 1;
-    transition: opacity 0.5s ease-out;
-}
+        .customize-btn {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.initial-loading.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.loading-logo {
-    width: 100vw;
-    height: 100vh;
-    opacity: 0;
-    transform: scale(0.5);
-    animation: logoAnimation 1.5s ease-out forwards;
-    object-fit: cover; /* This makes it fill the screen like a background */
-}
-
-@keyframes logoAnimation {
-    0% {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+        .customize-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
+        }
 
         model-viewer {
-    width: 100%;
-    height: 120%;
-    background-color: transparent;
-    --poster-color: transparent;
-    margin-top: -50px; /* Reduced from -100px */
-    transform: translateY(0px); /* Changed from -30px to 0px */
-}
+            width: 100%;
+            height: 120%;
+            background-color: transparent;
+            --poster-color: transparent;
+            margin-top: -50px;
+            transform: translateY(0px);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
 
         .chat-interface {
             flex: 1;
@@ -373,7 +190,7 @@
             width: 800px;
             max-width: 800px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: -20px;  /* Add this to align with model viewer */
+            margin-top: -20px;
         }
 
         .chat-history {
@@ -404,38 +221,6 @@
             margin-right: auto;
         }
 
-        .grid-item.selected {
-    border: 2px solid #00f2fe;
-    box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
-}
-
-.music-item.playing {
-    background: rgba(0, 242, 254, 0.1);
-    border-color: #00f2fe;
-}
-
-/* Smooth transition for background changes */
-#modelContainer {
-    transition: background-image 0.3s ease;
-}
-
-/* Better hover effect for music items */
-.music-item:hover .play-btn {
-    transform: scale(1.1);
-}
-
-.play-btn {
-    transition: transform 0.2s ease;
-}
-
-/* Loading spinner for avatar changes */
-.loading-overlay {
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
         .code-block {
             background: #1e1e1e;
             border-radius: 8px;
@@ -448,145 +233,6 @@
             padding: 15px;
             overflow-x: auto;
         }
-
-        .character-window-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.customize-btn {
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    border: none;
-    border-radius: 4px;
-    color: white;
-    padding: 4px 8px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.customize-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
-}
-
-.download-btn {
-    display: block;
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    color: white;
-    text-decoration: none;
-    padding: 8px;
-    border-radius: 4px;
-    margin-top: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.download-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
-}
-
-.customize-terminal {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.customize-tabs {
-    display: flex;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 10px;
-}
-
-.tab-btn {
-    background: none;
-    border: none;
-    color: #64748b;
-    padding: 8px 16px;
-    margin-right: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.tab-btn.active {
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    color: white;
-}
-
-.tab-content {
-    padding: 20px;
-    overflow-y: auto;
-    flex: 1;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-}
-
-.grid-item {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.grid-item:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.grid-item img {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 8px;
-}
-
-.grid-item span {
-    display: block;
-    text-align: center;
-    color: white;
-    font-size: 14px;
-}
-
-.music-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.music-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 12px;
-    cursor: pointer;
-}
-
-.music-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.play-btn {
-    background: none;
-    border: none;
-    color: #00f2fe;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 4px 8px;
-}
 
         .code-block code {
             font-family: 'Consolas', 'Monaco', monospace;
@@ -653,29 +299,22 @@
             box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
         }
 
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.3s ease-out;
+        .demo-button {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            margin-left: 10px;
         }
 
-        .loading-text {
-            color: white;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
+        .demo-button:hover {
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
         }
 
-        .fade-out {
-            opacity: 0;
-            pointer-events: none;
+        .reset-button {
+            background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
+            margin-left: 10px;
+        }
+
+        .reset-button:hover {
+            box-shadow: 0 4px 12px rgba(255, 75, 75, 0.2);
         }
 
         .footer {
@@ -686,7 +325,7 @@
             bottom: -10px;
             width: 100%;
             z-index: 100;
-            margin-top: 40px;  /* Add this line */
+            margin-top: 40px;
         }
         
         .footer-content {
@@ -698,7 +337,7 @@
         }
         
         .copyright {
-            color: rgba(255, 255, 255, 0.9); /* Changed from #64748b to white with slight transparency */
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.9rem;
         }
         
@@ -709,13 +348,13 @@
         }
         
         .footer-link {
-            color: rgba(255, 255, 255, 0.9); /* Changed from #64748b to white with slight transparency */
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             transition: color 0.3s ease;
         }
         
         .footer-link:hover {
-            color: white; /* Changed from #94a3b8 to pure white on hover */
+            color: white;
         }
 
         .modal {
@@ -766,32 +405,34 @@
             color: #94a3b8;
         }
 
-        .terminal {
-            background-color: rgba(0, 0, 0, 0.7);
+        .reset-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .reset-modal-content {
+            position: relative;
+            background-color: #0f1116;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            margin: 20% auto;
             padding: 20px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            height: 500px;
-            overflow-y: auto;
+            text-align: center;
         }
 
-        #terminal-text {
-            color: #00f2fe;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 16px;
-            background-color: #00f2fe;
-            animation: blink 1s infinite;
-            vertical-align: middle;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        .reset-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -821,38 +462,38 @@
                 <div class="loading-text">INITIALIZING...</div>
             </div>
             <model-viewer
-    id="characterViewer"
-    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
-    animation-name="idle"
-    autoplay
-    camera-target="0 0 0"
-    camera-orbit="0deg 85deg 3m"
-    field-of-view="35deg"
-    interpolation-decay="200"
-    environment-image="neutral"
-    skybox-image="neutral"
-    exposure="2"
-    disable-zoom="true"
-    disable-pan="true"
-    interaction-policy="none"
-    auto-rotate="false"
-    rotation-per-second="0deg"
-    tone-mapping="commerce">
-        <div class="model-lighting" slot="default">
-        <div class="light" style="transform: translate3d(0m, 2m, 4m)">
-                <div class="light__target"></div>
-            </div>
-            <div class="light" style="transform: translate3d(0m, 4m, 0m)">
-                <div class="light__target"></div>
-            </div>
-            <div class="light" style="transform: translate3d(4m, 2m, 0m)">
-                <div class="light__target"></div>
-            </div>
-            <div class="light" style="transform: translate3d(-4m, 2m, 0m)">
-                <div class="light__target"></div>
-            </div>
-        </div>
-</model-viewer>
+                id="characterViewer"
+                src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
+                animation-name="idle"
+                autoplay
+                camera-target="0 -2 0"
+                camera-orbit="0deg 90deg 5m"
+                field-of-view="45deg"
+                interpolation-decay="200"
+                environment-image="neutral"
+                skybox-image="neutral"
+                exposure="2"
+                disable-zoom="false"
+                disable-pan="false"
+                interaction-policy="always-allow"
+                auto-rotate="false"
+                rotation-per-second="0deg"
+                tone-mapping="commerce">
+                <div class="model-lighting" slot="default">
+                    <div class="light" style="transform: translate3d(0m, 2m, 4m)">
+                        <div class="light__target"></div>
+                    </div>
+                    <div class="light" style="transform: translate3d(0m, 4m, 0m)">
+                        <div class="light__target"></div>
+                    </div>
+                    <div class="light" style="transform: translate3d(4m, 2m, 0m)">
+                        <div class="light__target"></div>
+                    </div>
+                    <div class="light" style="transform: translate3d(-4m, 2m, 0m)">
+                        <div class="light__target"></div>
+                    </div>
+                </div>
+            </model-viewer>
         </div>
 
         <div class="chat-interface">
@@ -870,15 +511,14 @@
         </div>
     </div>
 
-    <!-- FAQ Modal -->
-    <div id="faqModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="terminal-title">JewWaifu FAQ</div>
-                <span class="close-btn" onclick="closeFAQ()">&times;</span>
-            </div>
-            <div class="terminal">
-                <div id="terminal-text"></div>
+    <!-- Reset Modal -->
+    <div id="resetModal" class="reset-modal">
+        <div class="reset-modal-content">
+            <h2 style="color: white; margin-bottom: 15px;">Reset Chat</h2>
+            <p style="color: #64748b;">Are you sure you want to reset the chat? This will clear all conversation history.</p>
+            <div class="reset-modal-buttons">
+                <button onclick="confirmReset()" class="nav-button" style="background: linear-gradient(45deg, #ff4b4b, #ff6b6b);">Reset</button>
+                <button onclick="closeResetModal()" class="nav-button" style="background: linear-gradient(45deg, #4facfe, #00f2fe);">Cancel</button>
             </div>
         </div>
     </div>
@@ -907,80 +547,6 @@
     </footer>
 
     <script>
-function createPreview(code) {
-    const previewWindow = window.open('', '_blank');
-    const isHTML = code.includes('<html') || code.includes('<!DOCTYPE html');
-    const isCSS = code.includes('{') && code.includes('}') && !code.includes('function');
-    
-    if (isHTML) {
-        previewWindow.document.write(code);
-        previewWindow.document.close();
-        return;
-    }
-    
-    const template = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Code Preview</title>
-            ${isCSS ? `<style>${code}</style>` : ''}
-            <style>
-                body { 
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                    background-color: #f0f0f0;
-                }
-                #preview-container {
-                    background-color: white;
-                    padding: 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                }
-            </style>
-        </head>
-        <body>
-            <div id="preview-container">
-                ${isCSS ? '<div id="css-preview">CSS Preview</div>' : ''}
-            </div>
-            ${!isCSS ? `<script>${code}<\/script>` : ''}
-        </body>
-        </html>
-    `;
-    
-    previewWindow.document.write(template);
-    previewWindow.document.close();
-}
-
-// Function to extract code from messages
-function extractLatestCode() {
-    const messages = document.querySelectorAll('.message');
-    let latestCode = '';
-    
-    for (let i = messages.length - 1; i >= 0; i--) {
-        const codeBlock = messages[i].querySelector('.code-block');
-        if (codeBlock) {
-            const code = codeBlock.querySelector('code');
-            if (code) {
-                latestCode = code.textContent;
-                break;
-            }
-        }
-    }
-    
-    return latestCode;
-}
-
-// Event handler for demo button
-function handleDemoClick() {
-    const code = extractLatestCode();
-    if (code) {
-        createPreview(code);
-    } else {
-        alert('No code found in the current chat to preview!');
-    }
-}
         // API configuration
         const API_KEY = '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';
         
@@ -1004,378 +570,226 @@ IMPORTANT FORMATTING RULES:
 - Never mix code with regular text inside code blocks
 - Always include language identifier in the code block`;
 
-        const faqText = `> Initializing JewWaifu FAQ...
-> Loading information...
-
-About JewWaifu:
----------------
-JewWaifu is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
-
-Mission:
---------
-- Lower the barrier to entry for coding and web design
-- Make technology more approachable and less intimidating
-- Provide practical, hands-on guidance for building real projects
-- Foster a supportive learning environment for beginners
-
-Features:
----------
-- Expert guidance in web development, coding, and game creation
-- Real-time code assistance and debugging
-- Project-based learning approach
-- Interactive 3D interface for enhanced engagement
-- Custom code generation and optimization
-
-Roadmap:
---------
-Q3 2025:
-- Launch "Create Your Own" agent platform
-- Release AI agent customization tools
-- Introduce one-click deployment for web apps/games
-- Implement advanced code generation capabilities
-- Add interactive coding tutorials
-- Release visual website builder
-- Introduce project templates library
-- Launch community showcase platform
-
-Q4 2025:
-- Implement collaborative coding features
-- Add real-time pair programming support
-- Release mobile app development tools
-- Introduce AI-powered code reviews
-
-Learning Approach:
-----------------
-JewWaifu believes in learning by doing. She guides users through:
-- Building real-world projects
-- Understanding core programming concepts
-- Developing problem-solving skills
-- Creating portfolio-worthy applications
-
-> For more information or support, connect with us on Twitter or join our community!`;
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Initial loading animation
-    const initialLoading = document.querySelector('.initial-loading');
-    
-    // Wait for logo animation to complete
-    setTimeout(() => {
-        initialLoading.classList.add('fade-out');
-        
-        // Remove the loading screen from DOM after fade out
-        setTimeout(() => {
-            initialLoading.remove();
-        }, 500);
-    }, 5000);
-
-    // Existing 3D viewer code
-    const viewer = document.getElementById('characterViewer');
-    const loadingOverlay = document.querySelector('.loading-overlay');
-    
-    viewer.addEventListener('load', () => {
-    viewer.cameraOrbit = "0deg 85deg 3m"; /* Much higher angle and further distance */
-    viewer.cameraTarget = "0m 0m 0m"; /* Center on origin/ground level */
-    viewer.interactionPrompt = null;
-    
-    // Also try adjusting the field of view
-    viewer.fieldOfView = "35deg"; /* Wider view */
-    
-    setTimeout(() => {
-        loadingOverlay.classList.add('fade-out');
-        setTimeout(() => {
-            loadingOverlay.style.display = 'none';
-        }, 300);
-    }, 1500);
-
-    // Type out the initial greeting
-    const initialMessage = document.querySelector('.ai-message');
-    typeMessage(initialMessage, initialMessage.textContent);
-});
-    // Add the new initialization function here
-    function initializeCustomization() {
-        // Update the HTML for backgrounds
-        document.getElementById('backgrounds').innerHTML = `
-            <div class="grid-container">
-                ${Object.entries(backgrounds).map(([id, url]) => `
-                    <div class="grid-item" onclick="selectBackground('${id}')">
-                        <img src="${url}" alt="${id} Background">
-                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-
-        // Update the HTML for avatars
-        document.getElementById('avatars').innerHTML = `
-            <div class="grid-container">
-                ${Object.entries(avatars).map(([id, data]) => `
-                    <div class="grid-item" onclick="selectAvatar('${id}')">
-                        <img src="${data.preview}" alt="${id} Avatar">
-                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-
-        // Update the HTML for music
-        document.getElementById('music').innerHTML = `
-            <div class="music-list">
-                ${Object.entries(musicTracks).map(([id, track]) => `
-                    <div class="music-item" onclick="selectMusic('${id}')">
-                        <span>${track.title}</span>
-                        <button class="play-btn">▶</button>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-
-    // Call the initialization function
-    initializeCustomization();
-});
-
-        // FAQ functions
-        function openFAQ() {
-            const modal = document.getElementById('faqModal');
-            const terminalText = document.getElementById('terminal-text');
-            modal.style.display = 'block';
-            terminalText.innerHTML = '';
-            typeWriter(faqText);
-        }
-
-        function closeFAQ() {
-            const modal = document.getElementById('faqModal');
-            modal.style.display = 'none';
-        }
-
-        function typeWriter(text, index = 0) {
-            const terminalText = document.getElementById('terminal-text');
+        document.addEventListener('DOMContentLoaded', () => {
+            const viewer = document.getElementById('characterViewer');
+            const loadingOverlay = document.querySelector('.loading-overlay');
             
-            if (index < text.length) {
-                if (text[index] === '\n') {
-                    terminalText.innerHTML += '<br>';
-                } else {
-                    terminalText.innerHTML += text[index];
-                }
-                terminalText.scrollTop = terminalText.scrollHeight;
-                setTimeout(() => typeWriter(text, index + 1), 20);
-            } else {
-                terminalText.innerHTML += '<span class="cursor"></span>';
-            }
-        }
+            viewer.addEventListener('load', () => {
+                // Force camera settings after model loads
+                setTimeout(() => {
+                    viewer.cameraTarget = "0m -2m 0m";  // Look way down
+                    viewer.cameraOrbit = "0deg 90deg 5m"; // Top-down view from far away
+                    viewer.fieldOfView = "45deg";
+                    
+                    console.log("Camera target:", viewer.cameraTarget);
+                    console.log("Camera orbit:", viewer.cameraOrbit);
+                    console.log("Field of view:", viewer.fieldOfView);
+                }, 1000);
+                
+                setTimeout(() => {
+                    loadingOverlay.classList.add('fade-out');
+                    setTimeout(() => {
+                        loadingOverlay.style.display = 'none';
+                    }, 300);
+                }, 1500);
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('faqModal');
-            if (event.target === modal) {
-                closeFAQ();
-            }
-        }
+                // Type out the initial greeting
+                const initialMessage = document.querySelector('.ai-message');
+                typeMessage(initialMessage, initialMessage.textContent);
+            });
+
+            // Load chat history
+            loadChatHistory();
+        });
 
         // Typing animation
         function typeMessage(element, text, speed = 30, callback) {
-    let index = 0;
-    element.textContent = '';
-    
-    function type() {
-        if (index < text.length) {
-            element.textContent += text.charAt(index);
-            index++;
-            setTimeout(type, speed);
-        } else if (callback) {
-            callback();
+            let index = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            
+            type();
         }
-    }
-    
-    type();
-}
 
         // Message handling
         function appendMessage(className, text) {
-    const chatHistory = document.getElementById('chatHistory');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${className}`;
-    
-    // Check if the message contains code blocks
-    if (text.includes('```')) {
-        const parts = text.split(/(```(?:javascript|js|html|css)?\n[\s\S]*?\n```)/g);
-        parts.forEach(part => {
-            if (part.startsWith('```')) {
-                // Handle code blocks
-                const codeContent = part.replace(/```(?:javascript|js|html|css)?\n([\s\S]*?)\n```/, '$1');
-                const codeBlock = document.createElement('div');
-                codeBlock.className = 'code-block';
-                
-                const copyButton = document.createElement('button');
-                copyButton.className = 'copy-button';
-                copyButton.textContent = 'Copy';
-                copyButton.onclick = () => {
-                    navigator.clipboard.writeText(codeContent);
-                    copyButton.textContent = 'Copied!';
-                    setTimeout(() => copyButton.textContent = 'Copy', 2000);
-                };
-                
-                const pre = document.createElement('pre');
-                const code = document.createElement('code');
-                code.className = 'language-javascript';
-                code.textContent = codeContent;
-                
-                pre.appendChild(code);
-                codeBlock.appendChild(copyButton);
-                codeBlock.appendChild(pre);
-                messageDiv.appendChild(codeBlock);
-                
-                Prism.highlightElement(code);
-            } else if (part.trim()) {
-                // Handle regular text
-                const textNode = document.createElement('div');
+            const chatHistory = document.getElementById('chatHistory');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${className}`;
+            
+            // Check if the message contains code blocks
+            if (text.includes('```')) {
+                const parts = text.split(/(```(?:javascript|js|html|css)?\n[\s\S]*?\n```)/g);
+                parts.forEach(part => {
+                    if (part.startsWith('```')) {
+                        // Handle code blocks
+                        const codeContent = part.replace(/```(?:javascript|js|html|css)?\n([\s\S]*?)\n```/, '$1');
+                        const codeBlock = document.createElement('div');
+                        codeBlock.className = 'code-block';
+                        
+                        const copyButton = document.createElement('button');
+                        copyButton.className = 'copy-button';
+                        copyButton.textContent = 'Copy';
+                        copyButton.onclick = () => {
+                            navigator.clipboard.writeText(codeContent);
+                            copyButton.textContent = 'Copied!';
+                            setTimeout(() => copyButton.textContent = 'Copy', 2000);
+                        };
+                        
+                        const pre = document.createElement('pre');
+                        const code = document.createElement('code');
+                        code.className = 'language-javascript';
+                        code.textContent = codeContent;
+                        
+                        pre.appendChild(code);
+                        codeBlock.appendChild(copyButton);
+                        codeBlock.appendChild(pre);
+                        messageDiv.appendChild(codeBlock);
+                        
+                        Prism.highlightElement(code);
+                    } else if (part.trim()) {
+                        // Handle regular text
+                        const textNode = document.createElement('div');
+                        if (className === 'ai-message') {
+                            typeMessage(textNode, part, 30);
+                        } else {
+                            textNode.textContent = part;
+                        }
+                        messageDiv.appendChild(textNode);
+                    }
+                });
+            } else {
+                // Handle messages without code blocks
                 if (className === 'ai-message') {
-                    typeMessage(textNode, part, 30, () => {
-                        saveChatHistory();
-                    });
+                    typeMessage(messageDiv, text, 30);
                 } else {
-                    textNode.textContent = part;
-                    saveChatHistory();
+                    messageDiv.textContent = text;
                 }
-                messageDiv.appendChild(textNode);
             }
-        });
-    } else {
-        // Handle messages without code blocks
-        if (className === 'ai-message') {
-            typeMessage(messageDiv, text, 30, () => {
-                saveChatHistory();
-            });
-        } else {
-            messageDiv.textContent = text;
+            
+            chatHistory.appendChild(messageDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
             saveChatHistory();
         }
-    }
-    
-    chatHistory.appendChild(messageDiv);
-    chatHistory.scrollTop = chatHistory.scrollHeight;
-}
 
-        const originalAppendMessage = appendMessage;
+        // Chat history functions
+        function saveChatHistory() {
+            const chatHistory = document.getElementById('chatHistory');
+            const messages = [];
+            
+            chatHistory.querySelectorAll('.message').forEach(messageDiv => {
+                let messageContent = messageDiv.textContent.trim();
+                messages.push({
+                    type: messageDiv.classList.contains('user-message') ? 'user' : 'ai',
+                    content: messageContent
+                });
+            });
+            
+            localStorage.setItem('jewwaifu_chat_history', JSON.stringify(messages));
+        }
 
-// Override appendMessage to include saving
-appendMessage = function(className, text) {
-    originalAppendMessage(className, text);
-    saveChatHistory();
-};
-
-// Chat history persistence functions
-function saveChatHistory() {
-    const chatHistory = document.getElementById('chatHistory');
-    const messages = [];
-    
-    chatHistory.querySelectorAll('.message').forEach(messageDiv => {
-        let messageContent;
-        
-        if (messageDiv.querySelector('.code-block')) {
-            // For messages with code blocks, save the full HTML
-            messageContent = messageDiv.innerHTML;
-        } else {
-            // For regular messages, get the final text content after animation
-            const textDivs = messageDiv.querySelectorAll('div');
-            if (textDivs.length > 0) {
-                // If message has been split into divs (AI response), combine their text
-                messageContent = Array.from(textDivs)
-                    .map(div => div.textContent)
-                    .join('\n')
-                    .trim();
-            } else {
-                // Otherwise just get the direct text content
-                messageContent = messageDiv.textContent.trim();
+        function loadChatHistory() {
+            const chatHistory = document.getElementById('chatHistory');
+            const savedHistory = localStorage.getItem('jewwaifu_chat_history');
+            
+            if (savedHistory) {
+                try {
+                    const messages = JSON.parse(savedHistory);
+                    chatHistory.innerHTML = '';
+                    
+                    messages.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `message ${message.type}-message`;
+                        messageDiv.textContent = message.content;
+                        chatHistory.appendChild(messageDiv);
+                    });
+                } catch (error) {
+                    console.error('Error loading chat history:', error);
+                }
             }
         }
-            
-        messages.push({
-            type: messageDiv.classList.contains('user-message') ? 'user' : 'ai',
-            content: messageContent
-        });
-    });
-    
-    localStorage.setItem('webdevgf_chat_history', JSON.stringify(messages));
-}
 
-function loadChatHistory() {
-    const chatHistory = document.getElementById('chatHistory');
-    const savedHistory = localStorage.getItem('webdevgf_chat_history');
-    
-    if (savedHistory) {
-        try {
-            const messages = JSON.parse(savedHistory);
-            chatHistory.innerHTML = ''; // Clear default message
-            
-            messages.forEach(message => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${message.type}-message`;
-                
-                // Handle messages with code blocks
-                if (message.content.includes('code-block')) {
-                    messageDiv.innerHTML = message.content;
-                    // Re-initialize Prism highlighting for code blocks
-                    messageDiv.querySelectorAll('code').forEach(block => {
-                        Prism.highlightElement(block);
-                    });
-                } else {
-                    // For regular messages, set the text content directly without animation
-                    messageDiv.textContent = message.content.replace(/^"(.*)"$/, '$1');
-                }
-                
-                chatHistory.appendChild(messageDiv);
-            });
-        } catch (error) {
-            console.error('Error loading chat history:', error);
-            // If there's an error loading history, reset to default message
+        // Reset chat functionality
+        function resetChat() {
+            document.getElementById('resetModal').style.display = 'block';
+        }
+
+        function closeResetModal() {
+            document.getElementById('resetModal').style.display = 'none';
+        }
+
+        function confirmReset() {
+            const chatHistory = document.getElementById('chatHistory');
             chatHistory.innerHTML = `
                 <div class="message ai-message">
-                    Hi! I'm Grok's GF, your friendly assistant. I can help you create sites, tokens or just chat about tech! What would you like to discuss?
+                    Hi! I'm JewWaifu, your friendly assistant. I'm an LLM (Large Language Model) trained to help you with everything from reading scriptures to chatting about kosher food. What would you like to discuss today?
                 </div>
             `;
+            localStorage.removeItem('jewwaifu_chat_history');
+            closeResetModal();
         }
-    }
-}
 
-// Reset chat functionality
-function resetChat() {
-    document.getElementById('resetModal').style.display = 'block';
-}
+        // Demo and code preview functionality
+        function extractLatestCode() {
+            const messages = document.querySelectorAll('.message');
+            let latestCode = '';
+            
+            for (let i = messages.length - 1; i >= 0; i--) {
+                const codeBlock = messages[i].querySelector('.code-block');
+                if (codeBlock) {
+                    const code = codeBlock.querySelector('code');
+                    if (code) {
+                        latestCode = code.textContent;
+                        break;
+                    }
+                }
+            }
+            
+            return latestCode;
+        }
 
-function closeResetModal() {
-    document.getElementById('resetModal').style.display = 'none';
-}
+        function handleDemoClick() {
+            const code = extractLatestCode();
+            if (code) {
+                const previewWindow = window.open('', '_blank');
+                const isHTML = code.includes('<html') || code.includes('<!DOCTYPE html');
+                
+                if (isHTML) {
+                    previewWindow.document.write(code);
+                } else {
+                    const template = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>Code Preview</title>
+                            <style>
+                                body { font-family: Arial, sans-serif; margin: 20px; }
+                            </style>
+                        </head>
+                        <body>
+                            <div id="preview"></div>
+                            <script>${code}<\/script>
+                        </body>
+                        </html>
+                    `;
+                    previewWindow.document.write(template);
+                }
+                previewWindow.document.close();
+            } else {
+                alert('No code found in the current chat to preview!');
+            }
+        }
 
-function confirmReset() {
-    const chatHistory = document.getElementById('chatHistory');
-    chatHistory.innerHTML = `
-        <div class="message ai-message">
-            Hi! I'm Grok's GF, your friendly assistant. I can help you create sites, tokens or just chat about tech! What would you like to discuss?
-        </div>
-    `;
-    localStorage.removeItem('webdevgf_chat_history');
-    closeResetModal();
-}
-
-// Update the existing window.onclick function
-const originalWindowClick = window.onclick;
-window.onclick = function(event) {
-    if (originalWindowClick) {
-        originalWindowClick(event);
-    }
-    
-    const resetModal = document.getElementById('resetModal');
-    if (event.target === resetModal) {
-        closeResetModal();
-    }
-};
-
-// Load chat history when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    loadChatHistory();
-});
-
+        // API call function
         async function sendMessage() {
             const input = document.getElementById('userInput');
             const message = input.value.trim();
@@ -1385,27 +799,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.value = '';
         
                 try {
-                    console.log('Sending request to API...');
                     const response = await fetch('/api/chat', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-    message: message,
-    systemPrompt: SYSTEM_PROMPT  // Use the constant we defined at the top
-})
+                            message: message,
+                            systemPrompt: SYSTEM_PROMPT
+                        })
                     });
-        
+            
                     if (!response.ok) {
                         const errorText = await response.text();
                         console.error('API Response not OK:', response.status, errorText);
                         throw new Error(`API Error: ${response.status} ${errorText}`);
                     }
-        
+            
                     const data = await response.json();
-                    console.log('API Response:', data);  // Debug log
-        
+                    console.log('API Response:', data);
+            
                     if (data && data.content && data.content[0] && data.content[0].text) {
                         appendMessage('ai-message', data.content[0].text);
                     } else if (data && data.error) {
@@ -1414,7 +827,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.error('Unexpected API response structure:', data);
                         appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
                     }
-        
+            
                 } catch (error) {
                     console.error('Error details:', error);
                     appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
@@ -1429,355 +842,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function openCustomize() {
-    const modal = document.getElementById('customizeModal');
-    modal.style.display = 'block';
-}
+            // Placeholder for customize functionality
+            alert('Customize feature coming soon!');
+        }
 
-function closeCustomize() {
-    const modal = document.getElementById('customizeModal');
-    modal.style.display = 'none';
-}
-
-function openBugReport() {
-    const modal = document.getElementById('bugReportModal');
-    const form = document.getElementById('bugReportForm');
-    const success = document.getElementById('bugSubmitSuccess');
-    modal.style.display = 'block';
-    form.style.display = 'flex';
-    success.style.display = 'none';
-}
-
-function closeBugReport() {
-    const modal = document.getElementById('bugReportModal');
-    modal.style.display = 'none';
-}
-
-function submitBugReport(event) {
-    event.preventDefault();
-    const form = document.getElementById('bugReportForm');
-    const success = document.getElementById('bugSubmitSuccess');
-    
-    // Simulate submission delay
-    form.style.opacity = '0.5';
-    form.style.pointerEvents = 'none';
-    
-    setTimeout(() => {
-        form.style.display = 'none';
-        success.style.display = 'flex';
-        
-        // Reset and hide modal after 2 seconds
-        setTimeout(() => {
-            form.reset();
-            form.style.opacity = '1';
-            form.style.pointerEvents = 'auto';
-            closeBugReport();
-        }, 2000);
-    }, 1000);
-}
-
-function switchTab(tabName) {
-    // Hide all tab content
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(tab => tab.style.display = 'none');
-    
-    // Remove active class from all tabs
-    const tabs = document.querySelectorAll('.tab-btn');
-    tabs.forEach(tab => tab.classList.remove('active'));
-    
-    // Show selected tab content and set active class
-    document.getElementById(tabName).style.display = 'block';
-    event.target.classList.add('active');
-}
-
-function selectBackground(bgId) {
-    // Implementation for changing background
-    console.log('Selected background:', bgId);
-}
-
-function selectAvatar(avatarId) {
-    // Implementation for changing avatar
-    console.log('Selected avatar:', avatarId);
-}
-
-function selectMusic(musicId) {
-    // Implementation for changing music
-    console.log('Selected music:', musicId);
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const customizeModal = document.getElementById('customizeModal');
-    const faqModal = document.getElementById('faqModal');
-    const bugReportModal = document.getElementById('bugReportModal');
-    
-    if (event.target === customizeModal) {
-        closeCustomize();
-    } else if (event.target === faqModal) {
-        closeFAQ();
-    } else if (event.target === bugReportModal) {
-        closeBugReport();
-    }
-}
-
-// Background Options
-const backgrounds = {
-japan: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67706de4c10995186589b87d_japann.png",
-milady: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e9feec7013b3f7bbd3_clfibymru0933ptjsbplh0tbj.jpg",
-cluckinBell: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e9d488bf6febcb378c_cluckin-bell-grand-theft-auto-real-life-version.jpg",
-diddy: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e9feec7013b3f7bb8d_Diddy_meme.jpg",
-pokemon: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e931f20da28d9e8a6f_forest.jpg",
-gigachad: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196eade847249faae38a0_gigachad.jpg",
-kingprawn: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e903040fbe78307425_King_prawn.png",
-phub: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e9e79df71a90cd072b_mom.jpg",
-msn: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e95971404437f3af36_MSN.jpeg",
-mw2: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e9aba28ded77af6767_MW2.jpg",
-rust: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e9e6e458d66a3d2c72_Rust.png",
-league: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e934a0f13850dd7fbc_Summoners_Rift.png",
-windows: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e925aa75f90151e927_Windows.png"
-};
-
-// Avatar Models
-const avatars = {
-    JewWaifu: {
-        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
-        preview: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6876f39d7cde640b991aea44_ChatGPT_Image_Jul_16__2025__01_07_00_AM-removebg-preview.png"
-    },
-    AnneFrank: {
-        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
-        preview: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6875805a5a003d7af46f0668_ChatGPT%20Image%20Jul%2014%2C%202025%2C%2011_10_29%20PM.png"
-    },
-    Emiko: {
-        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
-        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2cc6b1a11e43d8ebba_377e4d3c55154555ab3a62f970a88356.png"
-    },
-    Himari: {
-        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
-        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2c4c587e02fd8c9e16_a17c253702225c2b33c12cdc832c4e53.png"
-    },
-    Rin: {
-        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
-        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2cf881c31c8ba19542_8df704f6-70fd-4c90-b53d-30ef62a8451a.jpg"
-    }
-};
-
-// Music Tracks
-const musicTracks = {
-    londonParis: {
-        url: "https://www.youtube.com/embed/H_WN-xTp7oU?si=PI0GibGAlTlycjTw", // Replace with the actual URL
-        title: "Hava Nagalia"
-    },
-    narcosTheme: {
-        url: "https://www.youtube.com/embed/zNPXnAVyAUA", // Replace with the actual URL
-        title: "Narcos Theme"
-    },
-    gritsMyLife: {
-        url: "https://www.youtube.com/embed/83mhHOytg4U", // Replace with the actual URL
-        title: "Grits - My Life Be Like/Ohh Ahh"
-    },
-    gtaSanAndreas: {
-        url: "https://www.youtube.com/embed/W4VTq0sa9yg", // Replace with the actual URL
-        title: "GTA San Andreas Theme Song"
-    },
-    ponponpon: {
-        url: "https://www.youtube.com/embed/yzC4hFK5P3g", // Replace with the actual URL
-        title: "きゃりーぱみゅぱみゅ - PONPONPON"
-    },
-    btsBoyWithLuv: {
-        url: "https://www.youtube.com/embed/i4ywHpSXThs", // Replace with the actual URL
-        title: "BTS - Boy with Luv"
-    },
-    darudeSandstorm: {
-        url: "https://www.youtube.com/embed/y6120QOlsfU", // Replace with the actual URL
-        title: "Darude - Sandstorm"
-    },
-    justinBieberBeauty: {
-        url: "https://www.youtube.com/embed/2jTwoSFdfSI", // Replace with the actual URL
-        title: "Justin Bieber - Beauty And A Beat"
-    }
-};
-
-// Audio Player
-let currentAudio = null;
-
-function selectBackground(bgId) {
-    const modelContainer = document.getElementById('modelContainer');
-    const background = backgrounds[bgId];
-    
-    // Change this part
-    modelContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; // Keep the dark overlay
-    modelContainer.style.backgroundImage = `url(${background})`;
-    modelContainer.style.backgroundSize = 'cover';
-    modelContainer.style.backgroundPosition = 'center';
-    modelContainer.style.backgroundBlendMode = 'overlay';
-    
-    // Add visual feedback
-    const bgItems = document.querySelectorAll('#backgrounds .grid-item');
-    bgItems.forEach(item => item.classList.remove('selected'));
-    event.currentTarget.classList.add('selected');
-}
-
-async function downloadSticker(url, filename) {
-   try {
-       const response = await fetch(url);
-       const blob = await response.blob();
-       const downloadUrl = window.URL.createObjectURL(blob);
-       const link = document.createElement('a');
-       link.href = downloadUrl;
-       link.download = filename;
-       document.body.appendChild(link);
-       link.click();
-       document.body.removeChild(link);
-       window.URL.revokeObjectURL(downloadUrl);
-   } catch (error) {
-       console.error('Download failed:', error);
-   }
-}
-
-function selectAvatar(avatarId) {
-    const modelViewer = document.getElementById('characterViewer');
-    const loadingOverlay = document.querySelector('.loading-overlay');
-    loadingOverlay.style.display = 'flex';
-    
-    // Change the model using the model URL, not the preview
-    modelViewer.src = avatars[avatarId].model;
-    
-    modelViewer.addEventListener('load', () => {
-        loadingOverlay.classList.add('fade-out');
-        setTimeout(() => {
-            loadingOverlay.style.display = 'none';
-            loadingOverlay.classList.remove('fade-out');
-        }, 300);
-    }, { once: true });
-    
-    const avatarItems = document.querySelectorAll('#avatars .grid-item');
-    avatarItems.forEach(item => item.classList.remove('selected'));
-    event.currentTarget.classList.add('selected');
-}
-
-function selectMusic(musicId) {
-    const musicContainer = document.getElementById('musicPlayer');
-    if (!musicContainer) {
-        // Create container if it doesn't exist
-        const container = document.createElement('div');
-        container.id = 'musicPlayer';
-        container.style.display = 'none';
-        document.body.appendChild(container);
-    }
-    
-    const track = musicTracks[musicId];
-    musicContainer.innerHTML = `
-        <iframe width="0" height="0" 
-            src="${track.url}?autoplay=1&controls=0" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media">
-        </iframe>
-    `;
-}
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const resetModal = document.getElementById('resetModal');
+            if (event.target === resetModal) {
+                closeResetModal();
+            }
+        }
     </script>
-    <div id="customizeModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="terminal-title">Customize JewWaifu</div>
-                <span class="close-btn" onclick="closeCustomize()">&times;</span>
-            </div>
-            <div class="terminal customize-terminal">
-                <div class="customize-tabs">
-                    <button class="tab-btn active" onclick="switchTab('backgrounds')">Backgrounds</button>
-                    <button class="tab-btn" onclick="switchTab('avatars')">Avatars COMING SOON</button>
-                    <button class="tab-btn" onclick="switchTab('music')">Music</button>
-                    <button class="tab-btn" onclick="switchTab('stickers')">Stickers</button>
-                </div>
-                <div class="tab-content" id="backgrounds"></div>
-                <div class="tab-content" id="avatars" style="display: none;"></div>
-                <div class="tab-content" id="music" style="display: none;"></div>
-                <div class="tab-content" id="stickers" style="display: none;">
-                    <div class="grid-container">
-                        <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="Higher">
-                            <span>Higher</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png', 'higher.png')">Download</a>
-                        </div>
-                        <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="LFG">
-                            <span>LFG</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png', 'lfg.png')">Download</a>
-                        </div>
-                        <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" alt="Arigatou">
-                            <span>Arigatou</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png', 'arigatou.png')">Download</a>
-                        </div>
-                        <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="Moon">
-                            <span>Moon</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png', 'moon.png')">Download</a>
-                        </div>
-                        <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="Bonded">
-                            <span>Bonded</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png', 'bonded.png')">Download</a>
-                        </div>
-                        <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" alt="Coffee Break">
-                            <span>Coffee Break</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png', 'coffee.png')">Download</a>
-                        </div>
-                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="resetModal" class="reset-modal">
-    <div class="reset-modal-content">
-        <h2 style="color: white; margin-bottom: 15px;">Reset Chat</h2>
-        <p style="color: #64748b;">Are you sure you want to reset the chat? This will clear all conversation history.</p>
-        <div class="reset-modal-buttons">
-            <button onclick="confirmReset()" class="nav-button confirm-reset">Reset</button>
-            <button onclick="closeResetModal()" class="nav-button cancel-reset">Cancel</button>
-        </div>
-    </div>
-</div>
-    <div id="bugReportModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="terminal-title">Report a Bug</div>
-                <span class="close-btn" onclick="closeBugReport()">&times;</span>
-            </div>
-            <div class="terminal">
-                <form id="bugReportForm" onsubmit="submitBugReport(event)" class="bug-report-form">
-                    <div class="form-group">
-                        <label for="bugTitle">Bug Title:</label>
-                        <input type="text" id="bugTitle" required class="bug-input">
-                    </div>
-                    <div class="form-group">
-                        <label for="bugDescription">Description:</label>
-                        <textarea id="bugDescription" required class="bug-textarea"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="bugPriority">Priority:</label>
-                        <select id="bugPriority" required class="bug-select">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="bug-submit">Submit Report</button>
-                </form>
-                <div id="bugSubmitSuccess" class="bug-success" style="display: none;">
-                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                    </svg>
-                    <p>Bug report submitted successfully!</p>
-                </div>
-            </div>
-        </div>
-    </div>    
 </body>
 </html>
-
-
-
-
-
-
