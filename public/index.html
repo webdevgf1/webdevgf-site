@@ -825,6 +825,9 @@
     src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
     animation-name="idle"
     autoplay
+    camera-orbit="0deg 80deg 2.5m"
+    camera-target="0m 1.6m 0m"
+    field-of-view="30deg"
     camera-controls
     auto-rotate="false"
     environment-image="neutral"
@@ -1050,8 +1053,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingOverlay = document.querySelector('.loading-overlay');
     
     viewer.addEventListener('load', () => {
-    viewer.cameraOrbit = "0deg 80deg 1.4m";
+    viewer.cameraOrbit = "0deg 80deg 2.5m";
     viewer.cameraTarget = "0m 1.6m 0m";
+    viewer.fieldOfView = "30deg";
     viewer.interactionPrompt = null;
     
     setTimeout(() => {
@@ -1061,12 +1065,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }, 1500);
 
-    // Type out the initial greeting
     const initialMessage = document.querySelector('.ai-message');
     typeMessage(initialMessage, initialMessage.textContent);
-    
-    // Add debug logging
-    setTimeout(logCameraInfo, 1000);
 });
     // Add the new initialization function here
     function initializeCustomization() {
@@ -1770,6 +1770,7 @@ function selectMusic(musicId) {
     </div>    
 </body>
 </html>
+
 
 
 
