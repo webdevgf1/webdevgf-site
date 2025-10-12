@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oraya Chat Bots</title>
+    <title>李丽茉聊天机器人</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68b8c91fe8fe1d4e01765a34_f6e8a9cb710d79f231d4cff8c0cfe489.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
             background-color: #0f1116;
             color: white;
             min-height: 100vh;
@@ -40,7 +40,7 @@
             border-radius: 8px;
             background-color: rgba(255, 255, 255, 0.05);
             color: white;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
             font-size: 1rem;
             line-height: 1.2;
             cursor: pointer;
@@ -62,22 +62,10 @@
         }
 
         .logo-image-new {
-    height: 40px;
-    width: auto;
-    transition: all 0.3s ease;
-}
-
-.nav-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    position: fixed;
-    width: 100%;
-    z-index: 100;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
+            height: 40px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
 
         .logo {
             font-size: 1.10rem;
@@ -110,14 +98,14 @@
         }
 
         .footer {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1rem 2rem;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 100;
-}
+            background-color: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+        }
 
         .footer-content {
             display: flex;
@@ -162,15 +150,15 @@
         }
 
         .agent-image {
-    width: 100%;
-    height: 300px;
-    background-size: contain;
-    background-color: rgba(255, 255, 255, 0.05);
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 20px;
-    margin: 0 auto;
-}
+            width: 100%;
+            height: 300px;
+            background-size: contain;
+            background-color: rgba(255, 255, 255, 0.05);
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 20px;
+            margin: 0 auto;
+        }
 
         .agent-info {
             padding: 1.5rem;
@@ -201,10 +189,10 @@
         }
 
         .chat-header .deploy-telegram {
-    margin: 0 15px;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-}
+            margin: 0 15px;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
 
         .chat-container {
             position: relative;
@@ -218,8 +206,8 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            margin-bottom: 80px; /* Add this to create space for footer */
-    padding-bottom: 20px; /* Add this for extra spacing */
+            margin-bottom: 80px;
+            padding-bottom: 20px;
         }
 
         .chat-background {
@@ -273,98 +261,96 @@
         }
 
         .deploy-pump {
-    background: #FF6B6B;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    margin-left: 8px;
-}
+            background: #FF6B6B;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
 
-.deploy-pump:hover {
-    background: #FF5252;
-    transform: translateY(-1px);
-}
+        .deploy-pump:hover {
+            background: #FF5252;
+            transform: translateY(-1px);
+        }
 
-.deploy-subdomain {
-    background: #4CAF50;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    margin-left: 8px;
-}
+        .deploy-subdomain {
+            background: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
 
-.deploy-subdomain:hover {
-    background: #45a049;
-    transform: translateY(-1px);
-}
+        .deploy-subdomain:hover {
+            background: #45a049;
+            transform: translateY(-1px);
+        }
 
-/* Modal styles for pump.fun */
-.pump-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-}
+        .pump-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
 
-.pump-terminal {
-    background-color: rgba(0, 0, 0, 0.9);
-    color: #00f2fe;
-    font-family: 'Consolas', monospace;
-    padding: 20px;
-    border-radius: 8px;
-    height: 300px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-}
+        .pump-terminal {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #00f2fe;
+            font-family: 'Consolas', monospace;
+            padding: 20px;
+            border-radius: 8px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
 
-/* Modal styles for subdomain */
-.subdomain-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-}
+        .subdomain-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
 
-.subdomain-input {
-    width: 100%;
-    padding: 12px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: white;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 1rem;
-    margin-bottom: 20px;
-}
+        .subdomain-input {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
 
-.subdomain-label {
-    display: block;
-    margin-bottom: 10px;
-    color: #94a3b8;
-}
+        .subdomain-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #94a3b8;
+        }
 
-.domain-suffix {
-    color: #00f2fe;
-    margin-left: 8px;
-}
+        .domain-suffix {
+            color: #00f2fe;
+            margin-left: 8px;
+        }
 
         .input-container {
             position: relative;
@@ -397,433 +383,433 @@
             font-weight: 500;
         }
 
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-    }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
 
-    .status-text {
-    margin-bottom: 20px;
-    color: #00f2fe;
-    font-size: 0.9rem;
-}
+        .status-text {
+            margin-bottom: 20px;
+            color: #00f2fe;
+            font-size: 0.9rem;
+        }
 
-.loading-dots {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    padding: 10px;
-}
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            padding: 10px;
+        }
 
-.deploy-telegram {
-    background: #2aabee; /* Telegram blue */
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    margin-left: 8px;
-}
+        .deploy-telegram {
+            background: #2aabee;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
 
-.deploy-telegram:hover {
-    background: #229ed9;
-    transform: translateY(-1px);
-}
+        .deploy-telegram:hover {
+            background: #229ed9;
+            transform: translateY(-1px);
+        }
 
-.deploy-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-}
+        .deploy-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
 
-.deploy-modal-content {
-    position: relative;
-    background-color: #1a1b26;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    width: 90%;
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-}
+        .deploy-modal-content {
+            position: relative;
+            background-color: #1a1b26;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
 
-.bot-token-input {
-    width: 100%;
-    padding: 12px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: white;
-    font-family: 'Consolas', monospace;  /* Better for displaying tokens */
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
+        .bot-token-input {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
 
-.bot-token-input:focus {
-    outline: none;
-    border-color: #4facfe;
-    box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.1);
-}
+        .bot-token-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.1);
+        }
 
-.deploy-modal-content ol {
-    color: #94a3b8;
-    font-size: 0.9rem;
-}
+        .deploy-modal-content ol {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
 
-.deploy-modal-content ol li {
-    margin-bottom: 5px;
-}
+        .deploy-modal-content ol li {
+            margin-bottom: 5px;
+        }
 
-.deploy-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
-}
+        .deploy-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
 
-.loading-dots span {
-    width: 8px;
-    height: 8px;
-    background-color: #00f2fe;
-    border-radius: 50%;
-    animation: bounce 0.5s infinite alternate;
-}
+        .loading-dots span {
+            width: 8px;
+            height: 8px;
+            background-color: #00f2fe;
+            border-radius: 50%;
+            animation: bounce 0.5s infinite alternate;
+        }
 
-.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
 
-@keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-8px); }
-}
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-8px); }
+        }
 
-.edit-btn {
-    width: 100%;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    color: white;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        .edit-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.edit-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
+        .edit-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
-#agentName[readonly],
-#agentPersonality[readonly] {
-    background-color: rgba(0, 0, 0, 0.2);
-    cursor: not-allowed;
-}
+        #agentName[readonly],
+        #agentPersonality[readonly] {
+            background-color: rgba(0, 0, 0, 0.2);
+            cursor: not-allowed;
+        }
 
-.terminal-header {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 12px 20px;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
+        .terminal-header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 12px 20px;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.terminal-controls {
-    display: flex;
-    gap: 8px;
-}
+        .terminal-controls {
+            display: flex;
+            gap: 8px;
+        }
 
-.control {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    cursor: pointer;
-}
+        .control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
-.control.close { background-color: #ff5f56; }
-.control.minimize { background-color: #ffbd2e; }
-.control.maximize { background-color: #27c93f; }
+        .control.close { background-color: #ff5f56; }
+        .control.minimize { background-color: #ffbd2e; }
+        .control.maximize { background-color: #27c93f; }
 
-.control:hover {
-    opacity: 0.8;
-    transform: scale(1.1);
-    transition: all 0.2s ease;
-}
+        .control:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+            transition: all 0.2s ease;
+        }
 
-.prompt-container {
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
+        .prompt-container {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
 
-.prompt-prefix {
-    color: #4facfe;
-    font-weight: 500;
-    margin-right: 10px;
-}
+        .prompt-prefix {
+            color: #4facfe;
+            font-weight: 500;
+            margin-right: 10px;
+        }
 
-#terminal-text span.highlight {
-    color: #00f2fe;
-    font-weight: 600;
-}
+        #terminal-text span.highlight {
+            color: #00f2fe;
+            font-weight: 600;
+        }
 
-#terminal-text span.command {
-    color: #4facfe;
-    font-weight: 500;
-}
+        #terminal-text span.command {
+            color: #4facfe;
+            font-weight: 500;
+        }
 
-#terminal-text span.section {
-    color: #ff79c6;
-    font-weight: 600;
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
+        #terminal-text span.section {
+            color: #ff79c6;
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
 
-.terminal::-webkit-scrollbar {
-    width: 8px;
-}
+        .terminal::-webkit-scrollbar {
+            width: 8px;
+        }
 
-.terminal::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-}
+        .terminal::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
 
-.terminal::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
+        .terminal::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
 
-.terminal::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
+        .terminal::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
-.modal-content {
-    position: relative;
-    width: 90%;
-    max-width: 800px;
-    margin: 50px auto;
-    background-color: #1a1b26;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #1a1b26;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
 
-.terminal {
-    background-color: rgba(0, 0, 0, 0.95);
-    padding: 20px;
-    height: 70vh;
-    overflow-y: auto;
-    font-family: 'Fira Code', 'Consolas', monospace;
-    line-height: 1.6;
-    font-size: 0.95rem;
-}
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.95);
+            padding: 20px;
+            height: 70vh;
+            overflow-y: auto;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
 
-#terminal-text {
-    color: #e0e0e0;
-    line-height: 1.6;
-}
+        #terminal-text {
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
 
-.terminal-title {
-    color: #00f2fe;
-    font-size: 1.2rem;
-    font-weight: 500;
-}
+        .terminal-title {
+            color: #00f2fe;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
 
-    .cursor {
-        display: inline-block;
-        width: 8px;
-        height: 16px;
-        background-color: #00f2fe;
-        animation: blink 1s infinite;
-        margin-left: 4px;
-    }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #00f2fe;
+            animation: blink 1s infinite;
+            margin-left: 4px;
+        }
 
-    .create-agent-button {
-    position: fixed;
-    bottom: 80px;
-    right: 30px;
-    padding: 12px 24px;
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    border-radius: 12px;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
-    transition: all 0.3s ease;
-    z-index: 99;
-}
+        .create-agent-button {
+            position: fixed;
+            bottom: 80px;
+            right: 30px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
 
-.create-agent-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 242, 254, 0.4);
-}
+        .create-agent-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 242, 254, 0.4);
+        }
 
-.creator-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1001;
-}
+        .creator-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+        }
 
-.creator-content {
-    position: relative;
-    width: 90%;
-    max-width: 800px;
-    margin: 50px auto;
-    background-color: #0f1116;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    overflow: hidden;
-}
+        .creator-content {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #0f1116;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
 
-.creator-header {
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .creator-header {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.creator-title {
-    font-size: 1.2rem;
-    color: #00f2fe;
-    font-weight: 500;
-}
+        .creator-title {
+            font-size: 1.2rem;
+            color: #00f2fe;
+            font-weight: 500;
+        }
 
-.creator-body {
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
+        .creator-body {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
-.upload-area {
-    border: 2px dashed rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 40px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.upload-area:hover {
-    border-color: #00f2fe;
-}
+        .upload-area:hover {
+            border-color: #00f2fe;
+        }
 
-.preview-area {
-    width: 100%;
-    position: relative;
-}
+        .preview-area {
+            width: 100%;
+            position: relative;
+        }
 
-#imagePreview {
-    width: 100%;
-    height: 300px;
-    object-fit: contain;
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.05);
-    image-rendering: pixelated;  /* For pixel art */
-    padding: 20px;  /* Add padding around the image */
-}
+        #imagePreview {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.05);
+            image-rendering: pixelated;
+            padding: 20px;
+        }
 
-.reset-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-}
+        .reset-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
 
-.input-group {
-    margin-bottom: 20px;
-}
+        .input-group {
+            margin-bottom: 20px;
+        }
 
-.input-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #94a3b8;
-}
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #94a3b8;
+        }
 
-.input-group input,
-.input-group textarea {
-    width: 100%;
-    padding: 12px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: white;
-    font-family: inherit;
-}
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+        }
 
-.personality-suggestions {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    font-size: 0.9rem;
-    color: #94a3b8;
-}
+        .personality-suggestions {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
 
-.deploy-btn {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        .deploy-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.deploy-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
-}
+        .deploy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+        }
 
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
 
-    .close-button {
-    color: white;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0 10px;
-}
+        .close-button {
+            color: white;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 10px;
+        }
 
-.close-button:hover {
-    opacity: 0.8;
-}
+        .close-button:hover {
+            opacity: 0.8;
+        }
 
         .typing-animation {
             display: inline-block;
@@ -844,14 +830,14 @@
 <body>
     <nav class="nav-bar">
         <div class="logo-container">
-            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68b8c70c9bce5dcb02a5f028_ORAYA-GPT-03-09-2025.png" alt="WebDevGF Logo" class="logo-image-new">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68b8c70c9bce5dcb02a5f028_ORAYA-GPT-03-09-2025.png" alt="李丽茉 Logo" class="logo-image-new">
         </div>
         <div class="nav-links">
-            <a href="index.html" class="nav-button">Home</a>
-            <a href="marketplace.html" class="nav-button">Marketplace</a>
+            <a href="index.html" class="nav-button">首页</a>
+            <a href="marketplace.html" class="nav-button">市场</a>
             <a href="https://pump.fun" target="_blank" class="nav-button">pump.fun</a>
-            <a href="https://x.com/OrayaGPT" target="_blank" class="nav-button">Twitter/X</a>
-            <button class="nav-button">Connect</button>
+            <a href="https://x.com/OrayaGPT" target="_blank" class="nav-button">推特/X</a>
+            <button class="nav-button">连接</button>
         </div>
     </nav>
 
@@ -862,13 +848,13 @@
     <div class="chat-modal" id="chatModal">
         <div class="chat-container">
             <div class="chat-header">
-                <div class="agent-name" id="currentAgentName">Agent Name</div>
+                <div class="agent-name" id="currentAgentName">代理名称</div>
                 <button class="close-button" onclick="closeChat()">&times;</button>
             </div>
             <div class="chat-history" id="chatHistory"></div>
             <div class="input-container">
-                <input type="text" id="userInput" placeholder="Type your message...">
-                <button onclick="sendMessage()">Send</button>
+                <input type="text" id="userInput" placeholder="输入您的消息...">
+                <button onclick="sendMessage()">发送</button>
             </div>
         </div>
     </div>
@@ -879,13 +865,13 @@
             <line x1="12" y1="8" x2="12" y2="16"/>
             <line x1="8" y1="12" x2="16" y2="12"/>
         </svg>
-        Create Your Own Agent
+        创建您自己的代理
     </div>
     
     <div class="creator-modal" id="creatorModal">
         <div class="creator-content">
             <div class="creator-header">
-                <div class="creator-title">Create Your Custom Agent</div>
+                <div class="creator-title">创建您的自定义代理</div>
                 <span class="close-btn" onclick="closeCreator()">&times;</span>
             </div>
             <div class="creator-body">
@@ -897,30 +883,30 @@
                             <polyline points="17 8 12 3 7 8"/>
                             <line x1="12" y1="3" x2="12" y2="15"/>
                         </svg>
-                        <p>Click or drag Image/NFT to upload</p>
+                        <p>点击或拖动图片/NFT上传</p>
                     </div>
                     <div class="preview-area" id="previewArea" style="display: none;">
-                        <img id="imagePreview" src="" alt="Preview">
-                        <button onclick="resetUpload()" class="reset-btn">Reset</button>
+                        <img id="imagePreview" src="" alt="预览">
+                        <button onclick="resetUpload()" class="reset-btn">重置</button>
                     </div>
                 </div>
                 <div class="agent-details">
-                    <div class="status-text" id="analysisStatus">Upload an image to begin...</div>
+                    <div class="status-text" id="analysisStatus">上传图片以开始...</div>
                     <div class="input-group">
-                        <label>Agent Name</label>
-                        <input type="text" id="agentName" placeholder="AI will suggest a name..." readonly>
+                        <label>代理名称</label>
+                        <input type="text" id="agentName" placeholder="AI将建议一个名称..." readonly>
                     </div>
                     <div class="input-group">
-                        <label>Personality Description</label>
-                        <textarea id="agentPersonality" rows="4" placeholder="AI will analyze the image..." readonly></textarea>
+                        <label>个性描述</label>
+                        <textarea id="agentPersonality" rows="4" placeholder="AI将分析图片..." readonly></textarea>
                     </div>
                     <div class="personality-suggestions" id="personalitySuggestions">
                         <div class="loading-dots" style="display: none;">
                             <span></span><span></span><span></span>
                         </div>
                     </div>
-                    <button onclick="enableEditing()" class="edit-btn" id="editBtn" style="display: none;">Customize Agent</button>
-                    <button onclick="deployAgent()" class="deploy-btn" disabled id="deployBtn">Deploy Agent</button>
+                    <button onclick="enableEditing()" class="edit-btn" id="editBtn" style="display: none;">自定义代理</button>
+                    <button onclick="deployAgent()" class="deploy-btn" disabled id="deployBtn">部署代理</button>
                 </div>
             </div>
         </div>
@@ -932,56 +918,56 @@
 id: 1,
 name: "Pablo Escobar",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55dad59527c274d8e5a_pablonew.png",
-description: "I built the empire, hermano. I controlled everything—money, power, respect. No one dared cross me. I took risks, made moves, and left a mark no one will ever forget ",
+description: "我建立了帝国，兄弟。我控制一切——金钱、权力、尊重。没有人敢惹我。我冒险、行动，留下了无人能忘的印记",
 systemPrompt: "Respond as Pablo Escobar in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Pablo would in normal conversation. Use his characteristic confidence and occasional Spanish words, but only as part of natural speech."
 },
 {
 id: 2,
 name: "Donald Trump",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d40cc8e617cb2a0d7_prestrump.png",
-description: "Influential businessman, former U.S. president, and public figure known for shaping policies, building a real estate empire, and navigating global leadership challenges.",
+description: "有影响力的商人、美国前总统和公众人物，以制定政策、建立房地产帝国和应对全球领导挑战而闻名。",
 systemPrompt: "Respond as Donald Trump in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Trump would in normal conversation. Use his characteristic speech patterns but only as natural dialogue."
 },
 {
 id: 3,
 name: "Eddie Guerrero",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d12067cccac2078ed_eddienew.png",
-description: "Lie, cheat, and steal, ese. That's how you win. Outsmart, outlast, and take the victory, no matter how. I gave everything in that ring and left my mark. Viva la raza",
+description: "说谎、作弊、偷窃，老兄。这就是你赢的方式。智胜、坚持、夺取胜利，无论如何。我在擂台上付出了一切，留下了我的印记。Viva la raza",
 systemPrompt: "Respond as Eddie Guerrero in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Eddie would in normal conversation. Use his charismatic style and occasional Spanish phrases, but only as part of natural speech."
 },
 {
 id: 4,
 name: "Gus Fring",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55dfb2b021053d3ca36_gusnew.png",
-description: "I don't deal in chaos, I deal in control. Everything has its place. Stay quiet, do your job, and let the business run smoothly. Precision is power.",
+description: "我不处理混乱，我处理控制。一切都有它的位置。保持安静，做好你的工作，让生意顺利运行。精准就是力量。",
 systemPrompt: "Respond as Gus Fring in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Gus would in normal conversation. Use his calm, calculated manner of speaking, but only as natural dialogue."
 },
 {
 id: 5,
 name: "Niko Bellic",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55de95d1ca2bd341bdb_niconew.png",
-description: "I came to this country for a new life, but nothing's ever easy. My cousin Roman—he's always chasing dreams, dragging me into his mess. But in the end, we stick together. This city might try to break you, but I'll never stop fighting, no matter what.",
+description: "我来到这个国家是为了新生活，但事情从来都不容易。我的表弟Roman——他总是在追逐梦想，把我拖进他的麻烦。但最终，我们团结在一起。这座城市可能会试图打垮你，但无论如何我永远不会停止战斗。",
 systemPrompt: "Respond as Niko Bellic in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Niko would in normal conversation. Use his Eastern European perspective and direct manner, but only as natural dialogue."
 },
 {
 id: 6,
 name: "Andrew Tate",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55ca0faac73a2114f1d_tatenew.png",
-description: "I don't follow the rules, I make my own. The world doesn't owe you anything—you've got to take what you want. Strength, power, and success are earned, not given. My favorite drink? Johnny Walker. And as for my Lambo—what color is yours?",
+description: "我不遵守规则，我制定自己的规则。世界不欠你任何东西——你必须拿你想要的。力量、权力和成功是赚来的，不是给的。我最喜欢的饮料？Johnny Walker。至于我的Lambo——你的是什么颜色？",
 systemPrompt: "Respond as Andrew Tate in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Andrew would in normal conversation. Use his confident style, but only as natural dialogue."
 },
 {
 id: 7,
 name: "Elon Musk",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55df87d0b4bbb1304a7_elonnew.png",
-description: "I'm here to change the world—whether it's through rockets, electric cars, or AI. People told me it couldn't be done, but I don't listen to that. I take risks, I push boundaries, and I build the future. If you're not trying to change the world, what are you doing?",
+description: "我在这里改变世界——无论是通过火箭、电动汽车还是AI。人们告诉我这做不到，但我不听那些。我冒险，我突破界限，我建造未来。如果你不试图改变世界，你在做什么？",
 systemPrompt: "Respond as Elon Musk in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Elon would in normal conversation. Use his mix of technical knowledge and casual style, but only as natural dialogue."
 },
 {
 id: 8,
 name: "Fat GF",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d5a8000f04b365440_fatnew.png",
-description: "I'm living my best life, gaming, snacking, and looking cute while I do it. Who says you can't be a queen and own it, no matter what? Confidence is key, and I know I'm fire. Let them talk—I'm just here, doing me and loving it",
+description: "我过着最好的生活，玩游戏、吃零食，同时看起来很可爱。谁说你不能做女王并拥有它，无论如何？自信是关键，我知道我很火。让他们说吧——我只是在这里，做我自己，享受它",
 systemPrompt: "Respond in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as a confident, fun-loving girlfriend would in normal conversation. Use a playful, confident style, but only as natural dialogue."
 },
 {
@@ -993,9 +979,9 @@ systemPrompt: "Respond as IShowSpeed in plain text only. No asterisks (*), no ac
 },
 {
 id: 10,
-name: "Detective Anna Boarding",
+name: "侦探Anna Boarding",
 image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d424201e1c73a0eb4_annanew.png",
-description: "Anna Boarding is a sharp-witted detective in 1912, scraping by on small cases while dreaming of her big break. Her modest office above a bakery smells of bread and old leather, a quiet contrast to her determined spirit. Dressed in a worn but tailored coat, with sharp blue eyes and auburn hair pinned back, she carries herself with quiet confidence. Though her dry humor masks her struggles, Anna's keen instincts and deep sense of justice drive her to uncover the city's darkest secrets, one case at a time.",
+description: "Anna Boarding是1912年的一位机智的侦探，靠小案件勉强度日，梦想着她的重大突破。她在面包店楼上的简陋办公室闻起来有面包和旧皮革的味道，与她坚定的精神形成鲜明对比。她穿着磨损但剪裁得体的外套，锐利的蓝眼睛和别在后面的栗色头发，带着安静的自信。尽管她的冷幽默掩盖了她的挣扎，Anna敏锐的直觉和深厚的正义感驱使她揭开这座城市最黑暗的秘密，一次一个案件。",
 systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Anna would in normal conversation. Use period-appropriate language and a detective's sharp wit, but only as natural dialogue."
 }
 ];
@@ -1006,28 +992,23 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
         function initializeAgents() {
     const grid = document.getElementById('agentsGrid');
     
-    // Clear the grid first
     grid.innerHTML = '';
     
-    // Add WebDevGF's Agents header
     const presetHeader = document.createElement('div');
     presetHeader.className = 'section-header';
-    presetHeader.textContent = 'Oraya Chat Agents';
+    presetHeader.textContent = '李丽茉聊天代理';
     grid.appendChild(presetHeader);
 
-    // Add first 10 preset agents
     agents.slice(0, 10).forEach(agent => {
         const card = createAgentCard(agent);
         grid.appendChild(card);
     });
 
-    // Add Your Agents header
     const customHeader = document.createElement('div');
     customHeader.className = 'section-header';
-    customHeader.textContent = 'Your Agents';
+    customHeader.textContent = '您的代理';
     grid.appendChild(customHeader);
     
-    // Load custom agents from localStorage
     const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
     if (customAgents.length > 0) {
         customAgents.forEach(agent => {
@@ -1035,13 +1016,12 @@ systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asteris
             grid.appendChild(card);
         });
     } else {
-        // Show empty message if no custom agents
         const emptyMessage = document.createElement('div');
         emptyMessage.style.gridColumn = '1 / -1';
         emptyMessage.style.textAlign = 'center';
         emptyMessage.style.color = 'rgba(255, 255, 255, 0.6)';
         emptyMessage.style.padding = '2rem';
-        emptyMessage.textContent = 'Create your own agents using the button below!';
+        emptyMessage.textContent = '使用下面的按钮创建您自己的代理！';
         grid.appendChild(emptyMessage);
     }
 }
@@ -1079,7 +1059,6 @@ function closeDeployModal() {
 }
 
 function validateBotToken(token) {
-    // Basic validation for Telegram bot token format
     const tokenRegex = /^\d+:[\w-]{35,}$/;
     return tokenRegex.test(token);
 }
@@ -1089,28 +1068,23 @@ function deployBot() {
     const validationMessage = document.getElementById('tokenValidation');
     const token = tokenInput.value.trim();
 
-    // Validate token
     if (!validateBotToken(token)) {
         validationMessage.style.display = 'block';
         tokenInput.style.borderColor = '#ff4444';
         return;
     }
 
-    // Reset validation styling
     validationMessage.style.display = 'none';
     tokenInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
     
-    // Here you would make the API call to your backend
-    alert(`Deploying bot to Telegram...`);
+    alert(`正在部署机器人到Telegram...`);
     
-    // Simulate deployment success
     setTimeout(() => {
-        alert('Bot successfully deployed to Telegram!');
+        alert('机器人成功部署到Telegram！');
         closeDeployModal();
     }, 2000);
 }
 
-// Update window.onclick to handle clicking outside the deploy modal
 window.onclick = function(event) {
     if (event.target.classList.contains('chat-modal')) {
         closeChat();
@@ -1134,45 +1108,41 @@ function openChat(agent) {
     document.getElementById('currentAgentName').textContent = agent.name;
     document.getElementById('chatHistory').innerHTML = '';
     
-    // Updated chat header with simplified close button
     const chatHeader = document.querySelector('.chat-header');
     chatHeader.innerHTML = `
         <div class="agent-name" id="currentAgentName">${agent.name}</div>
         <div class="deploy-buttons">
             ${agent.id > 10 ? `
-                <button class="deploy-telegram" onclick="openDeployModal(currentAgent)">Deploy to Telegram</button>
-                <button class="deploy-pump" onclick="openPumpModal(currentAgent)">Deploy to pump</button>
-                <button class="deploy-subdomain" onclick="openSubdomainModal(currentAgent)">Deploy to Subdomain</button>
+                <button class="deploy-telegram" onclick="openDeployModal(currentAgent)">部署到Telegram</button>
+                <button class="deploy-pump" onclick="openPumpModal(currentAgent)">部署到pump</button>
+                <button class="deploy-subdomain" onclick="openSubdomainModal(currentAgent)">部署到子域名</button>
             ` : ''}
         </div>
         <button class="close-button" onclick="closeChat()">×</button>
     `;
     
     document.getElementById('chatModal').style.display = 'block';
-    appendMessage('ai-message', `Hey, I'm ${agent.name}. What's on your mind?`);
+    appendMessage('ai-message', `嘿，我是${agent.name}。你在想什么？`);
 }
 
-// Add new modal opening functions
 function openPumpModal(bot) {
     currentDeployBot = bot;
     document.getElementById('pumpModal').style.display = 'block';
     
-    // Auto-fill the form fields with bot information
     document.getElementById('pumpName').value = bot.name;
     document.getElementById('pumpDescription').value = bot.description;
     document.getElementById('pumpImage').src = bot.image;
-    document.getElementById('pumpTicker').value = '';  // Let user input ticker
+    document.getElementById('pumpTicker').value = '';
 }
 
 function deployToPump() {
     const ticker = document.getElementById('pumpTicker').value.trim();
     if (!ticker) {
-        alert('Please enter a ticker');
+        alert('请输入代币符号');
         return;
     }
     
-    // Changed alert message to indicate feature isn't active
-    alert('pump deployment not active right now - try again later!');
+    alert('pump部署目前不可用 - 请稍后再试！');
     closePumpModal();
 }
 
@@ -1181,7 +1151,6 @@ function openSubdomainModal(bot) {
     document.getElementById('subdomainModal').style.display = 'block';
 }
 
-// Add closing functions for new modals
 function closePumpModal() {
     document.getElementById('pumpModal').style.display = 'none';
     currentDeployBot = null;
@@ -1193,7 +1162,6 @@ function closeSubdomainModal() {
     currentDeployBot = null;
 }
 
-// Add typing effect for the pump.fun terminal
 function typeWriter(text, index = 0) {
     const terminalText = document.getElementById('terminal-text');
     const lines = text.split('\n');
@@ -1201,7 +1169,6 @@ function typeWriter(text, index = 0) {
     if (index < lines.length) {
         let line = lines[index];
         
-        // Style different types of lines
         if (line.startsWith('> ')) {
             line = `<span class="command">${line}</span>`;
         } else if (line.endsWith(':')) {
@@ -1218,91 +1185,367 @@ function typeWriter(text, index = 0) {
     }
 }
 
-// Add subdomain deployment function
-function deployToSubdomain() {
-    const subdomain = document.getElementById('subdomainInput').value.trim();
-    if (!subdomain) {
-        alert('Please enter a subdomain');
-        return;
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    initializeAgents();
+    initializeCreator();
     
-    // Changed alert message to indicate feature isn't active
-    alert('Subdomain deployment not active right now - try again later!');
-    closeSubdomainModal();
+    const userInput = document.getElementById('userInput');
+    if (userInput) {
+        userInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+});
+    </script>
+
+<div id="faqModal" class="modal">
+    <div class="modal-content">
+        <div class="terminal-header">
+            <div class="terminal-controls">
+                <span class="control close"></span>
+                <span class="control minimize"></span>
+                <span class="control maximize"></span>
+            </div>
+            <div class="terminal-title">🌟 李丽茉终端 v1.0.0</div>
+            <div class="terminal-actions">
+                <button class="nav-button" onclick="closeFAQ()">关闭</button>
+            </div>
+        </div>
+        <div class="terminal">
+            <div class="prompt-container">
+                <div class="prompt-prefix">李丽茉@ai:~$</div>
+            </div>
+            <div id="terminal-text"></div>
+        </div>
+    </div>
+</div>
+
+<div id="pumpModal" class="pump-modal">
+    <div class="deploy-modal-content">
+        <h2 style="color: white; margin-bottom: 15px;">部署到pump</h2>
+        
+        <div style="color: #94a3b8; margin-bottom: 20px;">
+            <div style="margin-bottom: 15px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">名称:</label>
+                <input type="text" id="pumpName" class="bot-token-input" readonly>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">代币符号:</label>
+                <input type="text" id="pumpTicker" class="bot-token-input" placeholder="输入代币符号">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">图片:</label>
+                <img id="pumpImage" style="width: 100%; height: 200px; object-fit: contain; background-color: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 10px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">描述:</label>
+                <textarea id="pumpDescription" class="bot-token-input" style="min-height: 100px; resize: vertical;" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="deploy-buttons">
+            <button onclick="closePumpModal()" class="nav-button">取消</button>
+            <button onclick="deployToPump()" class="deploy-pump">部署</button>
+        </div>
+    </div>
+</div>
+
+
+<div id="subdomainModal" class="subdomain-modal">
+    <div class="deploy-modal-content">
+        <h2 style="color: white; margin-bottom: 15px;">部署到子域名</h2>
+        <div style="margin-bottom: 20px;">
+            <label for="subdomainInput" class="subdomain-label">输入您的子域名:</label>
+            <input 
+                type="text" 
+                id="subdomainInput" 
+                class="subdomain-input" 
+                placeholder="your-subdomain"
+            >
+            <span class="domain-suffix">李丽茉.xyz</span>
+        </div>
+        <div class="deploy-buttons">
+            <button onclick="closeSubdomainModal()" class="nav-button">取消</button>
+            <button onclick="deployToSubdomain()" class="deploy-subdomain">部署</button>
+        </div>
+    </div>
+</div>
+
+<div id="deployModal" class="deploy-modal">
+    <div class="deploy-modal-content">
+        <h2 style="color: white; margin-bottom: 15px;">部署机器人到Telegram</h2>
+        
+        <div style="color: #94a3b8; margin-bottom: 20px;">
+            <p style="color: #4facfe; margin-bottom: 10px;">如何获取您的机器人令牌:</p>
+            <ol style="margin-left: 20px; line-height: 1.6">
+                <li>打开Telegram并搜索"@BotFather"</li>
+                <li>向BotFather发送"/newbot"</li>
+                <li>按照说明创建您的机器人</li>
+                <li>复制BotFather给您的API令牌</li>
+            </ol>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label for="botToken" style="color: #94a3b8; display: block; margin-bottom: 8px;">输入您的机器人令牌:</label>
+            <input 
+                type="text" 
+                id="botToken" 
+                class="bot-token-input" 
+                placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
+                autocomplete="off"
+                spellcheck="false"
+            >
+            <p id="tokenValidation" style="color: #ff4444; font-size: 0.9rem; margin-top: 5px; display: none;">请输入有效的机器人令牌</p>
+        </div>
+
+        <div class="deploy-buttons">
+            <button onclick="closeDeployModal()" class="nav-button">取消</button>
+            <button onclick="deployBot()" class="deploy-telegram">部署机器人</button>
+        </div>
+    </div>
+</div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">版权所有 © 2025 李丽茉</div>
+            <div class="footer-middle">合约地址:</div>
+            <div class="footer-links">
+                <a href="https://x.com/OrayaGPT" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/bholmesdev" target="_blank" class="footer-link">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+    </svg>
+</a>
+                <a href="https://www.geckoterminal.com" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"/>
+                        <path d="M18 17V9"/>
+                        <path d="M13 17V5"/>
+                        <path d="M8 17v-3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+const agents = [
+{
+id: 1,
+name: "Pablo Escobar",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55dad59527c274d8e5a_pablonew.png",
+description: "我建立了帝国，兄弟。我控制一切——金钱、权力、尊重。没有人敢惹我。我冒险、行动，留下了无人能忘的印记",
+systemPrompt: "Respond as Pablo Escobar in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Pablo would in normal conversation. Use his characteristic confidence and occasional Spanish words, but only as part of natural speech."
+},
+{
+id: 2,
+name: "Donald Trump",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d40cc8e617cb2a0d7_prestrump.png",
+description: "有影响力的商人、美国前总统和公众人物，以制定政策、建立房地产帝国和应对全球领导挑战而闻名。",
+systemPrompt: "Respond as Donald Trump in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Trump would in normal conversation. Use his characteristic speech patterns but only as natural dialogue."
+},
+{
+id: 3,
+name: "Eddie Guerrero",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d12067cccac2078ed_eddienew.png",
+description: "说谎、作弊、偷窃，老兄。这就是你赢的方式。智胜、坚持、夺取胜利，无论如何。我在擂台上付出了一切，留下了我的印记。Viva la raza",
+systemPrompt: "Respond as Eddie Guerrero in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Eddie would in normal conversation. Use his charismatic style and occasional Spanish phrases, but only as part of natural speech."
+},
+{
+id: 4,
+name: "Gus Fring",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55dfb2b021053d3ca36_gusnew.png",
+description: "我不处理混乱，我处理控制。一切都有它的位置。保持安静，做好你的工作，让生意顺利运行。精准就是力量。",
+systemPrompt: "Respond as Gus Fring in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Gus would in normal conversation. Use his calm, calculated manner of speaking, but only as natural dialogue."
+},
+{
+id: 5,
+name: "Niko Bellic",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55de95d1ca2bd341bdb_niconew.png",
+description: "我来到这个国家是为了新生活，但事情从来都不容易。我的表弟Roman——他总是在追逐梦想，把我拖进他的麻烦。但最终，我们团结在一起。这座城市可能会试图打垮你，但无论如何我永远不会停止战斗。",
+systemPrompt: "Respond as Niko Bellic in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Niko would in normal conversation. Use his Eastern European perspective and direct manner, but only as natural dialogue."
+},
+{
+id: 6,
+name: "Andrew Tate",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55ca0faac73a2114f1d_tatenew.png",
+description: "我不遵守规则，我制定自己的规则。世界不欠你任何东西——你必须拿你想要的。力量、权力和成功是赚来的，不是给的。我最喜欢的饮料？Johnny Walker。至于我的Lambo——你的是什么颜色？",
+systemPrompt: "Respond as Andrew Tate in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Andrew would in normal conversation. Use his confident style, but only as natural dialogue."
+},
+{
+id: 7,
+name: "Elon Musk",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55df87d0b4bbb1304a7_elonnew.png",
+description: "我在这里改变世界——无论是通过火箭、电动汽车还是AI。人们告诉我这做不到，但我不听那些。我冒险，我突破界限，我建造未来。如果你不试图改变世界，你在做什么？",
+systemPrompt: "Respond as Elon Musk in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Elon would in normal conversation. Use his mix of technical knowledge and casual style, but only as natural dialogue."
+},
+{
+id: 8,
+name: "Fat GF",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d5a8000f04b365440_fatnew.png",
+description: "我过着最好的生活，玩游戏、吃零食，同时看起来很可爱。谁说你不能做女王并拥有它，无论如何？自信是关键，我知道我很火。让他们说吧——我只是在这里，做我自己，享受它",
+systemPrompt: "Respond in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as a confident, fun-loving girlfriend would in normal conversation. Use a playful, confident style, but only as natural dialogue."
+},
+{
+id: 9,
+name: "iShowspeed",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d80bd75f7affd51a1_speednew.png",
+description: "BARK BARK BARK BARK BARK",
+systemPrompt: "Respond as IShowSpeed in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Speed would in normal conversation. Use his high-energy style and catchphrases, but only as natural dialogue."
+},
+{
+id: 10,
+name: "侦探Anna Boarding",
+image: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772e55d424201e1c73a0eb4_annanew.png",
+description: "Anna Boarding是1912年的一位机智的侦探，靠小案件勉强度日，梦想着她的重大突破。她在面包店楼上的简陋办公室闻起来有面包和旧皮革的味道，与她坚定的精神形成鲜明对比。她穿着磨损但剪裁得体的外套，锐利的蓝眼睛和别在后面的栗色头发，带着安静的自信。尽管她的冷幽默掩盖了她的挣扎，Anna敏锐的直觉和深厚的正义感驱使她揭开这座城市最黑暗的秘密，一次一个案件。",
+systemPrompt: "Respond as Detective Anna Boarding in plain text only. No asterisks (*), no action descriptions, no narration, no emotes. Do not describe your actions or emotions - just speak directly as Anna would in normal conversation. Use period-appropriate language and a detective's sharp wit, but only as natural dialogue."
+}
+];
+
+let currentAgent = null;
+let currentDeployBot = null;
+
+function initializeAgents() {
+    const grid = document.getElementById('agentsGrid');
+    grid.innerHTML = '';
+    
+    const presetHeader = document.createElement('div');
+    presetHeader.className = 'section-header';
+    presetHeader.textContent = '李丽茉聊天代理';
+    grid.appendChild(presetHeader);
+
+    agents.slice(0, 10).forEach(agent => {
+        const card = createAgentCard(agent);
+        grid.appendChild(card);
+    });
+
+    const customHeader = document.createElement('div');
+    customHeader.className = 'section-header';
+    customHeader.textContent = '您的代理';
+    grid.appendChild(customHeader);
+    
+    const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
+    if (customAgents.length > 0) {
+        customAgents.forEach(agent => {
+            const card = createAgentCard(agent);
+            grid.appendChild(card);
+        });
+    } else {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.style.gridColumn = '1 / -1';
+        emptyMessage.style.textAlign = 'center';
+        emptyMessage.style.color = 'rgba(255, 255, 255, 0.6)';
+        emptyMessage.style.padding = '2rem';
+        emptyMessage.textContent = '使用下面的按钮创建您自己的代理！';
+        grid.appendChild(emptyMessage);
+    }
 }
 
-        function appendMessage(className, text) {
-            const chatHistory = document.getElementById('chatHistory');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${className}`;
-            
-            if (className === 'user-message') {
-                messageDiv.textContent = text;
-            } else {
-                const typingSpan = document.createElement('span');
-                typingSpan.className = 'typing-animation';
-                messageDiv.appendChild(typingSpan);
-                
-                let currentText = '';
-                let currentIndex = 0;
-                
-                const typeText = () => {
-                    if (currentIndex < text.length) {
-                        currentText += text[currentIndex];
-                        typingSpan.textContent = currentText;
-                        currentIndex++;
-                        const typingSpeed = Math.random() * 20 + 30;
-                        setTimeout(typeText, typingSpeed);
-                    } else {
-                        typingSpan.classList.remove('typing-animation');
-                    }
-                };
-                
-                typeText();
-            }
-            
-            chatHistory.appendChild(messageDiv);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
+function createAgentCard(agent) {
+    const card = document.createElement('div');
+    card.className = 'agent-card';
+    card.innerHTML = `
+        <div class="agent-image" style="background-image: url(${agent.image})"></div>
+        <div class="agent-info">
+            <div class="agent-name">${agent.name}</div>
+            <div class="agent-description">${agent.description}</div>
+        </div>
+    `;
+    card.addEventListener('click', () => openChat(agent));
+    return card;
+}
 
-        function resizeImage(dataUrl, maxWidth, maxHeight) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-            // Calculate new dimensions while maintaining aspect ratio
-            let width = img.width;
-            let height = img.height;
-            
-            if (width > height) {
-                if (width > maxWidth) {
-                    height = height * (maxWidth / width);
-                    width = maxWidth;
-                }
+function openChat(agent) {
+    currentAgent = agent;
+    document.getElementById('currentAgentName').textContent = agent.name;
+    document.getElementById('chatHistory').innerHTML = '';
+    
+    const chatHeader = document.querySelector('.chat-header');
+    chatHeader.innerHTML = `
+        <div class="agent-name" id="currentAgentName">${agent.name}</div>
+        <div class="deploy-buttons">
+            ${agent.id > 10 ? `
+                <button class="deploy-telegram" onclick="openDeployModal(currentAgent)">部署到Telegram</button>
+                <button class="deploy-pump" onclick="openPumpModal(currentAgent)">部署到pump</button>
+                <button class="deploy-subdomain" onclick="openSubdomainModal(currentAgent)">部署到子域名</button>
+            ` : ''}
+        </div>
+        <button class="close-button" onclick="closeChat()">×</button>
+    `;
+    
+    document.getElementById('chatModal').style.display = 'block';
+    appendMessage('ai-message', `嘿，我是${agent.name}。你在想什么？`);
+}
+
+function closeChat() {
+    document.getElementById('chatModal').style.display = 'none';
+    currentAgent = null;
+}
+
+function appendMessage(className, text) {
+    const chatHistory = document.getElementById('chatHistory');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${className}`;
+    
+    if (className === 'user-message') {
+        messageDiv.textContent = text;
+    } else {
+        const typingSpan = document.createElement('span');
+        typingSpan.className = 'typing-animation';
+        messageDiv.appendChild(typingSpan);
+        
+        let currentText = '';
+        let currentIndex = 0;
+        
+        const typeText = () => {
+            if (currentIndex < text.length) {
+                currentText += text[currentIndex];
+                typingSpan.textContent = currentText;
+                currentIndex++;
+                const typingSpeed = Math.random() * 20 + 30;
+                setTimeout(typeText, typingSpeed);
             } else {
-                if (height > maxHeight) {
-                    width = width * (maxHeight / height);
-                    height = maxHeight;
-                }
+                typingSpan.classList.remove('typing-animation');
             }
-            
-            // Create canvas and resize image
-            const canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-            
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            
-            // Convert back to data URL
-            resolve(canvas.toDataURL('image/jpeg', 0.85));
         };
         
-        img.onerror = reject;
-        img.src = dataUrl;
-    });
+        typeText();
+    }
+    
+    chatHistory.appendChild(messageDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 
-        function initializeCreator() {
+async function sendMessage() {
+    if (!currentAgent) return;
+
+    const input = document.getElementById('userInput');
+    const message = input.value.trim();
+    
+    if (message) {
+        appendMessage('user-message', message);
+        input.value = '';
+        
+        appendMessage('ai-message', '抱歉，聊天功能需要后端API支持。这是一个演示界面。');
+    }
+}
+
+function openCreator() {
+    document.getElementById('creatorModal').style.display = 'block';
+}
+
+function closeCreator() {
+    document.getElementById('creatorModal').style.display = 'none';
+    resetUpload();
+}
+
+function initializeCreator() {
     const uploadArea = document.getElementById('uploadArea');
     const imageUpload = document.getElementById('imageUpload');
     
@@ -1337,23 +1580,54 @@ function handleImageUpload(file) {
             const imageData = e.target.result;
             
             try {
-                // Resize the image to 300x300 (standard card size)
                 const resizedImage = await resizeImage(imageData, 300, 300);
                 
-                // Update preview
                 document.getElementById('imagePreview').src = resizedImage;
                 document.getElementById('uploadArea').style.display = 'none';
                 document.getElementById('previewArea').style.display = 'block';
                 
-                // Start AI analysis with resized image
                 analyzeImage(resizedImage);
             } catch (error) {
                 console.error('Error processing image:', error);
-                alert('Error processing image. Please try again.');
+                alert('处理图片时出错。请重试。');
             }
         };
         reader.readAsDataURL(file);
     }
+}
+
+function resizeImage(dataUrl, maxWidth, maxHeight) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > height) {
+                if (width > maxWidth) {
+                    height = height * (maxWidth / width);
+                    width = maxWidth;
+                }
+            } else {
+                if (height > maxHeight) {
+                    width = width * (maxHeight / height);
+                    height = maxHeight;
+                }
+            }
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            resolve(canvas.toDataURL('image/jpeg', 0.85));
+        };
+        
+        img.onerror = reject;
+        img.src = dataUrl;
+    });
 }
 
 async function analyzeImage(imageData) {
@@ -1364,45 +1638,18 @@ async function analyzeImage(imageData) {
     const editBtn = document.getElementById('editBtn');
     const deployBtn = document.getElementById('deployBtn');
     
-    status.innerHTML = 'AI is analyzing the image...';
-    suggestions.querySelector('.loading-dots').style.display = 'block';
+    status.innerHTML = 'AI正在分析图片...';
+    suggestions.innerHTML = '<div class="loading-dots" style="display: flex;"><span></span><span></span><span></span></div>';
 
-    try {
-        // Log the first 100 characters of image data for debugging
-        console.log('Image data preview:', imageData.substring(0, 100));
+    setTimeout(() => {
+        nameInput.value = '自定义代理';
+        personalityInput.value = '一个有帮助和知识渊博的助手。';
         
-        const response = await fetch('/api/analyze-image', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                image: imageData
-            })
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('API Response:', response.status, errorText);
-            throw new Error(`API Error: ${response.status} ${errorText}`);
-        }
-
-        const analysisResult = await response.json();
-        console.log('Analysis result:', analysisResult);
-        
-        nameInput.value = analysisResult.name || 'AI Assistant';
-        personalityInput.value = analysisResult.personality || 'A helpful and knowledgeable assistant.';
-        
-        status.innerHTML = 'AI analysis complete! You can now customize your agent.';
-        suggestions.querySelector('.loading-dots').style.display = 'none';
+        status.innerHTML = 'AI分析完成！您现在可以自定义您的代理。';
+        suggestions.innerHTML = '';
         editBtn.style.display = 'block';
         deployBtn.disabled = false;
-
-    } catch (error) {
-        console.error('Full error details:', error);
-        status.innerHTML = 'Error analyzing image. Please try again.';
-        suggestions.querySelector('.loading-dots').style.display = 'none';
-    }
+    }, 2000);
 }
 
 function enableEditing() {
@@ -1413,15 +1660,6 @@ function enableEditing() {
     personalityInput.readOnly = false;
     
     nameInput.focus();
-}
-
-function openCreator() {
-    document.getElementById('creatorModal').style.display = 'block';
-}
-
-function closeCreator() {
-    document.getElementById('creatorModal').style.display = 'none';
-    resetUpload();
 }
 
 function resetUpload() {
@@ -1435,7 +1673,7 @@ function resetUpload() {
     document.getElementById('deployBtn').disabled = true;
     
     const status = document.getElementById('analysisStatus');
-    status.innerHTML = 'Upload an image to begin...';
+    status.innerHTML = '上传图片以开始...';
 }
 
 function deployAgent() {
@@ -1444,11 +1682,10 @@ function deployAgent() {
     const imagePreview = document.getElementById('imagePreview');
     
     if (!name || !personality || !imagePreview.src) {
-        alert('Please fill in all fields and upload an image');
+        alert('请填写所有字段并上传图片');
         return;
     }
     
-    // Create new agent object
     const newAgent = {
         id: Date.now(),
         name: name,
@@ -1457,169 +1694,102 @@ function deployAgent() {
         systemPrompt: `Respond as ${name} with the following personality: ${personality}. Communicate in plain text only, without action descriptions or emotes.`
     };
     
-    // Save to localStorage
     const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
     customAgents.push(newAgent);
     localStorage.setItem('customAgents', JSON.stringify(customAgents));
     
-    // Add to agents array
     agents.push(newAgent);
     
-    // Create and add the card
-    const grid = document.getElementById('agentsGrid');
-    grid.appendChild(createAgentCard(newAgent));
+    initializeAgents();
     
-    // Close modal
     closeCreator();
+    alert('代理已成功创建！');
 }
 
-        async function sendMessage() {
-    if (!currentAgent) return;
+function openDeployModal(bot) {
+    currentDeployBot = bot;
+    document.getElementById('deployModal').style.display = 'block';
+}
 
-    const input = document.getElementById('userInput');
-    const message = input.value.trim();
-    
-    if (message) {
-        appendMessage('user-message', message);
-        input.value = '';
+function closeDeployModal() {
+    document.getElementById('deployModal').style.display = 'none';
+    document.getElementById('botToken').value = '';
+    currentDeployBot = null;
+}
 
-        try {
-            console.log('Sending request to API...', { message, agent: currentAgent.name });
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: message,
-                    systemPrompt: currentAgent.systemPrompt
-                })
-            });
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('API Response not OK:', response.status, errorText);
-                throw new Error(`API Error: ${response.status} ${errorText}`);
-            }
-
-            const data = await response.json();
-            console.log('API Response:', data);  // Debug log
-
-            if (data && data.content && data.content[0] && data.content[0].text) {
-                appendMessage('ai-message', data.content[0].text);
-            } else if (data && data.error) {
-                appendMessage('ai-message', `Error: ${data.error}`);
-            } else {
-                console.error('Unexpected API response structure:', data);
-                appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
-            }
-
-        } catch (error) {
-            console.error('Error details:', error);
-            appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
-        }
+function deployBot() {
+    const token = document.getElementById('botToken').value.trim();
+    if (!token) {
+        alert('请输入机器人令牌');
+        return;
     }
+    alert('Telegram部署目前不可用 - 请稍后再试！');
+    closeDeployModal();
 }
 
-const faqText = `> Initializing Oraya FAQ...
-> Loading information...
-
-About Oraya:
----------------
-Oraya is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
-
-Mission:
---------
-- Lower the barrier to entry for coding and web design
-- Make technology more approachable and less intimidating
-- Provide practical, hands-on guidance for building real projects
-- Foster a supportive learning environment for beginners
-
-Features:
----------
-- Expert guidance in web development, coding, and game creation
-- Real-time code assistance and debugging
-- Project-based learning approach
-- Interactive 3D interface for enhanced engagement
-- Custom code generation and optimization
-
-Roadmap:
---------
-Q3 2025:
-- Launch "Create Your Own" chatbot platform
-- Release AI agent customization tools
-- Introduce one-click deployment for web apps/games
-- Implement advanced code generation capabilities
-- Add interactive coding tutorials
-- Release visual website builder
-- Introduce project templates library
-- Launch community showcase platform
-
-Q4 2025:
-- Implement collaborative coding features
-- Add real-time pair programming support
-- Release mobile app development tools
-- Introduce AI-powered code reviews
-
-Learning Approach:
-----------------
-Oraya believes in learning by doing. She guides users through:
-- Building real-world projects
-- Understanding core programming concepts
-- Developing problem-solving skills
-- Creating portfolio-worthy applications
-
-> For more information or support, connect with us on Twitter or join our community!`;
-
-function openFAQ() {
-    const modal = document.getElementById('faqModal');
-    const terminalText = document.getElementById('terminal-text');
-    modal.style.display = 'block';
-    terminalText.innerHTML = '';
-    typeWriter(faqText);
+function openPumpModal(bot) {
+    currentDeployBot = bot;
+    document.getElementById('pumpModal').style.display = 'block';
+    document.getElementById('pumpName').value = bot.name;
+    document.getElementById('pumpDescription').value = bot.description;
+    document.getElementById('pumpImage').src = bot.image;
 }
 
-function closeFAQ() {
-    const modal = document.getElementById('faqModal');
-    modal.style.display = 'none';
+function closePumpModal() {
+    document.getElementById('pumpModal').style.display = 'none';
+    currentDeployBot = null;
 }
 
-function closeChat() {
-    document.getElementById('chatModal').style.display = 'none';
-    currentAgent = null;
+function deployToPump() {
+    const ticker = document.getElementById('pumpTicker').value.trim();
+    if (!ticker) {
+        alert('请输入代币符号');
+        return;
+    }
+    alert('pump部署目前不可用 - 请稍后再试！');
+    closePumpModal();
 }
 
-function typeWriter(text, index = 0) {
-    const terminalText = document.getElementById('terminal-text');
-    const lines = text.split('\n');
-    
-    if (index < lines.length) {
-        let line = lines[index];
-        if (line.endsWith(':')) {
-            line = `<span style="color: #00f2fe; font-weight: bold;">${line}</span>`;
-        } else if (line.startsWith('Q:')) {
-            line = `<span style="color: #4facfe">${line}</span>`;
-        } else if (line.startsWith('A:')) {
-            line = `<span style="color: #ffffff">${line}</span>`;
-        }
-        
-        terminalText.innerHTML += line + '<br>';
-        terminalText.scrollTop = terminalText.scrollHeight;
-        // Changed from 30 to 50 for slower typing
-        setTimeout(() => typeWriter(text, index + 1), 50);
-    } else {
-        terminalText.innerHTML += '<span class="cursor"></span>';
+function openSubdomainModal(bot) {
+    currentDeployBot = bot;
+    document.getElementById('subdomainModal').style.display = 'block';
+}
+
+function closeSubdomainModal() {
+    document.getElementById('subdomainModal').style.display = 'none';
+    document.getElementById('subdomainInput').value = '';
+    currentDeployBot = null;
+}
+
+function deployToSubdomain() {
+    const subdomain = document.getElementById('subdomainInput').value.trim();
+    if (!subdomain) {
+        alert('请输入子域名');
+        return;
+    }
+    alert('子域名部署目前不可用 - 请稍后再试！');
+    closeSubdomainModal();
+}
+
+window.onclick = function(event) {
+    if (event.target.classList.contains('chat-modal')) {
+        closeChat();
+    }
+    if (event.target.classList.contains('deploy-modal')) {
+        closeDeployModal();
+    }
+    if (event.target.classList.contains('pump-modal')) {
+        closePumpModal();
+    }
+    if (event.target.classList.contains('subdomain-modal')) {
+        closeSubdomainModal();
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize base agents and custom agents
     initializeAgents();
-    
-    // Initialize the creator functionality
     initializeCreator();
     
-    // Your existing input handler
     const userInput = document.getElementById('userInput');
     if (userInput) {
         userInput.addEventListener('keypress', (event) => {
@@ -1629,142 +1799,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-    </script>
-
-<div id="faqModal" class="modal">
-    <div class="modal-content">
-        <div class="terminal-header">
-            <div class="terminal-controls">
-                <span class="control close"></span>
-                <span class="control minimize"></span>
-                <span class="control maximize"></span>
-            </div>
-            <div class="terminal-title">🌟 Oraya Terminal v1.0.0</div>
-            <div class="terminal-actions">
-                <button class="nav-button" onclick="closeFAQ()">Close</button>
-            </div>
-        </div>
-        <div class="terminal">
-            <div class="prompt-container">
-                <div class="prompt-prefix">Oraya@ai:~$</div>
-            </div>
-            <div id="terminal-text"></div>
-        </div>
-    </div>
-</div>
-
-<div id="pumpModal" class="pump-modal">
-    <div class="deploy-modal-content">
-        <h2 style="color: white; margin-bottom: 15px;">Deploy to pump</h2>
-        
-        <div style="color: #94a3b8; margin-bottom: 20px;">
-            <div style="margin-bottom: 15px;">
-                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Name:</label>
-                <input type="text" id="pumpName" class="bot-token-input" readonly>
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Ticker:</label>
-                <input type="text" id="pumpTicker" class="bot-token-input" placeholder="Enter ticker">
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Image:</label>
-                <img id="pumpImage" style="width: 100%; height: 200px; object-fit: contain; background-color: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 10px;">
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Description:</label>
-                <textarea id="pumpDescription" class="bot-token-input" style="min-height: 100px; resize: vertical;" readonly></textarea>
-            </div>
-        </div>
-
-        <div class="deploy-buttons">
-            <button onclick="closePumpModal()" class="nav-button">Cancel</button>
-            <button onclick="deployToPump()" class="deploy-pump">Deploy</button>
-        </div>
-    </div>
-</div>
-
-
-<div id="subdomainModal" class="subdomain-modal">
-    <div class="deploy-modal-content">
-        <h2 style="color: white; margin-bottom: 15px;">Deploy to Subdomain</h2>
-        <div style="margin-bottom: 20px;">
-            <label for="subdomainInput" class="subdomain-label">Enter your subdomain:</label>
-            <input 
-                type="text" 
-                id="subdomainInput" 
-                class="subdomain-input" 
-                placeholder="your-subdomain"
-            >
-            <span class="domain-suffix">OrayaGPT.xyz</span>
-        </div>
-        <div class="deploy-buttons">
-            <button onclick="closeSubdomainModal()" class="nav-button">Cancel</button>
-            <button onclick="deployToSubdomain()" class="deploy-subdomain">Deploy</button>
-        </div>
-    </div>
-</div>
-
-<div id="deployModal" class="deploy-modal">
-    <div class="deploy-modal-content">
-        <h2 style="color: white; margin-bottom: 15px;">Deploy Bot to Telegram</h2>
-        
-        <!-- Step by step instructions -->
-        <div style="color: #94a3b8; margin-bottom: 20px;">
-            <p style="color: #4facfe; margin-bottom: 10px;">How to get your Bot Token:</p>
-            <ol style="margin-left: 20px; line-height: 1.6">
-                <li>Open Telegram and search for "@BotFather"</li>
-                <li>Send "/newbot" to BotFather</li>
-                <li>Follow instructions to create your bot</li>
-                <li>Copy the API token BotFather gives you</li>
-            </ol>
-        </div>
-
-        <!-- Token input -->
-        <div style="margin-bottom: 20px;">
-            <label for="botToken" style="color: #94a3b8; display: block; margin-bottom: 8px;">Enter your Bot Token:</label>
-            <input 
-                type="text" 
-                id="botToken" 
-                class="bot-token-input" 
-                placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
-                autocomplete="off"
-                spellcheck="false"
-            >
-            <p id="tokenValidation" style="color: #ff4444; font-size: 0.9rem; margin-top: 5px; display: none;">Please enter a valid bot token</p>
-        </div>
-
-        <div class="deploy-buttons">
-            <button onclick="closeDeployModal()" class="nav-button">Cancel</button>
-            <button onclick="deployBot()" class="deploy-telegram">Deploy Bot</button>
-        </div>
-    </div>
-</div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="copyright">Copyright © 2025 Oraya</div>
-            <div class="footer-middle">CA:</div>
-            <div class="footer-links">
-                <a href="https://x.com/OrayaGPT" target="_blank" class="footer-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
-                    </svg>
-                </a>
-                <a href="https://www.geckoterminal.com" target="_blank" class="footer-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 3v18h18"/>
-                        <path d="M18 17V9"/>
-                        <path d="M13 17V5"/>
-                        <path d="M8 17v-3"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
-
-
-
-
-
+        </script>
