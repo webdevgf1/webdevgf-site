@@ -5,26 +5,26 @@
       "maxDuration": 60
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/telegram-webhook/(.*)",
-      "dest": "/api/telegram-webhook.js"
+      "source": "/api/telegram-webhook/(.*)",
+      "destination": "/api/telegram-webhook.js"
     },
     {
-      "src": "/api/deploy-telegram-bot",
-      "dest": "/api/deploy-telegram-bot.js"
+      "source": "/api/deploy-telegram-bot",
+      "destination": "/api/deploy-telegram-bot.js"
     },
     {
-      "src": "/marketplace",
-      "dest": "/public/marketplace.html"
+      "source": "/marketplace",
+      "destination": "/public/marketplace.html"
     },
     {
-      "src": "/chatbots",
-      "dest": "/public/chatbots.html"
+      "source": "/chatbots",
+      "destination": "/public/chatbots.html"
     },
     {
-      "src": "/",
-      "dest": "/public/index.html"
+      "source": "/",
+      "destination": "/public/index.html"
     }
   ]
 }
