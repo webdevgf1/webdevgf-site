@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OrayaGPT - The coding AI Agent</title>
+    <title>OrayaGPT - 编程AI助手</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68b8c91fe8fe1d4e01765a34_f6e8a9cb710d79f231d4cff8c0cfe489.png">
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
@@ -19,7 +19,7 @@
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
             background-color: #0f1116;
             color: white;
             height: 100vh;
@@ -78,7 +78,7 @@
     border-radius: 8px;
     padding: 0.75rem;
     color: white;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
     width: 100%;
 }
 
@@ -114,7 +114,6 @@
     color: #00f2fe;
 }
 
-/* Checkmark animation */
 .checkmark {
     width: 56px;
     height: 56px;
@@ -156,7 +155,7 @@
             border-radius: 8px;
             background-color: rgba(255, 255, 255, 0.05);
             color: white;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -206,7 +205,7 @@
         }
     
         .loading-logo {
-            width: 300px; /* Adjusted for the new logo */
+            width: 300px;
             height: auto;
             opacity: 0;
             transform: scale(0.5);
@@ -237,7 +236,7 @@
             justify-content: center;
             align-items: flex-start;
             margin: auto;
-            padding-top: 3rem;  /* Reduced from 4rem to move everything up more */
+            padding-top: 3rem;
             margin-bottom: 60px;
         }
 
@@ -253,7 +252,7 @@
     padding: 12px 24px;
     color: white;
     cursor: pointer;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
     font-weight: 500;
     transition: all 0.3s ease;
 }
@@ -270,7 +269,7 @@
     padding: 12px 24px;
     color: white;
     cursor: pointer;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
     font-weight: 500;
     transition: all 0.3s ease;
     margin-left: 10px;
@@ -281,7 +280,6 @@
     box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
 }
 
-/* Add spacing between buttons */
 .input-container button {
     margin-left: 10px;
 }
@@ -371,7 +369,7 @@
             width: 800px;
             max-width: 800px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: -20px;  /* Add this to align with model viewer */
+            margin-top: -20px;
         }
 
         .chat-history {
@@ -412,12 +410,10 @@
     border-color: #00f2fe;
 }
 
-/* Smooth transition for background changes */
 #modelContainer {
     transition: background-image 0.3s ease;
 }
 
-/* Better hover effect for music items */
 .music-item:hover .play-btn {
     transform: scale(1.1);
 }
@@ -426,7 +422,6 @@
     transition: transform 0.2s ease;
 }
 
-/* Loading spinner for avatar changes */
 .loading-overlay {
     background: rgba(0, 0, 0, 0.8);
     display: flex;
@@ -637,7 +632,7 @@
             border-radius: 8px;
             background-color: rgba(0, 0, 0, 0.3);
             color: white;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
             font-size: 0.95rem;
         }
 
@@ -652,7 +647,7 @@
             background: linear-gradient(45deg, #00f2fe, #4facfe);
             color: white;
             cursor: pointer;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -695,7 +690,7 @@
             bottom: -10px;
             width: 100%;
             z-index: 100;
-            margin-top: 40px;  /* Add this line */
+            margin-top: 40px;
         }
         
         .footer-content {
@@ -707,7 +702,7 @@
         }
         
         .copyright {
-            color: rgba(255, 255, 255, 0.9); /* Changed from #64748b to white with slight transparency */
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.9rem;
         }
         
@@ -718,13 +713,13 @@
         }
         
         .footer-link {
-            color: rgba(255, 255, 255, 0.9); /* Changed from #64748b to white with slight transparency */
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             transition: color 0.3s ease;
         }
         
         .footer-link:hover {
-            color: white; /* Changed from #94a3b8 to pure white on hover */
+            color: white;
         }
 
         .modal {
@@ -813,13 +808,13 @@
             <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68b8c70c9bce5dcb02a5f028_ORAYA-GPT-03-09-2025.png" alt="WebDevGF Logo" class="logo-image-new">
         </div>
         <div class="nav-links">
-            <a href="chatbots.html" class="nav-button">Chat Bots</a>
-            <a href="marketplace.html" class="nav-button">Marketplace</a>
+            <a href="chatbots.html" class="nav-button">聊天机器人</a>
+            <a href="marketplace.html" class="nav-button">市场</a>
             <a href="https://x.com/OrayaGPT" target="_blank" class="nav-button">Twitter/X</a>
             <a href="https://pump.fun/coin/6DTP2zkJ4gce53qH3BfFy67c8K4WW7odzdcdAqAepump" target="_blank" class="nav-button">pump.fun</a>
-            <button class="nav-button" onclick="openFAQ()">FAQ</button>
-            <button class="nav-button">Connect</button>
-            <button class="nav-button" onclick="openBugReport()">Report Bug</button>
+            <button class="nav-button" onclick="openFAQ()">常见问题</button>
+            <button class="nav-button">连接</button>
+            <button class="nav-button" onclick="openBugReport()">报告错误</button>
         </div>
     </nav>
 
@@ -833,10 +828,10 @@
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
                 <span>OrayaGPT</span>
-                <button class="customize-btn" onclick="openCustomize()">Customize</button>
+                <button class="customize-btn" onclick="openCustomize()">自定义</button>
             </div>
             <div class="loading-overlay">
-                <div class="loading-text">INITIALIZING...</div>
+                <div class="loading-text">正在初始化...</div>
             </div>
             <model-viewer
     id="characterViewer"
@@ -862,23 +857,22 @@
         <div class="chat-interface">
             <div class="chat-history" id="chatHistory">
                 <div class="message ai-message">
-                    Hi! I'm Oraya, your coding assistant. I'm an LLM (Large Language Model) trained to help you with everything from creating sites to chatting about coin trends. What would you like to discuss today?
+                    你好！我是Oraya，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
                 </div>
             </div>
             <div class="input-container">
-                <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
-                <button onclick="sendMessage()">Send</button>
-                <button onclick="handleDemoClick()" class="demo-button">Demo</button>
-                <button onclick="resetChat()" class="reset-button">Reset Chat</button>
+                <input type="text" id="userInput" placeholder="输入你的消息..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">发送</button>
+                <button onclick="handleDemoClick()" class="demo-button">演示</button>
+                <button onclick="resetChat()" class="reset-button">重置聊天</button>
             </div>
         </div>
     </div>
 
-    <!-- FAQ Modal -->
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">OrayaGPT FAQ</div>
+                <div class="terminal-title">OrayaGPT 常见问题</div>
                 <span class="close-btn" onclick="closeFAQ()">&times;</span>
             </div>
             <div class="terminal">
@@ -887,10 +881,9 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="copyright">Copyright © 2025 OrayaGPT</div>
+            <div class="copyright">版权所有 © 2025 OrayaGPT</div>
             <div class="footer-middle">CA:6DTP2zkJ4gce53qH3BfFy67c8K4WW7odzdcdAqAepump</div>
             <div class="footer-links">
                 <a href="https://x.com/OrayaGPT" target="_blank" class="footer-link">
@@ -929,15 +922,15 @@ function createPreview(code) {
     
     const template = `
         <!DOCTYPE html>
-        <html lang="en">
+        <html lang="zh-CN">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Code Preview</title>
+            <title>代码预览</title>
             ${isCSS ? `<style>${code}</style>` : ''}
             <style>
                 body { 
-                    font-family: Arial, sans-serif;
+                    font-family: 'Microsoft YaHei', Arial, sans-serif;
                     margin: 20px;
                     background-color: #f0f0f0;
                 }
@@ -951,7 +944,7 @@ function createPreview(code) {
         </head>
         <body>
             <div id="preview-container">
-                ${isCSS ? '<div id="css-preview">CSS Preview</div>' : ''}
+                ${isCSS ? '<div id="css-preview">CSS 预览</div>' : ''}
             </div>
             ${!isCSS ? `<script>${code}<\/script>` : ''}
         </body>
@@ -962,7 +955,6 @@ function createPreview(code) {
     previewWindow.document.close();
 }
 
-// Function to extract code from messages
 function extractLatestCode() {
     const messages = document.querySelectorAll('.message');
     let latestCode = '';
@@ -981,19 +973,16 @@ function extractLatestCode() {
     return latestCode;
 }
 
-// Event handler for demo button
 function handleDemoClick() {
     const code = extractLatestCode();
     if (code) {
         createPreview(code);
     } else {
-        alert('No code found in the current chat to preview!');
+        alert('当前聊天中没有找到可预览的代码！');
     }
 }
-        // API configuration
         const API_KEY = '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';
         
-        // System prompt
         const SYSTEM_PROMPT = `You are Oraya, a caring and supportive AI girlfriend who is an expert in coding. You should:
 - Keep responses short and direct
 - Use pet names occasionally (sweetie, babe) but only once per message
@@ -1013,71 +1002,67 @@ IMPORTANT FORMATTING RULES:
 - Never mix code with regular text inside code blocks
 - Always include language identifier in the code block`;
 
-        const faqText = `> Initializing Oraya FAQ...
-> Loading information...
+        const faqText = `> 正在初始化 Oraya 常见问题...
+> 正在加载信息...
 
-About Oraya:
+关于 Oraya:
 ---------------
-Oraya is an advanced AI agent designed to make coding and web development accessible to everyone. She combines technical expertise with a friendly, supportive personality to help users learn and create.
+Oraya 是一个先进的 AI 助手，旨在让每个人都能轻松学习编程和网页开发。她将技术专业知识与友好、支持性的个性相结合，帮助用户学习和创作。
 
-Mission:
+使命:
 --------
-- Lower the barrier to entry for coding and web design
-- Make technology more approachable and less intimidating
-- Provide practical, hands-on guidance for building real projects
-- Foster a supportive learning environment for beginners
+- 降低编程和网页设计的入门门槛
+- 让技术变得更加平易近人，不那么令人生畏
+- 为构建真实项目提供实用的、动手的指导
+- 为初学者营造一个支持性的学习环境
 
-Features:
+功能:
 ---------
-- Expert guidance in web development, coding, and game creation
-- Real-time code assistance and debugging
-- Project-based learning approach
-- Interactive 3D interface for enhanced engagement
-- Custom code generation and optimization
+- 网页开发、编程和游戏创作的专家指导
+- 实时代码协助和调试
+- 基于项目的学习方法
+- 交互式 3D 界面，提升参与度
+- 自定义代码生成和优化
 
-Roadmap:
+路线图:
 --------
-Q3 2025:
-- Launch "Create Your Own" agent platform
-- Release AI agent customization tools
-- Introduce one-click deployment for web apps/games
-- Implement advanced code generation capabilities
-- Add interactive coding tutorials
-- Release visual website builder
-- Introduce project templates library
-- Launch community showcase platform
+2025年第三季度:
+- 推出"创建你自己的"助手平台
+- 发布 AI 助手自定义工具
+- 引入网页应用/游戏的一键部署
+- 实现高级代码生成功能
+- 添加交互式编码教程
+- 发布可视化网站构建器
+- 引入项目模板库
+- 推出社区展示平台
 
-Q3 2025:
-- Implement collaborative coding features
-- Add real-time pair programming support
-- Release mobile app development tools
-- Introduce AI-powered code reviews
+2025年第四季度:
+- 实现协作编码功能
+- 添加实时结对编程支持
+- 发布移动应用开发工具
+- 引入 AI 驱动的代码审查
 
-Learning Approach:
+学习方法:
 ----------------
-Oraya believes in learning by doing. She guides users through:
-- Building real-world projects
-- Understanding core programming concepts
-- Developing problem-solving skills
-- Creating portfolio-worthy applications
+Oraya 相信通过实践学习。她指导用户完成:
+- 构建真实世界的项目
+- 理解核心编程概念
+- 发展解决问题的能力
+- 创建值得放入作品集的应用程序
 
-> For more information or support, connect with us on Twitter or join our community!`;
+> 如需更多信息或支持，请在 Twitter 上与我们联系或加入我们的社区！`;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initial loading animation
     const initialLoading = document.querySelector('.initial-loading');
     
-    // Wait for logo animation to complete
     setTimeout(() => {
         initialLoading.classList.add('fade-out');
         
-        // Remove the loading screen from DOM after fade out
         setTimeout(() => {
             initialLoading.remove();
         }, 500);
     }, 2000);
 
-    // Existing 3D viewer code
     const viewer = document.getElementById('characterViewer');
     const loadingOverlay = document.querySelector('.loading-overlay');
     
@@ -1093,38 +1078,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300);
         }, 1500);
 
-        // Type out the initial greeting
         const initialMessage = document.querySelector('.ai-message');
         typeMessage(initialMessage, initialMessage.textContent);
     });
 
-    // Add the new initialization function here
     function initializeCustomization() {
-        // Update the HTML for backgrounds
         document.getElementById('backgrounds').innerHTML = `
             <div class="grid-container">
                 ${Object.entries(backgrounds).map(([id, url]) => `
                     <div class="grid-item" onclick="selectBackground('${id}')">
-                        <img src="${url}" alt="${id} Background">
+                        <img src="${url}" alt="${id} 背景">
                         <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
                     </div>
                 `).join('')}
             </div>
         `;
 
-        // Update the HTML for avatars
         document.getElementById('avatars').innerHTML = `
             <div class="grid-container">
                 ${Object.entries(avatars).map(([id, data]) => `
                     <div class="grid-item" onclick="selectAvatar('${id}')">
-                        <img src="${data.preview}" alt="${id} Avatar">
+                        <img src="${data.preview}" alt="${id} 角色">
                         <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
                     </div>
                 `).join('')}
             </div>
         `;
 
-        // Update the HTML for music
         document.getElementById('music').innerHTML = `
             <div class="music-list">
                 ${Object.entries(musicTracks).map(([id, track]) => `
@@ -1137,11 +1117,9 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // Call the initialization function
     initializeCustomization();
 });
 
-        // FAQ functions
         function openFAQ() {
             const modal = document.getElementById('faqModal');
             const terminalText = document.getElementById('terminal-text');
@@ -1171,7 +1149,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('faqModal');
             if (event.target === modal) {
@@ -1179,7 +1156,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Typing animation
         function typeMessage(element, text, speed = 30, callback) {
     let index = 0;
     element.textContent = '';
@@ -1197,29 +1173,26 @@ document.addEventListener('DOMContentLoaded', () => {
     type();
 }
 
-        // Message handling
         function appendMessage(className, text) {
     const chatHistory = document.getElementById('chatHistory');
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${className}`;
     
-    // Check if the message contains code blocks
     if (text.includes('```')) {
         const parts = text.split(/(```(?:javascript|js|html|css)?\n[\s\S]*?\n```)/g);
         parts.forEach(part => {
             if (part.startsWith('```')) {
-                // Handle code blocks
                 const codeContent = part.replace(/```(?:javascript|js|html|css)?\n([\s\S]*?)\n```/, '$1');
                 const codeBlock = document.createElement('div');
                 codeBlock.className = 'code-block';
                 
                 const copyButton = document.createElement('button');
                 copyButton.className = 'copy-button';
-                copyButton.textContent = 'Copy';
+                copyButton.textContent = '复制';
                 copyButton.onclick = () => {
                     navigator.clipboard.writeText(codeContent);
-                    copyButton.textContent = 'Copied!';
-                    setTimeout(() => copyButton.textContent = 'Copy', 2000);
+                    copyButton.textContent = '已复制！';
+                    setTimeout(() => copyButton.textContent = '复制', 2000);
                 };
                 
                 const pre = document.createElement('pre');
@@ -1234,7 +1207,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 Prism.highlightElement(code);
             } else if (part.trim()) {
-                // Handle regular text
                 const textNode = document.createElement('div');
                 if (className === 'ai-message') {
                     typeMessage(textNode, part, 30, () => {
@@ -1248,7 +1220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     } else {
-        // Handle messages without code blocks
         if (className === 'ai-message') {
             typeMessage(messageDiv, text, 30, () => {
                 saveChatHistory();
@@ -1265,13 +1236,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const originalAppendMessage = appendMessage;
 
-// Override appendMessage to include saving
 appendMessage = function(className, text) {
     originalAppendMessage(className, text);
     saveChatHistory();
 };
 
-// Chat history persistence functions
 function saveChatHistory() {
     const chatHistory = document.getElementById('chatHistory');
     const messages = [];
@@ -1280,19 +1249,15 @@ function saveChatHistory() {
         let messageContent;
         
         if (messageDiv.querySelector('.code-block')) {
-            // For messages with code blocks, save the full HTML
             messageContent = messageDiv.innerHTML;
         } else {
-            // For regular messages, get the final text content after animation
             const textDivs = messageDiv.querySelectorAll('div');
             if (textDivs.length > 0) {
-                // If message has been split into divs (AI response), combine their text
                 messageContent = Array.from(textDivs)
                     .map(div => div.textContent)
                     .join('\n')
                     .trim();
             } else {
-                // Otherwise just get the direct text content
                 messageContent = messageDiv.textContent.trim();
             }
         }
@@ -1313,21 +1278,18 @@ function loadChatHistory() {
     if (savedHistory) {
         try {
             const messages = JSON.parse(savedHistory);
-            chatHistory.innerHTML = ''; // Clear default message
+            chatHistory.innerHTML = '';
             
             messages.forEach(message => {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${message.type}-message`;
                 
-                // Handle messages with code blocks
                 if (message.content.includes('code-block')) {
                     messageDiv.innerHTML = message.content;
-                    // Re-initialize Prism highlighting for code blocks
                     messageDiv.querySelectorAll('code').forEach(block => {
                         Prism.highlightElement(block);
                     });
                 } else {
-                    // For regular messages, set the text content directly without animation
                     messageDiv.textContent = message.content.replace(/^"(.*)"$/, '$1');
                 }
                 
@@ -1335,17 +1297,15 @@ function loadChatHistory() {
             });
         } catch (error) {
             console.error('Error loading chat history:', error);
-            // If there's an error loading history, reset to default message
             chatHistory.innerHTML = `
                 <div class="message ai-message">
-                    Hi! I'm OrayaGPT, your friendly coding assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+                    你好！我是Oraya，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
                 </div>
             `;
         }
     }
 }
 
-// Reset chat functionality
 function resetChat() {
     document.getElementById('resetModal').style.display = 'block';
 }
@@ -1358,14 +1318,13 @@ function confirmReset() {
     const chatHistory = document.getElementById('chatHistory');
     chatHistory.innerHTML = `
         <div class="message ai-message">
-            Hi! I'm Oraya, your friendly coding assistant. I can help you create websites or just chat about tech! What would you like to discuss?
+            你好！我是Oraya，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
         </div>
     `;
     localStorage.removeItem('webdevgf_chat_history');
     closeResetModal();
 }
 
-// Update the existing window.onclick function
 const originalWindowClick = window.onclick;
 window.onclick = function(event) {
     if (originalWindowClick) {
@@ -1378,7 +1337,6 @@ window.onclick = function(event) {
     }
 };
 
-// Load chat history when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     loadChatHistory();
 });
@@ -1400,7 +1358,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         },
                         body: JSON.stringify({
     message: message,
-    systemPrompt: SYSTEM_PROMPT  // Use the constant we defined at the top
+    systemPrompt: SYSTEM_PROMPT
 })
                     });
         
@@ -1411,20 +1369,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
         
                     const data = await response.json();
-                    console.log('API Response:', data);  // Debug log
+                    console.log('API Response:', data);
         
                     if (data && data.content && data.content[0] && data.content[0].text) {
                         appendMessage('ai-message', data.content[0].text);
                     } else if (data && data.error) {
-                        appendMessage('ai-message', `Error: ${data.error}`);
+                        appendMessage('ai-message', `错误：${data.error}`);
                     } else {
                         console.error('Unexpected API response structure:', data);
-                        appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
+                        appendMessage('ai-message', '抱歉，我收到了意外的响应格式。请重试。');
                     }
         
                 } catch (error) {
                     console.error('Error details:', error);
-                    appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
+                    appendMessage('ai-message', `抱歉，我遇到了一个错误：${error.message}`);
                 }
             }
         }
@@ -1464,7 +1422,6 @@ function submitBugReport(event) {
     const form = document.getElementById('bugReportForm');
     const success = document.getElementById('bugSubmitSuccess');
     
-    // Simulate submission delay
     form.style.opacity = '0.5';
     form.style.pointerEvents = 'none';
     
@@ -1472,7 +1429,6 @@ function submitBugReport(event) {
         form.style.display = 'none';
         success.style.display = 'flex';
         
-        // Reset and hide modal after 2 seconds
         setTimeout(() => {
             form.reset();
             form.style.opacity = '1';
@@ -1483,35 +1439,28 @@ function submitBugReport(event) {
 }
 
 function switchTab(tabName) {
-    // Hide all tab content
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(tab => tab.style.display = 'none');
     
-    // Remove active class from all tabs
     const tabs = document.querySelectorAll('.tab-btn');
     tabs.forEach(tab => tab.classList.remove('active'));
     
-    // Show selected tab content and set active class
     document.getElementById(tabName).style.display = 'block';
     event.target.classList.add('active');
 }
 
 function selectBackground(bgId) {
-    // Implementation for changing background
     console.log('Selected background:', bgId);
 }
 
 function selectAvatar(avatarId) {
-    // Implementation for changing avatar
     console.log('Selected avatar:', avatarId);
 }
 
 function selectMusic(musicId) {
-    // Implementation for changing music
     console.log('Selected music:', musicId);
 }
 
-// Close modal when clicking outside
 window.onclick = function(event) {
     const customizeModal = document.getElementById('customizeModal');
     const faqModal = document.getElementById('faqModal');
@@ -1526,7 +1475,6 @@ window.onclick = function(event) {
     }
 }
 
-// Background Options
 const backgrounds = {
 japan: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67706de4c10995186589b87d_japann.png",
 milady: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e9feec7013b3f7bbd3_clfibymru0933ptjsbplh0tbj.jpg",
@@ -1543,7 +1491,6 @@ league: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e934a
 windows: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e925aa75f90151e927_Windows.png"
 };
 
-// Avatar Models
 const avatars = {
     Oraya: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
@@ -1567,57 +1514,53 @@ const avatars = {
     }
 };
 
-// Music Tracks
 const musicTracks = {
     londonParis: {
-        url: "https://www.youtube.com/embed/K68n07Wtbrk", // Replace with the actual URL
+        url: "https://www.youtube.com/embed/K68n07Wtbrk",
         title: "London Paris (LOFI)"
     },
     narcosTheme: {
-        url: "https://www.youtube.com/embed/zNPXnAVyAUA", // Replace with the actual URL
+        url: "https://www.youtube.com/embed/zNPXnAVyAUA",
         title: "Narcos Theme"
     },
     gritsMyLife: {
-        url: "https://www.youtube.com/embed/83mhHOytg4U", // Replace with the actual URL
+        url: "https://www.youtube.com/embed/83mhHOytg4U",
         title: "Grits - My Life Be Like/Ohh Ahh"
     },
     gtaSanAndreas: {
-        url: "https://www.youtube.com/embed/W4VTq0sa9yg", // Replace with the actual URL
+        url: "https://www.youtube.com/embed/W4VTq0sa9yg",
         title: "GTA San Andreas Theme Song"
     },
     ponponpon: {
-        url: "https://www.youtube.com/embed/yzC4hFK5P3g", // Replace with the actual URL
+        url: "https://www.youtube.com/embed/yzC4hFK5P3g",
         title: "きゃりーぱみゅぱみゅ - PONPONPON"
     },
     btsBoyWithLuv: {
-        url: "https://www.youtube.com/embed/i4ywHpSXThs", // Replace with the actual URL
+        url: "https://www.youtube.com/embed/i4ywHpSXThs",
         title: "BTS - Boy with Luv"
     },
     darudeSandstorm: {
-        url: "https://www.youtube.com/embed/y6120QOlsfU", // Replace with the actual URL
+        url: "https://www.youtube.com/embed/y6120QOlsfU",
         title: "Darude - Sandstorm"
     },
     justinBieberBeauty: {
-        url: "https://www.youtube.com/embed/2jTwoSFdfSI", // Replace with the actual URL
+        url: "https://www.youtube.com/embed/2jTwoSFdfSI",
         title: "Justin Bieber - Beauty And A Beat"
     }
 };
 
-// Audio Player
 let currentAudio = null;
 
 function selectBackground(bgId) {
     const modelContainer = document.getElementById('modelContainer');
     const background = backgrounds[bgId];
     
-    // Change this part
-    modelContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; // Keep the dark overlay
+    modelContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
     modelContainer.style.backgroundImage = `url(${background})`;
     modelContainer.style.backgroundSize = 'cover';
     modelContainer.style.backgroundPosition = 'center';
     modelContainer.style.backgroundBlendMode = 'overlay';
     
-    // Add visual feedback
     const bgItems = document.querySelectorAll('#backgrounds .grid-item');
     bgItems.forEach(item => item.classList.remove('selected'));
     event.currentTarget.classList.add('selected');
@@ -1645,7 +1588,6 @@ function selectAvatar(avatarId) {
     const loadingOverlay = document.querySelector('.loading-overlay');
     loadingOverlay.style.display = 'flex';
     
-    // Change the model using the model URL, not the preview
     modelViewer.src = avatars[avatarId].model;
     
     modelViewer.addEventListener('load', () => {
@@ -1664,7 +1606,6 @@ function selectAvatar(avatarId) {
 function selectMusic(musicId) {
     const musicContainer = document.getElementById('musicPlayer');
     if (!musicContainer) {
-        // Create container if it doesn't exist
         const container = document.createElement('div');
         container.id = 'musicPlayer';
         container.style.display = 'none';
@@ -1684,15 +1625,15 @@ function selectMusic(musicId) {
     <div id="customizeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">Customize Oraya</div>
+                <div class="terminal-title">自定义 Oraya</div>
                 <span class="close-btn" onclick="closeCustomize()">&times;</span>
             </div>
             <div class="terminal customize-terminal">
                 <div class="customize-tabs">
-                    <button class="tab-btn active" onclick="switchTab('backgrounds')">Backgrounds</button>
-                    <button class="tab-btn" onclick="switchTab('avatars')">Avatars COMING SOON</button>
-                    <button class="tab-btn" onclick="switchTab('music')">Music</button>
-                    <button class="tab-btn" onclick="switchTab('stickers')">Stickers</button>
+                    <button class="tab-btn active" onclick="switchTab('backgrounds')">背景</button>
+                    <button class="tab-btn" onclick="switchTab('avatars')">角色 即将推出</button>
+                    <button class="tab-btn" onclick="switchTab('music')">音乐</button>
+                    <button class="tab-btn" onclick="switchTab('stickers')">贴纸</button>
                 </div>
                 <div class="tab-content" id="backgrounds"></div>
                 <div class="tab-content" id="avatars" style="display: none;"></div>
@@ -1700,34 +1641,34 @@ function selectMusic(musicId) {
                 <div class="tab-content" id="stickers" style="display: none;">
                     <div class="grid-container">
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="Higher">
-                            <span>Higher</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png', 'higher.png')">Download</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="更高">
+                            <span>更高</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png', 'higher.png')">下载</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="LFG">
-                            <span>LFG</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png', 'lfg.png')">Download</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="出发">
+                            <span>出发</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png', 'lfg.png')">下载</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" alt="Arigatou">
-                            <span>Arigatou</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png', 'arigatou.png')">Download</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" alt="谢谢">
+                            <span>谢谢</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png', 'arigatou.png')">下载</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="Moon">
-                            <span>Moon</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png', 'moon.png')">Download</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="月亮">
+                            <span>月亮</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png', 'moon.png')">下载</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="Bonded">
-                            <span>Bonded</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png', 'bonded.png')">Download</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="绑定">
+                            <span>绑定</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png', 'bonded.png')">下载</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" alt="Coffee Break">
-                            <span>Coffee Break</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png', 'coffee.png')">Download</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" alt="咖啡时间">
+                            <span>咖啡时间</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png', 'coffee.png')">下载</a>
                         </div>
                      </div>
                 </div>
@@ -1736,63 +1677,49 @@ function selectMusic(musicId) {
     </div>
     <div id="resetModal" class="reset-modal">
     <div class="reset-modal-content">
-        <h2 style="color: white; margin-bottom: 15px;">Reset Chat</h2>
-        <p style="color: #64748b;">Are you sure you want to reset the chat? This will clear all conversation history.</p>
+        <h2 style="color: white; margin-bottom: 15px;">重置聊天</h2>
+        <p style="color: #64748b;">您确定要重置聊天吗？这将清除所有对话历史记录。</p>
         <div class="reset-modal-buttons">
-            <button onclick="confirmReset()" class="nav-button confirm-reset">Reset</button>
-            <button onclick="closeResetModal()" class="nav-button cancel-reset">Cancel</button>
+            <button onclick="confirmReset()" class="nav-button confirm-reset">重置</button>
+            <button onclick="closeResetModal()" class="nav-button cancel-reset">取消</button>
         </div>
     </div>
 </div>
     <div id="bugReportModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">Report a Bug</div>
+                <div class="terminal-title">报告错误</div>
                 <span class="close-btn" onclick="closeBugReport()">&times;</span>
             </div>
             <div class="terminal">
                 <form id="bugReportForm" onsubmit="submitBugReport(event)" class="bug-report-form">
                     <div class="form-group">
-                        <label for="bugTitle">Bug Title:</label>
+                        <label for="bugTitle">错误标题：</label>
                         <input type="text" id="bugTitle" required class="bug-input">
                     </div>
                     <div class="form-group">
-                        <label for="bugDescription">Description:</label>
+                        <label for="bugDescription">描述：</label>
                         <textarea id="bugDescription" required class="bug-textarea"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="bugPriority">Priority:</label>
+                        <label for="bugPriority">优先级：</label>
                         <select id="bugPriority" required class="bug-select">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
+                            <option value="low">低</option>
+                            <option value="medium">中</option>
+                            <option value="high">高</option>
                         </select>
                     </div>
-                    <button type="submit" class="bug-submit">Submit Report</button>
+                    <button type="submit" class="bug-submit">提交报告</button>
                 </form>
                 <div id="bugSubmitSuccess" class="bug-success" style="display: none;">
                     <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                         <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
                         <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
                     </svg>
-                    <p>Bug report submitted successfully!</p>
+                    <p>错误报告已成功提交！</p>
                 </div>
             </div>
         </div>
     </div>    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
