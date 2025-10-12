@@ -15,7 +15,11 @@
       "destination": "/api/deploy-telegram-bot.js"
     },
     {
-      "source": "/marketplace",
+      "source": "/聊天机器人",
+      "destination": "/public/chatbots.html"
+    },
+    {
+      "source": "/市场",
       "destination": "/public/marketplace.html"
     },
     {
@@ -23,8 +27,9 @@
       "destination": "/public/chatbots.html"
     },
     {
-      "source": "/",
-      "destination": "/public/index.html"
+      "source": "/marketplace",
+      "destination": "/public/marketplace.html"
     }
-  ]
+  ],
+  "cleanUrls": true
 }
