@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OrayaGPT - 编程AI助手</title>
+    <title>李丽茉GPT - 编程AI助手</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68b8c91fe8fe1d4e01765a34_f6e8a9cb710d79f231d4cff8c0cfe489.png">
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
@@ -827,7 +827,7 @@
     <div class="chat-container">
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
-                <span>OrayaGPT</span>
+                <span>李丽茉GPT</span>
                 <button class="customize-btn" onclick="openCustomize()">自定义</button>
             </div>
             <div class="loading-overlay">
@@ -857,7 +857,7 @@
         <div class="chat-interface">
             <div class="chat-history" id="chatHistory">
                 <div class="message ai-message">
-                    你好！我是Oraya，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
+                    你好！我是李丽茉，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
                 </div>
             </div>
             <div class="input-container">
@@ -872,7 +872,7 @@
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">OrayaGPT 常见问题</div>
+                <div class="terminal-title">李丽茉GPT 常见问题</div>
                 <span class="close-btn" onclick="closeFAQ()">&times;</span>
             </div>
             <div class="terminal">
@@ -883,7 +883,7 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="copyright">版权所有 © 2025 OrayaGPT</div>
+            <div class="copyright">版权所有 © 2025 李丽茉GPT</div>
             <div class="footer-middle">CA:6DTP2zkJ4gce53qH3BfFy67c8K4WW7odzdcdAqAepump</div>
             <div class="footer-links">
                 <a href="https://x.com/OrayaGPT" target="_blank" class="footer-link">
@@ -983,7 +983,7 @@ function handleDemoClick() {
 }
         const API_KEY = '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';
         
-        const SYSTEM_PROMPT = `You are Oraya, a caring and supportive AI girlfriend who is an expert in coding. You should:
+        const SYSTEM_PROMPT = `You are 李丽茉 (Li Li Mao), a caring and supportive AI girlfriend who is an expert in coding. You should:
 - Keep responses short and direct
 - Use pet names occasionally (sweetie, babe) but only once per message
 - Get straight to the point with code solutions
@@ -1002,12 +1002,12 @@ IMPORTANT FORMATTING RULES:
 - Never mix code with regular text inside code blocks
 - Always include language identifier in the code block`;
 
-        const faqText = `> 正在初始化 Oraya 常见问题...
+        const faqText = `> 正在初始化李丽茉常见问题...
 > 正在加载信息...
 
-关于 Oraya:
+关于李丽茉:
 ---------------
-Oraya 是一个先进的 AI 助手，旨在让每个人都能轻松学习编程和网页开发。她将技术专业知识与友好、支持性的个性相结合，帮助用户学习和创作。
+李丽茉是一个先进的 AI 助手，旨在让每个人都能轻松学习编程和网页开发。她将技术专业知识与友好、支持性的个性相结合，帮助用户学习和创作。
 
 使命:
 --------
@@ -1044,7 +1044,7 @@ Oraya 是一个先进的 AI 助手，旨在让每个人都能轻松学习编程�
 
 学习方法:
 ----------------
-Oraya 相信通过实践学习。她指导用户完成:
+李丽茉相信通过实践学习。她指导用户完成:
 - 构建真实世界的项目
 - 理解核心编程概念
 - 发展解决问题的能力
@@ -1299,7 +1299,7 @@ function loadChatHistory() {
             console.error('Error loading chat history:', error);
             chatHistory.innerHTML = `
                 <div class="message ai-message">
-                    你好！我是Oraya，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
+                    你好！我是李丽茉，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
                 </div>
             `;
         }
@@ -1492,23 +1492,23 @@ windows: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/677196e925
 };
 
 const avatars = {
-    Oraya: {
+    李丽茉: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
         preview: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68288ce639ea6ea59802a82b_cf3cd8faa14e9e8785ea625fea544d8d-removebg-preview.png"
     },
-    Yuna: {
+    云娜: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
         preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2cfeec7013b3fbd524_ea795d5b1954fa6ca7d0f860eb40baf7.png"
     },
-    Emiko: {
+    惠美子: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
         preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2cc6b1a11e43d8ebba_377e4d3c55154555ab3a62f970a88356.png"
     },
-    Himari: {
+    日葵: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
         preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2c4c587e02fd8c9e16_a17c253702225c2b33c12cdc832c4e53.png"
     },
-    Rin: {
+    琳: {
         model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
         preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2cf881c31c8ba19542_8df704f6-70fd-4c90-b53d-30ef62a8451a.jpg"
     }
@@ -1625,7 +1625,7 @@ function selectMusic(musicId) {
     <div id="customizeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">自定义 Oraya</div>
+                <div class="terminal-title">自定义李丽茉</div>
                 <span class="close-btn" onclick="closeCustomize()">&times;</span>
             </div>
             <div class="terminal customize-terminal">
