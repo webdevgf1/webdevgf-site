@@ -1,6 +1,6 @@
 <div align="center">
 
-![LeonaOS Banner](https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f4e19e256f3b2a0eb54d_2a11da21-c7bf-4e91-9969-2b0647313dc4%20(1).png)
+![LeonaOS Banner](https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f76d9fbb42a19070c142_New%20Project%20(91).png)
 
 <img src="https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f48a2574a64cb6ae3a6f_New%20Project%20(90).png" alt="LeonaOS" width="120" height="120">
 
