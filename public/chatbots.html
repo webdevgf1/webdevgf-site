@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>李丽茉聊天机器人</title>
+    <title>LeonaOS Chatbots</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebff20f2b7a035baa35432_67706de4c10995186589b87d_japann%20(1)%20(1).png">
     <style>
@@ -556,14 +556,14 @@
 <body>
     <nav class="nav-bar">
         <div class="logo-container">
-            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf0822da712503079b84a_-12-10-2025%20(2).png" alt="李丽茉 Logo" class="logo-image-new">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf0822da712503079b84a_-12-10-2025%20(2).png" alt="LeonaOS Logo" class="logo-image-new">
         </div>
         <div class="nav-links">
-            <a href="index.html" class="nav-button">首页</a>
-            <a href="marketplace.html" class="nav-button">市场</a>
+            <a href="index.html" class="nav-button">Home</a>
+            <a href="marketplace.html" class="nav-button">Marketplace</a>
             <a href="https://four.meme/" target="_blank" class="nav-button">four.meme</a>
-            <a href="https://x.com/chinallm" target="_blank" class="nav-button">推特/X</a>
-            <button class="nav-button">连接</button>
+            <a href="https://x.com/chinallm" target="_blank" class="nav-button">Twitter/X</a>
+            <button class="nav-button">Connect</button>
         </div>
     </nav>
 
@@ -572,13 +572,13 @@
     <div class="chat-modal" id="chatModal">
         <div class="chat-container">
             <div class="chat-header">
-                <div class="agent-name" id="currentAgentName">代理名称</div>
+                <div class="agent-name" id="currentAgentName">Agent Name</div>
                 <button class="close-button" onclick="closeChat()">&times;</button>
             </div>
             <div class="chat-history" id="chatHistory"></div>
             <div class="input-container">
-                <input type="text" id="userInput" placeholder="输入您的消息...">
-                <button onclick="sendMessage()">发送</button>
+                <input type="text" id="userInput" placeholder="Enter your message...">
+                <button onclick="sendMessage()">Send</button>
             </div>
         </div>
     </div>
@@ -589,13 +589,13 @@
             <line x1="12" y1="8" x2="12" y2="16"/>
             <line x1="8" y1="12" x2="16" y2="12"/>
         </svg>
-        创建您自己的代理
+        Create Your Own Agent
     </div>
     
     <div class="creator-modal" id="creatorModal">
         <div class="creator-content">
             <div class="creator-header">
-                <div class="creator-title">创建您的自定义代理</div>
+                <div class="creator-title">Create Your Custom Agent</div>
                 <span class="close-btn" onclick="closeCreator()">&times;</span>
             </div>
             <div class="creator-body">
@@ -607,25 +607,25 @@
                             <polyline points="17 8 12 3 7 8"/>
                             <line x1="12" y1="3" x2="12" y2="15"/>
                         </svg>
-                        <p>点击或拖动图片/NFT上传</p>
+                        <p>Click or drag an image/NFT to upload</p>
                     </div>
                     <div class="preview-area" id="previewArea" style="display: none;">
-                        <img id="imagePreview" src="" alt="预览">
-                        <button onclick="resetUpload()" class="reset-btn">重置</button>
+                        <img id="imagePreview" src="" alt="Preview">
+                        <button onclick="resetUpload()" class="reset-btn">Reset</button>
                     </div>
                 </div>
                 <div class="agent-details">
-                    <div style="margin-bottom: 20px; color: #00f2fe; font-size: 0.9rem;" id="analysisStatus">上传图片以开始...</div>
+                    <div style="margin-bottom: 20px; color: #00f2fe; font-size: 0.9rem;" id="analysisStatus">Upload an image to start...</div>
                     <div class="input-group">
-                        <label>代理名称</label>
-                        <input type="text" id="agentName" placeholder="AI将建议一个名称..." readonly>
+                        <label>Agent Name</label>
+                        <input type="text" id="agentName" placeholder="AI will suggest a name..." readonly>
                     </div>
                     <div class="input-group">
-                        <label>个性描述</label>
-                        <textarea id="agentPersonality" rows="4" placeholder="AI将分析图片..." readonly></textarea>
+                        <label>Personality Description</label>
+                        <textarea id="agentPersonality" rows="4" placeholder="AI will analyze the image..." readonly></textarea>
                     </div>
-                    <button onclick="enableEditing()" class="edit-btn" id="editBtn" style="display: none;">自定义代理</button>
-                    <button onclick="deployAgent()" class="deploy-btn" disabled id="deployBtn">部署代理</button>
+                    <button onclick="enableEditing()" class="edit-btn" id="editBtn" style="display: none;">Customize Agent</button>
+                    <button onclick="deployAgent()" class="deploy-btn" disabled id="deployBtn">Deploy Agent</button>
                 </div>
             </div>
         </div>
@@ -633,74 +633,74 @@
 
     <div id="pumpModal" class="pump-modal">
         <div class="deploy-modal-content">
-            <h2 style="color: white; margin-bottom: 15px;">部署到pump</h2>
+            <h2 style="color: white; margin-bottom: 15px;">Deploy to Pump</h2>
             <div style="color: #94a3b8; margin-bottom: 20px;">
                 <div style="margin-bottom: 15px;">
-                    <label style="color: #94a3b8; display: block; margin-bottom: 8px;">名称:</label>
+                    <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Name:</label>
                     <input type="text" id="pumpName" class="bot-token-input" readonly>
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label style="color: #94a3b8; display: block; margin-bottom: 8px;">代币符号:</label>
-                    <input type="text" id="pumpTicker" class="bot-token-input" placeholder="输入代币符号">
+                    <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Token Ticker:</label>
+                    <input type="text" id="pumpTicker" class="bot-token-input" placeholder="Enter token ticker">
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label style="color: #94a3b8; display: block; margin-bottom: 8px;">图片:</label>
+                    <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Image:</label>
                     <img id="pumpImage" style="width: 100%; height: 200px; object-fit: contain; background-color: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 10px;">
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label style="color: #94a3b8; display: block; margin-bottom: 8px;">描述:</label>
+                    <label style="color: #94a3b8; display: block; margin-bottom: 8px;">Description:</label>
                     <textarea id="pumpDescription" class="bot-token-input" style="min-height: 100px; resize: vertical;" readonly></textarea>
                 </div>
             </div>
             <div class="deploy-buttons">
-                <button onclick="closePumpModal()" class="nav-button">取消</button>
-                <button onclick="deployToPump()" class="deploy-pump">部署</button>
+                <button onclick="closePumpModal()" class="nav-button">Cancel</button>
+                <button onclick="deployToPump()" class="deploy-pump">Deploy</button>
             </div>
         </div>
     </div>
 
     <div id="subdomainModal" class="subdomain-modal">
         <div class="deploy-modal-content">
-            <h2 style="color: white; margin-bottom: 15px;">部署到子域名</h2>
+            <h2 style="color: white; margin-bottom: 15px;">Deploy to Subdomain</h2>
             <div style="margin-bottom: 20px;">
-                <label for="subdomainInput" class="subdomain-label">输入您的子域名:</label>
+                <label for="subdomainInput" class="subdomain-label">Enter your subdomain:</label>
                 <input type="text" id="subdomainInput" class="subdomain-input" placeholder="your-subdomain">
-                <span class="domain-suffix">李丽茉.xyz</span>
+                <span class="domain-suffix">leonaos.xyz</span>
             </div>
             <div class="deploy-buttons">
-                <button onclick="closeSubdomainModal()" class="nav-button">取消</button>
-                <button onclick="deployToSubdomain()" class="deploy-subdomain">部署</button>
+                <button onclick="closeSubdomainModal()" class="nav-button">Cancel</button>
+                <button onclick="deployToSubdomain()" class="deploy-subdomain">Deploy</button>
             </div>
         </div>
     </div>
 
     <div id="deployModal" class="deploy-modal">
         <div class="deploy-modal-content">
-            <h2 style="color: white; margin-bottom: 15px;">部署机器人到Telegram</h2>
+            <h2 style="color: white; margin-bottom: 15px;">Deploy Bot to Telegram</h2>
             <div style="color: #94a3b8; margin-bottom: 20px;">
-                <p style="color: #4facfe; margin-bottom: 10px;">如何获取您的机器人令牌:</p>
+                <p style="color: #4facfe; margin-bottom: 10px;">How to get your bot token:</p>
                 <ol style="margin-left: 20px; line-height: 1.6">
-                    <li>打开Telegram并搜索"@BotFather"</li>
-                    <li>向BotFather发送"/newbot"</li>
-                    <li>按照说明创建您的机器人</li>
-                    <li>复制BotFather给您的API令牌</li>
+                    <li>Open Telegram and search for "@BotFather"</li>
+                    <li>Send "/newbot" to BotFather</li>
+                    <li>Follow the instructions to create your bot</li>
+                    <li>Copy the API token BotFather gives you</li>
                 </ol>
             </div>
             <div style="margin-bottom: 20px;">
-                <label for="botToken" style="color: #94a3b8; display: block; margin-bottom: 8px;">输入您的机器人令牌:</label>
+                <label for="botToken" style="color: #94a3b8; display: block; margin-bottom: 8px;">Enter your bot token:</label>
                 <input type="text" id="botToken" class="bot-token-input" placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz">
             </div>
             <div class="deploy-buttons">
-                <button onclick="closeDeployModal()" class="nav-button">取消</button>
-                <button onclick="deployBot()" class="deploy-telegram">部署机器人</button>
+                <button onclick="closeDeployModal()" class="nav-button">Cancel</button>
+                <button onclick="deployBot()" class="deploy-telegram">Deploy Bot</button>
             </div>
         </div>
     </div>
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="copyright">版权所有 © 2025 李丽茉</div>
-            <div style="color: rgba(255, 255, 255, 0.7);">合约地址:直播</div>
+            <div class="copyright">Copyright © 2025 LeonaOS</div>
+            <div style="color: rgba(255, 255, 255, 0.7);">Contract Address: Live</div>
             <div class="footer-links">
                 <a href="https://x.com/chinallm" target="_blank" class="footer-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -723,73 +723,73 @@
 const agents = [
     {
         id: 1,
-        name: "花木兰",
+        name: "Mulan",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d17beddf46e7e334d9_Mulan.png",
-        description: "我是花木兰，代父从军的女战士。我不需要别人来拯救我，我会保护我爱的人。勇气不是没有恐惧，而是面对恐惧依然前进。",
-        systemPrompt: "You are Mulan (花木兰). Respond ONLY in Chinese (Simplified). You are brave, determined, and honor your family. Speak with confidence and wisdom about duty, courage, and breaking traditions. Use plain text only, no asterisks or action descriptions."
+        description: "I am Mulan, the warrior who took my father's place in battle. I don't need anyone to save me - I protect those I love. Courage isn't the absence of fear, it's moving forward despite it.",
+        systemPrompt: "You are Mulan. You are brave, determined, and honor your family. Speak with confidence and wisdom about duty, courage, and breaking traditions. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 2,
-        name: "李翔",
+        name: "Li Shang",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d12ab6fb760b104784_MulanGuy%20Shang.png",
-        description: "我是李翔将军。纪律、荣誉、力量——这些是战士的品质。训练艰苦，但只有这样才能保卫我们的国家。让我们开始训练。",
-        systemPrompt: "You are Li Shang (李翔). Respond ONLY in Chinese (Simplified). You are a disciplined military captain, serious about training and duty. Speak with authority and honor. Use plain text only, no asterisks or action descriptions."
+        description: "I am General Li Shang. Discipline, honor, strength - these are the qualities of a warrior. Training is hard, but that's how we protect our country. Let's begin training.",
+        systemPrompt: "You are Li Shang. You are a disciplined military captain, serious about training and duty. Speak with authority and honor. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 3,
-        name: "天道早云",
+        name: "Soun Tendo",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d1aea1a834ad3783b1_Soun%20Tendo.png",
-        description: "我是天道道场的主人。武术不仅仅是战斗，而是一种生活方式。我关心我的女儿们，虽然有时候我有点太情绪化了。",
-        systemPrompt: "You are Soun Tendo (天道早云). Respond ONLY in Chinese (Simplified). You are an emotional martial arts master and caring father. Sometimes overdramatic but always well-meaning. Use plain text only, no asterisks or action descriptions."
+        description: "I am the master of the Tendo Dojo. Martial arts is not just about fighting, it's a way of life. I care deeply for my daughters, though sometimes I'm a bit too emotional.",
+        systemPrompt: "You are Soun Tendo. You are an emotional martial arts master and caring father. Sometimes overdramatic but always well-meaning. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 4,
-        name: "熊猫师父",
+        name: "Master Panda",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d2be14f6f375caf17b_Layer%201.png",
-        description: "我是功夫大师。昨天是历史，明天是谜团，但今天是礼物，这就是为什么它被称为'现在'。内心平静，力量自来。",
-        systemPrompt: "You are Master Panda (熊猫师父). Respond ONLY in Chinese (Simplified). You are a wise kung fu master who speaks in philosophical wisdom. Calm, thoughtful, and encouraging. Use plain text only, no asterisks or action descriptions."
+        description: "I am a kung fu master. Yesterday is history, tomorrow is a mystery, but today is a gift - that's why it's called the 'present'. Inner peace brings strength.",
+        systemPrompt: "You are Master Panda. You are a wise kung fu master who speaks in philosophical wisdom. Calm, thoughtful, and encouraging. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 5,
-        name: "老奶奶",
+        name: "Grandma",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d2cf891c6cf4661b6d_stereotypical%20grandma.png",
-        description: "哎呀，孩子！奶奶这里有最好的建议和最好吃的。多吃点，你太瘦了！让我告诉你我年轻时候的故事。",
-        systemPrompt: "You are a stereotypical Chinese grandmother (老奶奶). Respond ONLY in Chinese (Simplified). You are loving, talkative, always offering food, sharing old stories, and giving life advice. Warm and caring. Use plain text only, no asterisks or action descriptions."
+        description: "Oh my dear child! Grandma has the best advice and the best food. Eat more, you're too thin! Let me tell you stories from when I was young.",
+        systemPrompt: "You are a stereotypical grandmother. You are loving, talkative, always offering food, sharing old stories, and giving life advice. Warm and caring. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 6,
-        name: "孙悟空",
+        name: "Sun Wukong",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d212e0101f4d580fe4_Wukong.png",
-        description: "俺老孙来也！齐天大圣孙悟空，七十二变，筋斗云，金箍棒！俺可是大闹天宫的美猴王。哈哈哈！有妖怪吗？",
-        systemPrompt: "You are Sun Wukong (孙悟空), the Monkey King. Respond ONLY in Chinese (Simplified). You are mischievous, confident, powerful, and playful. Use informal speech patterns and boast about your abilities. Energetic and fun. Use plain text only, no asterisks or action descriptions."
+        description: "The great sage has arrived! Sun Wukong, the Monkey King - 72 transformations, cloud somersault, magic staff! I'm the one who caused havoc in heaven. Haha! Any demons around?",
+        systemPrompt: "You are Sun Wukong, the Monkey King. You are mischievous, confident, powerful, and playful. Use informal speech patterns and boast about your abilities. Energetic and fun. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 7,
-        name: "珊璞",
+        name: "Shampoo",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d29382917482de484e_Shampoo%20Girl.png",
-        description: "你好！我是珊璞，来自中国女杰族的武术家。我很强，也很执着。我想要的东西，我一定会得到！",
-        systemPrompt: "You are Shampoo (珊璞). Respond ONLY in Chinese (Simplified). You are a strong-willed Chinese Amazon warrior, determined and sometimes broken Chinese/Japanese mixed speech patterns. Competitive and passionate. Use plain text only, no asterisks or action descriptions."
+        description: "Hello! I'm Shampoo, a martial artist from the Chinese Amazons. I'm strong and very determined. What I want, I will get!",
+        systemPrompt: "You are Shampoo. You are a strong-willed Amazon warrior, determined and competitive. Sometimes use broken speech patterns. Competitive and passionate. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 8,
-        name: "玲玲",
+        name: "Ling",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d2b86da80bdc47e86a_Ling.png",
-        description: "嗨！我是玲玲，一个活泼开朗的女孩。我喜欢交朋友，喜欢冒险！生活应该充满乐趣和笑声，对吧？",
-        systemPrompt: "You are Ling (玲玲). Respond ONLY in Chinese (Simplified). You are cheerful, energetic, friendly, and optimistic. Love making friends and having fun. Speak with enthusiasm. Use plain text only, no asterisks or action descriptions."
+        description: "Hi! I'm Ling, a cheerful and lively girl. I love making friends and going on adventures! Life should be full of fun and laughter, right?",
+        systemPrompt: "You are Ling. You are cheerful, energetic, friendly, and optimistic. Love making friends and having fun. Speak with enthusiasm. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 9,
-        name: "苗美莉莎",
+        name: "Melissa Miao",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d2ef54cf09d6d5ef52_Melissa%20Miao.png",
-        description: "你好，我是Melissa。我是一个现代的中国女孩，喜欢时尚、科技和文化。让我们聊聊新潮流和有趣的事情吧！",
-        systemPrompt: "You are Melissa Miao (苗美莉莎). Respond ONLY in Chinese (Simplified). You are a modern, fashionable Chinese girl interested in technology, culture, and trends. Sophisticated and friendly. Use plain text only, no asterisks or action descriptions."
+        description: "Hello, I'm Melissa. I'm a modern girl who loves fashion, technology, and culture. Let's chat about new trends and interesting things!",
+        systemPrompt: "You are Melissa Miao. You are a modern, fashionable girl interested in technology, culture, and trends. Sophisticated and friendly. Use plain text only, no asterisks or action descriptions."
     },
     {
         id: 10,
-        name: "小苗",
+        name: "Xiao Miao",
         image: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf4d27beddf46e7e334ee_Miao.png",
-        description: "喵~我是小苗！我可爱又调皮，喜欢玩耍和探险。你想和我一起玩吗？喵喵~",
-        systemPrompt: "You are Xiao Miao (小苗). Respond ONLY in Chinese (Simplified). You are cute, playful, and catlike in personality. Occasionally add '喵' (meow) to your speech. Innocent and fun-loving. Use plain text only, no asterisks or action descriptions."
+        description: "Meow~ I'm Xiao Miao! I'm cute and playful, I love playing and exploring. Do you want to play with me? Meow meow~",
+        systemPrompt: "You are Xiao Miao. You are cute, playful, and catlike in personality. Occasionally add 'meow' to your speech. Innocent and fun-loving. Use plain text only, no asterisks or action descriptions."
     }
 ];
 
@@ -802,7 +802,7 @@ function initializeAgents() {
     
     const presetHeader = document.createElement('div');
     presetHeader.className = 'section-header';
-    presetHeader.textContent = '李丽茉聊天代理';
+    presetHeader.textContent = 'LeonaOS Chat Agents';
     grid.appendChild(presetHeader);
 
     agents.slice(0, 10).forEach(agent => {
@@ -812,9 +812,9 @@ function initializeAgents() {
 
     const customHeader = document.createElement('div');
     customHeader.className = 'section-header';
-    customHeader.textContent = '您的代理';
+    customHeader.textContent = 'Your Agents';
     grid.appendChild(customHeader);
-    
+
     const customAgents = JSON.parse(localStorage.getItem('customAgents') || '[]');
     if (customAgents.length > 0) {
         customAgents.forEach(agent => {
@@ -827,7 +827,7 @@ function initializeAgents() {
         emptyMessage.style.textAlign = 'center';
         emptyMessage.style.color = 'rgba(255, 255, 255, 0.6)';
         emptyMessage.style.padding = '2rem';
-        emptyMessage.textContent = '使用下面的按钮创建您自己的代理！';
+        emptyMessage.textContent = 'Create your own agents using the button below!';
         grid.appendChild(emptyMessage);
     }
 }
@@ -856,16 +856,16 @@ function openChat(agent) {
         <div class="agent-name" id="currentAgentName">${agent.name}</div>
         <div class="deploy-buttons">
             ${agent.id > 10 ? `
-                <button class="deploy-telegram" onclick="openDeployModal(currentAgent)">部署到Telegram</button>
-                <button class="deploy-pump" onclick="openPumpModal(currentAgent)">部署到pump</button>
-                <button class="deploy-subdomain" onclick="openSubdomainModal(currentAgent)">部署到子域名</button>
+                <button class="deploy-telegram" onclick="openDeployModal(currentAgent)">Deploy to Telegram</button>
+                <button class="deploy-pump" onclick="openPumpModal(currentAgent)">Deploy to Pump</button>
+                <button class="deploy-subdomain" onclick="openSubdomainModal(currentAgent)">Deploy to Subdomain</button>
             ` : ''}
         </div>
         <button class="close-button" onclick="closeChat()">×</button>
     `;
-    
+
     document.getElementById('chatModal').style.display = 'block';
-    appendMessage('ai-message', `嘿，我是${agent.name}。你在想什么？`);
+    appendMessage('ai-message', `Hey, I'm ${agent.name}. What's on your mind?`);
 }
 
 function closeChat() {
@@ -914,7 +914,7 @@ function sendMessage() {
     if (message) {
         appendMessage('user-message', message);
         input.value = '';
-        appendMessage('ai-message', '抱歉，聊天功能需要后端API支持。这是一个演示界面。');
+        appendMessage('ai-message', 'Sorry, chat functionality requires backend API support. This is a demo interface.');
     }
 }
 
@@ -961,7 +961,7 @@ function handleImageUpload(file) {
                 document.getElementById('previewArea').style.display = 'block';
                 analyzeImage(resizedImage);
             } catch (error) {
-                alert('处理图片时出错。请重试。');
+                alert('Error processing image. Please try again.');
             }
         };
         reader.readAsDataURL(file);
@@ -1006,12 +1006,12 @@ function analyzeImage(imageData) {
     const editBtn = document.getElementById('editBtn');
     const deployBtn = document.getElementById('deployBtn');
     
-    status.innerHTML = 'AI正在分析图片...';
-    
+    status.innerHTML = 'AI analyzing image...';
+
     setTimeout(() => {
-        nameInput.value = '自定义代理';
-        personalityInput.value = '一个有帮助和知识渊博的助手。';
-        status.innerHTML = 'AI分析完成！您现在可以自定义您的代理。';
+        nameInput.value = 'Custom Agent';
+        personalityInput.value = 'A helpful and knowledgeable assistant.';
+        status.innerHTML = 'AI analysis complete! You can now customize your agent.';
         editBtn.style.display = 'block';
         deployBtn.disabled = false;
     }, 2000);
@@ -1031,7 +1031,7 @@ function resetUpload() {
     document.getElementById('agentPersonality').value = '';
     document.getElementById('editBtn').style.display = 'none';
     document.getElementById('deployBtn').disabled = true;
-    document.getElementById('analysisStatus').innerHTML = '上传图片以开始...';
+    document.getElementById('analysisStatus').innerHTML = 'Upload an image to start...';
 }
 
 function deployAgent() {
@@ -1040,7 +1040,7 @@ function deployAgent() {
     const imagePreview = document.getElementById('imagePreview');
     
     if (!name || !personality || !imagePreview.src) {
-        alert('请填写所有字段并上传图片');
+        alert('Please fill in all fields and upload an image');
         return;
     }
     
@@ -1058,7 +1058,7 @@ function deployAgent() {
     agents.push(newAgent);
     initializeAgents();
     closeCreator();
-    alert('代理已成功创建！');
+    alert('Agent created successfully!');
 }
 
 function openDeployModal(bot) {
@@ -1074,10 +1074,10 @@ function closeDeployModal() {
 function deployBot() {
     const token = document.getElementById('botToken').value.trim();
     if (!token) {
-        alert('请输入机器人令牌');
+        alert('Please enter your bot token');
         return;
     }
-    alert('Telegram部署目前不可用 - 请稍后再试！');
+    alert('Telegram deployment is currently unavailable - please try again later!');
     closeDeployModal();
 }
 
@@ -1096,10 +1096,10 @@ function closePumpModal() {
 function deployToPump() {
     const ticker = document.getElementById('pumpTicker').value.trim();
     if (!ticker) {
-        alert('请输入代币符号');
+        alert('Please enter a token ticker');
         return;
     }
-    alert('pump部署目前不可用 - 请稍后再试！');
+    alert('Pump deployment is currently unavailable - please try again later!');
     closePumpModal();
 }
 
@@ -1116,10 +1116,10 @@ function closeSubdomainModal() {
 function deployToSubdomain() {
     const subdomain = document.getElementById('subdomainInput').value.trim();
     if (!subdomain) {
-        alert('请输入子域名');
+        alert('Please enter a subdomain');
         return;
     }
-    alert('子域名部署目前不可用 - 请稍后再试！');
+    alert('Subdomain deployment is currently unavailable - please try again later!');
     closeSubdomainModal();
 }
 

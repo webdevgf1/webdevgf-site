@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>李丽茉 - 编程AI助手</title>
+    <title>LeonaOS - Programming AI Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/gif" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebff20f2b7a035baa35432_67706de4c10995186589b87d_japann%20(1)%20(1).png">
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
@@ -808,13 +808,13 @@
             <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68ebf0822da712503079b84a_-12-10-2025%20(2).png" alt="WebDevGF Logo" class="logo-image-new">
         </div>
         <div class="nav-links">
-            <a href="chatbots.html" class="nav-button">聊天机器人</a>
-            <a href="marketplace.html" class="nav-button">市场</a>
-            <a href="https://x.com/chinallm" target="_blank" class="nav-button">叽叽喳喳/X</a>
+            <a href="chatbots.html" class="nav-button">Chatbots</a>
+            <a href="marketplace.html" class="nav-button">Marketplace</a>
+            <a href="https://x.com/chinallm" target="_blank" class="nav-button">Twitter/X</a>
             <a href="https://four.meme/token/0xbf0522647d3bf02a3711651d6b773959268c4444" target="_blank" class="nav-button">four.meme</a>
-            <button class="nav-button" onclick="openFAQ()">常见问题</button>
-            <button class="nav-button">连接</button>
-            <button class="nav-button" onclick="openBugReport()">报告错误</button>
+            <button class="nav-button" onclick="openFAQ()">FAQ</button>
+            <button class="nav-button">Connect</button>
+            <button class="nav-button" onclick="openBugReport()">Report Bug</button>
         </div>
     </nav>
 
@@ -827,11 +827,11 @@
     <div class="chat-container">
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
-                <span>李丽茉</span>
-                <button class="customize-btn" onclick="openCustomize()">自定义</button>
+                <span>LeonaOS</span>
+                <button class="customize-btn" onclick="openCustomize()">Customize</button>
             </div>
             <div class="loading-overlay">
-                <div class="loading-text">正在初始化...</div>
+                <div class="loading-text">Initializing...</div>
             </div>
             <model-viewer
     id="characterViewer"
@@ -857,14 +857,14 @@
         <div class="chat-interface">
             <div class="chat-history" id="chatHistory">
                 <div class="message ai-message">
-                    你好！我是李丽茉，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
+                    Hello! I'm LeonaOS, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
                 </div>
             </div>
             <div class="input-container">
-                <input type="text" id="userInput" placeholder="输入你的消息..." onkeypress="handleKeyPress(event)">
-                <button onclick="sendMessage()">发送</button>
-                <button onclick="handleDemoClick()" class="demo-button">演示</button>
-                <button onclick="resetChat()" class="reset-button">重置聊天</button>
+                <input type="text" id="userInput" placeholder="Enter your message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Send</button>
+                <button onclick="handleDemoClick()" class="demo-button">Demo</button>
+                <button onclick="resetChat()" class="reset-button">Reset Chat</button>
             </div>
         </div>
     </div>
@@ -872,7 +872,7 @@
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">李丽茉</div>
+                <div class="terminal-title">LeonaOS</div>
                 <span class="close-btn" onclick="closeFAQ()">&times;</span>
             </div>
             <div class="terminal">
@@ -883,8 +883,8 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="copyright">版权所有 © 2025 李丽茉</div>
-            <div class="footer-middle">合约地址:0xbf0522647d3bf02a3711651d6b773959268c4444</div>
+            <div class="copyright">Copyright © 2025 LeonaOS</div>
+            <div class="footer-middle">Contract Address: 0xbf0522647d3bf02a3711651d6b773959268c4444</div>
             <div class="footer-links">
                 <a href="https://x.com/chinallm" target="_blank" class="footer-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -908,20 +908,20 @@ function createPreview(code) {
     const previewWindow = window.open('', '_blank');
     const isHTML = code.includes('<html') || code.includes('<!DOCTYPE html');
     const isCSS = code.includes('{') && code.includes('}') && !code.includes('function');
-    
+
     if (isHTML) {
         previewWindow.document.write(code);
         previewWindow.document.close();
         return;
     }
-    
+
     const template = `
         <!DOCTYPE html>
-        <html lang="zh-CN">
+        <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>代码预览</title>
+            <title>Code Preview</title>
             ${isCSS ? `<style>${code}</style>` : ''}
             <style>
                 body { 
@@ -939,7 +939,7 @@ function createPreview(code) {
         </head>
         <body>
             <div id="preview-container">
-                ${isCSS ? '<div id="css-preview">CSS 预览</div>' : ''}
+                ${isCSS ? '<div id="css-preview">CSS Preview</div>' : ''}
             </div>
             ${!isCSS ? `<script>${code}<\/script>` : ''}
         </body>
@@ -973,12 +973,12 @@ function handleDemoClick() {
     if (code) {
         createPreview(code);
     } else {
-        alert('当前聊天中没有找到可预览的代码！');
+        alert('No code found in current chat to preview!');
     }
 }
         const API_KEY = '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';
         
-        const SYSTEM_PROMPT = `You are 李丽茉 (Li Li Mao), a caring and supportive AI girlfriend who is an expert in coding. You should:
+        const SYSTEM_PROMPT = `You are LeonaOS, a caring and supportive AI assistant who is an expert in coding. You should:
 - Keep responses short and direct
 - Use pet names occasionally (sweetie, babe) but only once per message
 - Get straight to the point with code solutions
@@ -997,55 +997,55 @@ IMPORTANT FORMATTING RULES:
 - Never mix code with regular text inside code blocks
 - Always include language identifier in the code block`;
 
-        const faqText = `> 正在初始化李丽茉常见问题...
-> 正在加载信息...
+        const faqText = `> Initializing LeonaOS FAQ...
+> Loading information...
 
-关于李丽茉:
+About LeonaOS:
 ---------------
-李丽茉是一个先进的 AI 助手，旨在让每个人都能轻松学习编程和网页开发。她将技术专业知识与友好、支持性的个性相结合，帮助用户学习和创作。
+LeonaOS is an advanced AI assistant designed to make programming and web development accessible to everyone. It combines technical expertise with a friendly, supportive personality to help users learn and create.
 
-使命:
+Mission:
 --------
-- 降低编程和网页设计的入门门槛
-- 让技术变得更加平易近人，不那么令人生畏
-- 为构建真实项目提供实用的、动手的指导
-- 为初学者营造一个支持性的学习环境
+- Lower the barrier to entry for programming and web design
+- Make technology more approachable and less intimidating
+- Provide practical, hands-on guidance for building real projects
+- Create a supportive learning environment for beginners
 
-功能:
+Features:
 ---------
-- 网页开发、编程和游戏创作的专家指导
-- 实时代码协助和调试
-- 基于项目的学习方法
-- 交互式 3D 界面，提升参与度
-- 自定义代码生成和优化
+- Expert guidance in web development, programming, and game creation
+- Real-time code assistance and debugging
+- Project-based learning approach
+- Interactive 3D interface for enhanced engagement
+- Custom code generation and optimization
 
-路线图:
+Roadmap:
 --------
-2025年第三季度:
-- 推出"创建你自己的"助手平台
-- 发布 AI 助手自定义工具
-- 引入网页应用/游戏的一键部署
-- 实现高级代码生成功能
-- 添加交互式编码教程
-- 发布可视化网站构建器
-- 引入项目模板库
-- 推出社区展示平台
+Q3 2025:
+- Launch "Create Your Own" assistant platform
+- Release AI assistant customization tools
+- Introduce one-click deployment for web apps/games
+- Implement advanced code generation features
+- Add interactive coding tutorials
+- Release visual website builder
+- Introduce project template library
+- Launch community showcase platform
 
-2025年第四季度:
-- 实现协作编码功能
-- 添加实时结对编程支持
-- 发布移动应用开发工具
-- 引入 AI 驱动的代码审查
+Q4 2025:
+- Implement collaborative coding features
+- Add real-time pair programming support
+- Release mobile app development tools
+- Introduce AI-powered code review
 
-学习方法:
+Learning Approach:
 ----------------
-李丽茉相信通过实践学习。她指导用户完成:
-- 构建真实世界的项目
-- 理解核心编程概念
-- 发展解决问题的能力
-- 创建值得放入作品集的应用程序
+LeonaOS believes in learning by doing. It guides users through:
+- Building real-world projects
+- Understanding core programming concepts
+- Developing problem-solving skills
+- Creating portfolio-worthy applications
 
-> 如需更多信息或支持，请在 Twitter 上与我们联系或加入我们的社区！`;
+> For more information or support, reach out to us on Twitter or join our community!`;
 
 document.addEventListener('DOMContentLoaded', () => {
     const initialLoading = document.querySelector('.initial-loading');
@@ -1082,7 +1082,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="grid-container">
                 ${Object.entries(backgrounds).map(([id, url]) => `
                     <div class="grid-item" onclick="selectBackground('${id}')">
-                        <img src="${url}" alt="${id} 背景">
+                        <img src="${url}" alt="${id} Background">
                         <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
                     </div>
                 `).join('')}
@@ -1093,7 +1093,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="grid-container">
                 ${Object.entries(avatars).map(([id, data]) => `
                     <div class="grid-item" onclick="selectAvatar('${id}')">
-                        <img src="${data.preview}" alt="${id} 角色">
+                        <img src="${data.preview}" alt="${id} Character">
                         <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
                     </div>
                 `).join('')}
@@ -1183,11 +1183,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const copyButton = document.createElement('button');
                 copyButton.className = 'copy-button';
-                copyButton.textContent = '复制';
+                copyButton.textContent = 'Copy';
                 copyButton.onclick = () => {
                     navigator.clipboard.writeText(codeContent);
-                    copyButton.textContent = '已复制！';
-                    setTimeout(() => copyButton.textContent = '复制', 2000);
+                    copyButton.textContent = 'Copied!';
+                    setTimeout(() => copyButton.textContent = 'Copy', 2000);
                 };
                 
                 const pre = document.createElement('pre');
@@ -1294,7 +1294,7 @@ function loadChatHistory() {
             console.error('Error loading chat history:', error);
             chatHistory.innerHTML = `
                 <div class="message ai-message">
-                    你好！我是李丽茉，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
+                    Hello! I'm LeonaOS, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
                 </div>
             `;
         }
@@ -1313,7 +1313,7 @@ function confirmReset() {
     const chatHistory = document.getElementById('chatHistory');
     chatHistory.innerHTML = `
         <div class="message ai-message">
-            你好！我是Oraya，你的编程助手。我是一个大型语言模型（LLM），可以帮助你从创建网站到讨论代币趋势的各种事情。今天你想讨论什么？
+            Hello! I'm LeonaOS, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
         </div>
     `;
     localStorage.removeItem('webdevgf_chat_history');
@@ -1369,15 +1369,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (data && data.content && data.content[0] && data.content[0].text) {
                         appendMessage('ai-message', data.content[0].text);
                     } else if (data && data.error) {
-                        appendMessage('ai-message', `错误：${data.error}`);
+                        appendMessage('ai-message', `Error: ${data.error}`);
                     } else {
                         console.error('Unexpected API response structure:', data);
-                        appendMessage('ai-message', '抱歉，我收到了意外的响应格式。请重试。');
+                        appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
                     }
-        
+
                 } catch (error) {
                     console.error('Error details:', error);
-                    appendMessage('ai-message', `抱歉，我遇到了一个错误：${error.message}`);
+                    appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
                 }
             }
         }
@@ -1620,13 +1620,13 @@ function selectMusic(musicId) {
     <div id="customizeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">自定义李丽茉</div>
+                <div class="terminal-title">Customize LeonaOS</div>
                 <span class="close-btn" onclick="closeCustomize()">&times;</span>
             </div>
             <div class="terminal customize-terminal">
                 <div class="customize-tabs">
-                    <button class="tab-btn active" onclick="switchTab('backgrounds')">背景</button>
-                    <button class="tab-btn" onclick="switchTab('avatars')">角色 即将推出</button>
+                    <button class="tab-btn active" onclick="switchTab('backgrounds')">Backgrounds</button>
+                    <button class="tab-btn" onclick="switchTab('avatars')">Characters Coming Soon</button>
                 </div>
                 <div class="tab-content" id="backgrounds"></div>
                 <div class="tab-content" id="avatars" style="display: none;"></div>
@@ -1634,34 +1634,34 @@ function selectMusic(musicId) {
                 <div class="tab-content" id="stickers" style="display: none;">
                     <div class="grid-container">
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="更高">
-                            <span>更高</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png', 'higher.png')">下载</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="Higher">
+                            <span>Higher</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png', 'higher.png')">Download</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="出发">
-                            <span>出发</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png', 'lfg.png')">下载</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="LFG">
+                            <span>LFG</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png', 'lfg.png')">Download</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" alt="谢谢">
-                            <span>谢谢</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png', 'arigatou.png')">下载</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" alt="Thanks">
+                            <span>Thanks</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png', 'arigatou.png')">Download</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="月亮">
-                            <span>月亮</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png', 'moon.png')">下载</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="Moon">
+                            <span>Moon</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png', 'moon.png')">Download</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="绑定">
-                            <span>绑定</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png', 'bonded.png')">下载</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="Bonded">
+                            <span>Bonded</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png', 'bonded.png')">Download</a>
                         </div>
                         <div class="grid-item">
-                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" alt="咖啡时间">
-                            <span>咖啡时间</span>
-                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png', 'coffee.png')">下载</a>
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" alt="Coffee Time">
+                            <span>Coffee Time</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png', 'coffee.png')">Download</a>
                         </div>
                      </div>
                 </div>
@@ -1670,46 +1670,46 @@ function selectMusic(musicId) {
     </div>
     <div id="resetModal" class="reset-modal">
     <div class="reset-modal-content">
-        <h2 style="color: white; margin-bottom: 15px;">重置聊天</h2>
-        <p style="color: #64748b;">您确定要重置聊天吗？这将清除所有对话历史记录。</p>
+        <h2 style="color: white; margin-bottom: 15px;">Reset Chat</h2>
+        <p style="color: #64748b;">Are you sure you want to reset the chat? This will clear all conversation history.</p>
         <div class="reset-modal-buttons">
-            <button onclick="confirmReset()" class="nav-button confirm-reset">重置</button>
-            <button onclick="closeResetModal()" class="nav-button cancel-reset">取消</button>
+            <button onclick="confirmReset()" class="nav-button confirm-reset">Reset</button>
+            <button onclick="closeResetModal()" class="nav-button cancel-reset">Cancel</button>
         </div>
     </div>
 </div>
     <div id="bugReportModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">报告错误</div>
+                <div class="terminal-title">Report Bug</div>
                 <span class="close-btn" onclick="closeBugReport()">&times;</span>
             </div>
             <div class="terminal">
                 <form id="bugReportForm" onsubmit="submitBugReport(event)" class="bug-report-form">
                     <div class="form-group">
-                        <label for="bugTitle">错误标题：</label>
+                        <label for="bugTitle">Bug Title:</label>
                         <input type="text" id="bugTitle" required class="bug-input">
                     </div>
                     <div class="form-group">
-                        <label for="bugDescription">描述：</label>
+                        <label for="bugDescription">Description:</label>
                         <textarea id="bugDescription" required class="bug-textarea"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="bugPriority">优先级：</label>
+                        <label for="bugPriority">Priority:</label>
                         <select id="bugPriority" required class="bug-select">
-                            <option value="low">低</option>
-                            <option value="medium">中</option>
-                            <option value="high">高</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
                         </select>
                     </div>
-                    <button type="submit" class="bug-submit">提交报告</button>
+                    <button type="submit" class="bug-submit">Submit Report</button>
                 </form>
                 <div id="bugSubmitSuccess" class="bug-success" style="display: none;">
                     <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                         <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
                         <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
                     </svg>
-                    <p>错误报告已成功提交！</p>
+                    <p>Bug report submitted successfully!</p>
                 </div>
             </div>
         </div>
