@@ -13,7 +13,7 @@
 [![Built with ElizaOS](https://img.shields.io/badge/Built%20with-ElizaOS-green?style=flat-square)](https://github.com/ai16z/eliza)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
-[Website](https://leonaos.fun) • [Documentation](#) • [Twitter](https://x.com/TheLeonaOS) • [Marketplace](https://leonaos.fun/marketplace.html)
+[Website](https://leonaos.fun) • [Documentation](#) • [Twitter](https://x.com/TheLeonaOS) • [Marketplace](https://leonaos.fun/marketplace)
 
 </div>
 
@@ -572,8 +572,8 @@ MIT License - See [LICENSE](LICENSE) for details
 
 - **Website**: [https://leonaos.fun](https://leonaos.fun)
 - **Twitter**: [@TheLeonaOS](https://x.com/TheLeonaOS)
-- **Marketplace**: [https://leonaos.fun/marketplace.html](https://leonaos.fun/marketplace.html)
-- **Chatbots**: [https://leonaos.fun/chatbots.html](https://leonaos.fun/chatbots.html)
+- **Marketplace**: [https://leonaos.fun/marketplace](https://leonaos.fun/marketplace)
+- **Chatbots**: [https://leonaos.fun/chatbots](https://leonaos.fun/chatbots)
 
 ---
 
