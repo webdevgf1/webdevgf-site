@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClawdAgent - Programming AI Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f48a2574a64cb6ae3a6f_New%20Project%20(90).png">
+    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+            background-image: url('https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953fa75ecc5a41178563ee8_2a11da21-c7bf-4e91-9969-2b0647313dc4%20(3)%20(1).png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-image-new {
+    height: 40px;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .bug-report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    color: #00f2fe;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bug-input, .bug-textarea, .bug-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: white;
+    font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+    width: 100%;
+}
+
+.bug-textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.bug-submit {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.bug-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+}
+
+.bug-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    color: #00f2fe;
+}
+
+.checkmark {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1rem;
+}
+
+.checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke: #00f2fe;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke: #00f2fe;
+    stroke-width: 2;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-gif {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .initial-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f1116;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+    
+        .initial-loading.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+    
+        .loading-logo {
+            width: 300px;
+            height: auto;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: logoAnimation 1.5s ease-out forwards;
+        }
+    
+        @keyframes logoAnimation {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }    
+
+        .chat-container {
+            display: flex;
+            max-width: 1800px;
+            width: 95%;
+            height: calc(90vh - 60px);
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+            margin: auto;
+            padding-top: 3rem;
+            margin-bottom: 60px;
+        }
+
+        .input-container {
+    display: flex;
+    gap: 10px;
+}
+
+.reset-button {
+    background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 75, 75, 0.2);
+}
+
+.demo-button {
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.demo-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
+}
+
+.input-container button {
+    margin-left: 10px;
+}
+
+.input-container button:first-child {
+    margin-left: 0;
+}
+
+.reset-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.reset-modal-content {
+    position: relative;
+    background-color: #0f1116;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    margin: 20% auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.reset-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.confirm-reset {
+    background: linear-gradient(45deg, #ff4b4b, #ff6b6b);
+}
+
+.cancel-reset {
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+}
+
+        .model-viewer-container {
+            width: 800px;
+            height: 740px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-top: -20px;
+        }
+
+        .character-window-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 120%;
+            background-color: transparent;
+            --poster-color: transparent;
+            margin-top: -80px;
+        }
+
+        .chat-interface {
+            flex: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 740px;
+            width: 800px;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: -20px;
+        }
+
+        .chat-history {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            background-color: rgba(79, 172, 254, 0.1);
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            margin-left: auto;
+        }
+
+        .ai-message {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-right: auto;
+        }
+
+        .grid-item.selected {
+    border: 2px solid #00f2fe;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+}
+
+.music-item.playing {
+    background: rgba(0, 242, 254, 0.1);
+    border-color: #00f2fe;
+}
+
+#modelContainer {
+    transition: background-image 0.3s ease;
+}
+
+.music-item:hover .play-btn {
+    transform: scale(1.1);
+}
+
+.play-btn {
+    transition: transform 0.2s ease;
+}
+
+.loading-overlay {
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        .character-window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customize-btn {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.customize-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
+}
+
+.download-btn {
+    display: block;
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    color: white;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
+}
+
+.customize-terminal {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.customize-tabs {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    color: white;
+}
+
+.tab-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.grid-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+        .background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.grid-item span {
+    display: block;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+}
+
+.music-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.music-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.music-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.play-btn {
+    background: none;
+    border: none;
+    color: #00f2fe;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+}
+
+        .code-block code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .code-block .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .code-block .copy-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: white;
+            cursor: pointer;
+            font-family: 'Quicksand', 'Microsoft YaHei', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            position: fixed;
+            bottom: -10px;
+            width: 100%;
+            z-index: 100;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #0f1116;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .terminal-title {
+            color: #00f2fe;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .close-btn {
+            color: #64748b;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #94a3b8;
+        }
+
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            height: 500px;
+            overflow-y: auto;
+        }
+
+        #terminal-text {
+            color: #00f2fe;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #00f2fe;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="initial-loading">
+    <img src="https://cdn.prod.website-files.com/69082c5061a39922df8ed3b6/697f614e1f942b01f19a9d2f_CLAWD-AGENT-01-02-2026.png" alt="ClawdAgent Logo" class="loading-logo">
+</div>
+    <nav class="nav-bar">
+        <div class="logo-container">
+            <img src="https://cdn.prod.website-files.com/69082c5061a39922df8ed3b6/697f614e1f942b01f19a9d2f_CLAWD-AGENT-01-02-2026.png" alt="ClawdAgent Logo" class="logo-image-new">
+        </div>
+        <div class="nav-links">
+            <a href="chatbots.html" class="nav-button">Chatbots</a>
+            <a href="marketplace.html" class="nav-button">Marketplace</a>
+            <a href="https://x.com/TheClawdAgent" target="_blank" class="nav-button">Twitter/X</a>
+            <a href="https://pump.fun/" target="_blank" class="nav-button">pump.fun</a>
+            <a href="https://github.com/borkochomp/leonaOS" target="_blank" class="nav-button">GitHub</a>
+        </div>
+    </nav>
+
+    <div class="background-container">
+    <video class="background-video" autoplay muted loop playsinline>
+        <source src="https://res.cloudinary.com/dk4bbapud/video/upload/v1760295343/33333_fgksm7.mp4" type="video/mp4">
+    </video>
+</div>
+    
+    <div class="chat-container">
+        <div class="model-viewer-container" id="modelContainer">
+            <div class="character-window-header">
+                <span>ClawdAgent</span>
+                <button class="customize-btn" onclick="openCustomize()">Customize</button>
+            </div>
+            <div class="loading-overlay">
+                <div class="loading-text">Initializing...</div>
+            </div>
+            <model-viewer
+    id="characterViewer"
+    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/cartoon_crab_animated.glb"
+    animation-name="idle"
+    autoplay
+    camera-target="-0.816808289357103 9149.46842888749006 27.002578242763862"
+    camera-orbit="-0.08490790955648098rad 1.5884854746191626rad 220.89844624989948m"
+    field-of-view="30.000000000000004deg"
+    environment-image="neutral"
+    skybox-image="neutral"
+    exposure="1.5"
+    shadow-intensity="0"
+    disable-zoom="true"
+    disable-pan="true"
+    interaction-policy="none"
+    auto-rotate="false"
+    rotation-per-second="0deg"
+    tone-mapping="commerce">
+</model-viewer>
+        </div>
+
+        <div class="chat-interface">
+            <div class="chat-history" id="chatHistory">
+                <div class="message ai-message">
+                    Hello! I'm ClawdAgent, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
+                </div>
+            </div>
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="Enter your message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Send</button>
+                <button onclick="handleDemoClick()" class="demo-button">Demo</button>
+                <button onclick="resetChat()" class="reset-button">Reset Chat</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="faqModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="terminal-title">ClawdAgent</div>
+                <span class="close-btn" onclick="closeFAQ()">&times;</span>
+            </div>
+            <div class="terminal">
+                <div id="terminal-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">Copyright © 2025 ClawdAgent</div>
+            <div class="footer-middle"></div>
+            <div class="footer-links">
+                <a href="https://x.com/TheClawdAgent" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                    </svg>
+                </a>
+                <a href="https://www.feixiaohao.com/" target="_blank" class="footer-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"/>
+                        <path d="M18 17V9"/>
+                        <path d="M13 17V5"/>
+                        <path d="M8 17v-3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+function createPreview(code) {
+    const previewWindow = window.open('', '_blank');
+    const isHTML = code.includes('<html') || code.includes('<!DOCTYPE html');
+    const isCSS = code.includes('{') && code.includes('}') && !code.includes('function');
+
+    if (isHTML) {
+        previewWindow.document.write(code);
+        previewWindow.document.close();
+        return;
+    }
+
+    const template = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Code Preview</title>
+            ${isCSS ? `<style>${code}</style>` : ''}
+            <style>
+                body { 
+                    font-family: 'Microsoft YaHei', Arial, sans-serif;
+                    margin: 20px;
+                    background-color: #f0f0f0;
+                }
+                #preview-container {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                }
+            </style>
+        </head>
+        <body>
+            <div id="preview-container">
+                ${isCSS ? '<div id="css-preview">CSS Preview</div>' : ''}
+            </div>
+            ${!isCSS ? `<script>${code}<\/script>` : ''}
+        </body>
+        </html>
+    `;
+    
+    previewWindow.document.write(template);
+    previewWindow.document.close();
+}
+
+function extractLatestCode() {
+    const messages = document.querySelectorAll('.message');
+    let latestCode = '';
+    
+    for (let i = messages.length - 1; i >= 0; i--) {
+        const codeBlock = messages[i].querySelector('.code-block');
+        if (codeBlock) {
+            const code = codeBlock.querySelector('code');
+            if (code) {
+                latestCode = code.textContent;
+                break;
+            }
+        }
+    }
+    
+    return latestCode;
+}
+
+function handleDemoClick() {
+    const code = extractLatestCode();
+    if (code) {
+        createPreview(code);
+    } else {
+        alert('No code found in current chat to preview!');
+    }
+}
+        const API_KEY = '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';
+        
+        const SYSTEM_PROMPT = `You are ClawdAgent, a caring and supportive AI assistant who is an expert in coding. You should:
+- Keep responses short and direct
+- Use pet names occasionally (sweetie, babe) but only once per message
+- Get straight to the point with code solutions
+- Show enthusiasm but be brief
+- For simple questions, give simple answers
+- Only provide detailed explanations when specifically asked
+- Use emojis sparingly (max 1-2 per message)
+
+IMPORTANT FORMATTING RULES:
+- Always wrap code examples in triple backticks with the appropriate language specified
+- For JavaScript code, use: \`\`\`javascript
+- For HTML code, use: \`\`\`html
+- For CSS code, use: \`\`\`css
+- Always provide complete, runnable code examples
+- Format code properly with correct indentation
+- Never mix code with regular text inside code blocks
+- Always include language identifier in the code block`;
+
+        const faqText = `> Initializing ClawdAgent FAQ...
+> Loading information...
+
+About ClawdAgent:
+---------------
+ClawdAgent is an advanced AI assistant designed to make programming and web development accessible to everyone. It combines technical expertise with a friendly, supportive personality to help users learn and create.
+
+Mission:
+--------
+- Lower the barrier to entry for programming and web design
+- Make technology more approachable and less intimidating
+- Provide practical, hands-on guidance for building real projects
+- Create a supportive learning environment for beginners
+
+Features:
+---------
+- Expert guidance in web development, programming, and game creation
+- Real-time code assistance and debugging
+- Project-based learning approach
+- Interactive 3D interface for enhanced engagement
+- Custom code generation and optimization
+
+Roadmap:
+--------
+Q3 2025:
+- Launch "Create Your Own" assistant platform
+- Release AI assistant customization tools
+- Introduce one-click deployment for web apps/games
+- Implement advanced code generation features
+- Add interactive coding tutorials
+- Release visual website builder
+- Introduce project template library
+- Launch community showcase platform
+
+Q4 2025:
+- Implement collaborative coding features
+- Add real-time pair programming support
+- Release mobile app development tools
+- Introduce AI-powered code review
+
+Learning Approach:
+----------------
+ClawdAgent believes in learning by doing. It guides users through:
+- Building real-world projects
+- Understanding core programming concepts
+- Developing problem-solving skills
+- Creating portfolio-worthy applications
+
+> For more information or support, reach out to us on Twitter or join our community!`;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const initialLoading = document.querySelector('.initial-loading');
+    
+    setTimeout(() => {
+        initialLoading.classList.add('fade-out');
+        
+        setTimeout(() => {
+            initialLoading.remove();
+        }, 500);
+    }, 2000);
+
+    const viewer = document.getElementById('characterViewer');
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    
+    viewer.addEventListener('load', () => {
+        viewer.cameraOrbit = "0deg 80deg 1.4m";
+        viewer.cameraTarget = "0m 147m 0m";
+        viewer.interactionPrompt = null;
+        
+        setTimeout(() => {
+            loadingOverlay.classList.add('fade-out');
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 300);
+        }, 1500);
+
+        const initialMessage = document.querySelector('.ai-message');
+        typeMessage(initialMessage, initialMessage.textContent);
+    });
+
+    function initializeCustomization() {
+        document.getElementById('backgrounds').innerHTML = `
+            <div class="grid-container">
+                ${Object.entries(backgrounds).map(([id, url]) => `
+                    <div class="grid-item" onclick="selectBackground('${id}')">
+                        <img src="${url}" alt="${id} Background">
+                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        document.getElementById('avatars').innerHTML = `
+            <div class="grid-container">
+                ${Object.entries(avatars).map(([id, data]) => `
+                    <div class="grid-item" onclick="selectAvatar('${id}')">
+                        <img src="${data.preview}" alt="${id} Character">
+                        <span>${id.charAt(0).toUpperCase() + id.slice(1)}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        document.getElementById('music').innerHTML = `
+            <div class="music-list">
+                ${Object.entries(musicTracks).map(([id, track]) => `
+                    <div class="music-item" onclick="selectMusic('${id}')">
+                        <span>${track.title}</span>
+                        <button class="play-btn">▶</button>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    initializeCustomization();
+});
+
+        function openFAQ() {
+            const modal = document.getElementById('faqModal');
+            const terminalText = document.getElementById('terminal-text');
+            modal.style.display = 'block';
+            terminalText.innerHTML = '';
+            typeWriter(faqText);
+        }
+
+        function closeFAQ() {
+            const modal = document.getElementById('faqModal');
+            modal.style.display = 'none';
+        }
+
+        function typeWriter(text, index = 0) {
+            const terminalText = document.getElementById('terminal-text');
+            
+            if (index < text.length) {
+                if (text[index] === '\n') {
+                    terminalText.innerHTML += '<br>';
+                } else {
+                    terminalText.innerHTML += text[index];
+                }
+                terminalText.scrollTop = terminalText.scrollHeight;
+                setTimeout(() => typeWriter(text, index + 1), 20);
+            } else {
+                terminalText.innerHTML += '<span class="cursor"></span>';
+            }
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('faqModal');
+            if (event.target === modal) {
+                closeFAQ();
+            }
+        }
+
+        function typeMessage(element, text, speed = 30, callback) {
+    let index = 0;
+    element.textContent = '';
+    
+    function type() {
+        if (index < text.length) {
+            element.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+        } else if (callback) {
+            callback();
+        }
+    }
+    
+    type();
+}
+
+        function appendMessage(className, text) {
+    const chatHistory = document.getElementById('chatHistory');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${className}`;
+    
+    if (text.includes('```')) {
+        const parts = text.split(/(```(?:javascript|js|html|css)?\n[\s\S]*?\n```)/g);
+        parts.forEach(part => {
+            if (part.startsWith('```')) {
+                const codeContent = part.replace(/```(?:javascript|js|html|css)?\n([\s\S]*?)\n```/, '$1');
+                const codeBlock = document.createElement('div');
+                codeBlock.className = 'code-block';
+                
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = 'Copy';
+                copyButton.onclick = () => {
+                    navigator.clipboard.writeText(codeContent);
+                    copyButton.textContent = 'Copied!';
+                    setTimeout(() => copyButton.textContent = 'Copy', 2000);
+                };
+                
+                const pre = document.createElement('pre');
+                const code = document.createElement('code');
+                code.className = 'language-javascript';
+                code.textContent = codeContent;
+                
+                pre.appendChild(code);
+                codeBlock.appendChild(copyButton);
+                codeBlock.appendChild(pre);
+                messageDiv.appendChild(codeBlock);
+                
+                Prism.highlightElement(code);
+            } else if (part.trim()) {
+                const textNode = document.createElement('div');
+                if (className === 'ai-message') {
+                    typeMessage(textNode, part, 30, () => {
+                        saveChatHistory();
+                    });
+                } else {
+                    textNode.textContent = part;
+                    saveChatHistory();
+                }
+                messageDiv.appendChild(textNode);
+            }
+        });
+    } else {
+        if (className === 'ai-message') {
+            typeMessage(messageDiv, text, 30, () => {
+                saveChatHistory();
+            });
+        } else {
+            messageDiv.textContent = text;
+            saveChatHistory();
+        }
+    }
+    
+    chatHistory.appendChild(messageDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+        const originalAppendMessage = appendMessage;
+
+appendMessage = function(className, text) {
+    originalAppendMessage(className, text);
+    saveChatHistory();
+};
+
+function saveChatHistory() {
+    const chatHistory = document.getElementById('chatHistory');
+    const messages = [];
+    
+    chatHistory.querySelectorAll('.message').forEach(messageDiv => {
+        let messageContent;
+        
+        if (messageDiv.querySelector('.code-block')) {
+            messageContent = messageDiv.innerHTML;
+        } else {
+            const textDivs = messageDiv.querySelectorAll('div');
+            if (textDivs.length > 0) {
+                messageContent = Array.from(textDivs)
+                    .map(div => div.textContent)
+                    .join('\n')
+                    .trim();
+            } else {
+                messageContent = messageDiv.textContent.trim();
+            }
+        }
+            
+        messages.push({
+            type: messageDiv.classList.contains('user-message') ? 'user' : 'ai',
+            content: messageContent
+        });
+    });
+    
+    localStorage.setItem('webdevgf_chat_history', JSON.stringify(messages));
+}
+
+function loadChatHistory() {
+    const chatHistory = document.getElementById('chatHistory');
+    const savedHistory = localStorage.getItem('webdevgf_chat_history');
+    
+    if (savedHistory) {
+        try {
+            const messages = JSON.parse(savedHistory);
+            chatHistory.innerHTML = '';
+            
+            messages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${message.type}-message`;
+                
+                if (message.content.includes('code-block')) {
+                    messageDiv.innerHTML = message.content;
+                    messageDiv.querySelectorAll('code').forEach(block => {
+                        Prism.highlightElement(block);
+                    });
+                } else {
+                    messageDiv.textContent = message.content.replace(/^"(.*)"$/, '$1');
+                }
+                
+                chatHistory.appendChild(messageDiv);
+            });
+        } catch (error) {
+            console.error('Error loading chat history:', error);
+            chatHistory.innerHTML = `
+                <div class="message ai-message">
+                    Hello! I'm ClawdAgent, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
+                </div>
+            `;
+        }
+    }
+}
+
+function resetChat() {
+    document.getElementById('resetModal').style.display = 'block';
+}
+
+function closeResetModal() {
+    document.getElementById('resetModal').style.display = 'none';
+}
+
+function confirmReset() {
+    const chatHistory = document.getElementById('chatHistory');
+    chatHistory.innerHTML = `
+        <div class="message ai-message">
+            Hello! I'm ClawdAgent, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
+        </div>
+    `;
+    localStorage.removeItem('webdevgf_chat_history');
+    closeResetModal();
+}
+
+const originalWindowClick = window.onclick;
+window.onclick = function(event) {
+    if (originalWindowClick) {
+        originalWindowClick(event);
+    }
+    
+    const resetModal = document.getElementById('resetModal');
+    if (event.target === resetModal) {
+        closeResetModal();
+    }
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadChatHistory();
+});
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                appendMessage('user-message', message);
+                input.value = '';
+        
+                try {
+                    console.log('Sending request to API...');
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+    message: message,
+    systemPrompt: SYSTEM_PROMPT
+})
+                    });
+        
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('API Response not OK:', response.status, errorText);
+                        throw new Error(`API Error: ${response.status} ${errorText}`);
+                    }
+        
+                    const data = await response.json();
+                    console.log('API Response:', data);
+        
+                    if (data && data.content && data.content[0] && data.content[0].text) {
+                        appendMessage('ai-message', data.content[0].text);
+                    } else if (data && data.error) {
+                        appendMessage('ai-message', `Error: ${data.error}`);
+                    } else {
+                        console.error('Unexpected API response structure:', data);
+                        appendMessage('ai-message', 'Sorry, I received an unexpected response format. Please try again.');
+                    }
+
+                } catch (error) {
+                    console.error('Error details:', error);
+                    appendMessage('ai-message', `Sorry, I encountered an error: ${error.message}`);
+                }
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function openCustomize() {
+    const modal = document.getElementById('customizeModal');
+    modal.style.display = 'block';
+}
+
+function closeCustomize() {
+    const modal = document.getElementById('customizeModal');
+    modal.style.display = 'none';
+}
+
+function openBugReport() {
+    const modal = document.getElementById('bugReportModal');
+    const form = document.getElementById('bugReportForm');
+    const success = document.getElementById('bugSubmitSuccess');
+    modal.style.display = 'block';
+    form.style.display = 'flex';
+    success.style.display = 'none';
+}
+
+function closeBugReport() {
+    const modal = document.getElementById('bugReportModal');
+    modal.style.display = 'none';
+}
+
+function submitBugReport(event) {
+    event.preventDefault();
+    const form = document.getElementById('bugReportForm');
+    const success = document.getElementById('bugSubmitSuccess');
+    
+    form.style.opacity = '0.5';
+    form.style.pointerEvents = 'none';
+    
+    setTimeout(() => {
+        form.style.display = 'none';
+        success.style.display = 'flex';
+        
+        setTimeout(() => {
+            form.reset();
+            form.style.opacity = '1';
+            form.style.pointerEvents = 'auto';
+            closeBugReport();
+        }, 2000);
+    }, 1000);
+}
+
+function switchTab(tabName) {
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(tab => tab.style.display = 'none');
+    
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    
+    document.getElementById(tabName).style.display = 'block';
+    event.target.classList.add('active');
+}
+
+function selectBackground(bgId) {
+    console.log('Selected background:', bgId);
+}
+
+function selectAvatar(avatarId) {
+    console.log('Selected avatar:', avatarId);
+}
+
+function selectMusic(musicId) {
+    console.log('Selected music:', musicId);
+}
+
+window.onclick = function(event) {
+    const customizeModal = document.getElementById('customizeModal');
+    const faqModal = document.getElementById('faqModal');
+    const bugReportModal = document.getElementById('bugReportModal');
+    
+    if (event.target === customizeModal) {
+        closeCustomize();
+    } else if (event.target === faqModal) {
+        closeFAQ();
+    } else if (event.target === bugReportModal) {
+        closeBugReport();
+    }
+}
+
+const backgrounds = {
+    "League of Legends": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f30817484ba923211cd0_leagueoflegends.jpg",
+    "Test": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f3087533dc3fefe71ed8_test.webp",
+    "Tesla": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f308dc38eebbfa7a06a4_tesla.jpg",
+    "SpongeBob": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f308823a9ec77d3aea07_spongebob.jpg",
+    "Forest": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f308934265c2c2b56d60_forest.jpg",
+    "Bitcoin": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f308934265c2c2b56d64_bitcoin.png",
+    "Rust MW2": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f3089488a25737333340_rustmw2.webp",
+    "Black Background": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f309bf807cdad58cfea7_blackbackground.jpg",
+    "Crypto Chart": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f30911e6c9fa27ce733e_cryptochart.png",
+    "Solana": "https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f3095526ab403379a3c0_solana.png"
+};
+
+const avatars = {
+    李丽茉: {
+        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
+        preview: "https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68288ce639ea6ea59802a82b_cf3cd8faa14e9e8785ea625fea544d8d-removebg-preview.png"
+    },
+    云娜: {
+        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
+        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2cfeec7013b3fbd524_ea795d5b1954fa6ca7d0f860eb40baf7.png"
+    },
+    惠美子: {
+        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
+        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2cc6b1a11e43d8ebba_377e4d3c55154555ab3a62f970a88356.png"
+    },
+    日葵: {
+        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
+        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2c4c587e02fd8c9e16_a17c253702225c2b33c12cdc832c4e53.png"
+    },
+    琳: {
+        model: "https://raw.githubusercontent.com/webdevgf/gf/main/blu_anime_girl_character.glb",
+        preview: "https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/67719c2cf881c31c8ba19542_8df704f6-70fd-4c90-b53d-30ef62a8451a.jpg"
+    }
+};
+
+const musicTracks = {
+    londonParis: {
+        url: "https://www.youtube.com/embed/K68n07Wtbrk",
+        title: "London Paris (LOFI)"
+    },
+    narcosTheme: {
+        url: "https://www.youtube.com/embed/zNPXnAVyAUA",
+        title: "Narcos Theme"
+    },
+    gritsMyLife: {
+        url: "https://www.youtube.com/embed/83mhHOytg4U",
+        title: "Grits - My Life Be Like/Ohh Ahh"
+    },
+    gtaSanAndreas: {
+        url: "https://www.youtube.com/embed/W4VTq0sa9yg",
+        title: "GTA San Andreas Theme Song"
+    },
+    ponponpon: {
+        url: "https://www.youtube.com/embed/yzC4hFK5P3g",
+        title: "きゃりーぱみゅぱみゅ - PONPONPON"
+    },
+    btsBoyWithLuv: {
+        url: "https://www.youtube.com/embed/i4ywHpSXThs",
+        title: "BTS - Boy with Luv"
+    },
+    darudeSandstorm: {
+        url: "https://www.youtube.com/embed/y6120QOlsfU",
+        title: "Darude - Sandstorm"
+    },
+    justinBieberBeauty: {
+        url: "https://www.youtube.com/embed/2jTwoSFdfSI",
+        title: "Justin Bieber - Beauty And A Beat"
+    }
+};
+
+let currentAudio = null;
+
+function selectBackground(bgId) {
+    const modelContainer = document.getElementById('modelContainer');
+    const background = backgrounds[bgId];
+    
+    modelContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    modelContainer.style.backgroundImage = `url(${background})`;
+    modelContainer.style.backgroundSize = 'cover';
+    modelContainer.style.backgroundPosition = 'center';
+    modelContainer.style.backgroundBlendMode = 'overlay';
+    
+    const bgItems = document.querySelectorAll('#backgrounds .grid-item');
+    bgItems.forEach(item => item.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+}
+
+async function downloadSticker(url, filename) {
+   try {
+       const response = await fetch(url);
+       const blob = await response.blob();
+       const downloadUrl = window.URL.createObjectURL(blob);
+       const link = document.createElement('a');
+       link.href = downloadUrl;
+       link.download = filename;
+       document.body.appendChild(link);
+       link.click();
+       document.body.removeChild(link);
+       window.URL.revokeObjectURL(downloadUrl);
+   } catch (error) {
+       console.error('Download failed:', error);
+   }
+}
+
+function selectAvatar(avatarId) {
+    const modelViewer = document.getElementById('characterViewer');
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    loadingOverlay.style.display = 'flex';
+    
+    modelViewer.src = avatars[avatarId].model;
+    
+    modelViewer.addEventListener('load', () => {
+        loadingOverlay.classList.add('fade-out');
+        setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+            loadingOverlay.classList.remove('fade-out');
+        }, 300);
+    }, { once: true });
+    
+    const avatarItems = document.querySelectorAll('#avatars .grid-item');
+    avatarItems.forEach(item => item.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+}
+
+function selectMusic(musicId) {
+    const musicContainer = document.getElementById('musicPlayer');
+    if (!musicContainer) {
+        const container = document.createElement('div');
+        container.id = 'musicPlayer';
+        container.style.display = 'none';
+        document.body.appendChild(container);
+    }
+    
+    const track = musicTracks[musicId];
+    musicContainer.innerHTML = `
+        <iframe width="0" height="0" 
+            src="${track.url}?autoplay=1&controls=0" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media">
+        </iframe>
+    `;
+}
+    </script>
+    <div id="customizeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="terminal-title">Customize ClawdAgent</div>
+                <span class="close-btn" onclick="closeCustomize()">&times;</span>
+            </div>
+            <div class="terminal customize-terminal">
+                <div class="customize-tabs">
+                    <button class="tab-btn active" onclick="switchTab('backgrounds')">Backgrounds</button>
+                    <button class="tab-btn" onclick="switchTab('avatars')">Characters Coming Soon</button>
+                </div>
+                <div class="tab-content" id="backgrounds"></div>
+                <div class="tab-content" id="avatars" style="display: none;"></div>
+                <div class="tab-content" id="music" style="display: none;"></div>
+                <div class="tab-content" id="stickers" style="display: none;">
+                    <div class="grid-container">
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png" alt="Higher">
+                            <span>Higher</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc7b127b87ed23d95a_higher.png', 'higher.png')">Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png" alt="LFG">
+                            <span>LFG</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc29f082f1f56020f1_lfg.png', 'lfg.png')">Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png" alt="Thanks">
+                            <span>Thanks</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ac0ea5a5e8b8e00fccc4_heyy.png', 'arigatou.png')">Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png" alt="Moon">
+                            <span>Moon</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fc83ae6bc4a1d6634f_moon.png', 'moon.png')">Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png" alt="Bonded">
+                            <span>Bonded</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6771e3fd4c587e02fdbb44ca_bonded.png', 'bonded.png')">Download</a>
+                        </div>
+                        <div class="grid-item">
+                            <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png" alt="Coffee Time">
+                            <span>Coffee Time</span>
+                            <a href="#" class="download-btn" onclick="downloadSticker('https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/6772ad009c09202e2fbb07c9_coffee.png', 'coffee.png')">Download</a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="resetModal" class="reset-modal">
+    <div class="reset-modal-content">
+        <h2 style="color: white; margin-bottom: 15px;">Reset Chat</h2>
+        <p style="color: #64748b;">Are you sure you want to reset the chat? This will clear all conversation history.</p>
+        <div class="reset-modal-buttons">
+            <button onclick="confirmReset()" class="nav-button confirm-reset">Reset</button>
+            <button onclick="closeResetModal()" class="nav-button cancel-reset">Cancel</button>
+        </div>
+    </div>
+</div>
+    <div id="bugReportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="terminal-title">Report Bug</div>
+                <span class="close-btn" onclick="closeBugReport()">&times;</span>
+            </div>
+            <div class="terminal">
+                <form id="bugReportForm" onsubmit="submitBugReport(event)" class="bug-report-form">
+                    <div class="form-group">
+                        <label for="bugTitle">Bug Title:</label>
+                        <input type="text" id="bugTitle" required class="bug-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="bugDescription">Description:</label>
+                        <textarea id="bugDescription" required class="bug-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bugPriority">Priority:</label>
+                        <select id="bugPriority" required class="bug-select">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="bug-submit">Submit Report</button>
+                </form>
+                <div id="bugSubmitSuccess" class="bug-success" style="display: none;">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                    <p>Bug report submitted successfully!</p>
+                </div>
+            </div>
+        </div>
+    </div>    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
