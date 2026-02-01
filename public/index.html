@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeonaOS - Programming AI Assistant</title>
+    <title>ClawdAgent - Programming AI Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953f48a2574a64cb6ae3a6f_New%20Project%20(90).png">
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
@@ -805,18 +805,18 @@
 </head>
 <body>
 <div class="initial-loading">
-    <img src="https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953ed705e9811e3e4aa9867_Leona-OS-30-12-2025.png" alt="WebDevGF Logo" class="loading-logo">
+    <img src="https://cdn.prod.website-files.com/69082c5061a39922df8ed3b6/697f614e1f942b01f19a9d2f_CLAWD-AGENT-01-02-2026.png" alt="ClawdAgent Logo" class="loading-logo">
 </div>
     <nav class="nav-bar">
         <div class="logo-container">
-            <img src="https://cdn.prod.website-files.com/690812274aa823122c3977f6/6953ed705e9811e3e4aa9867_Leona-OS-30-12-2025.png" alt="WebDevGF Logo" class="logo-image-new">
+            <img src="https://cdn.prod.website-files.com/69082c5061a39922df8ed3b6/697f614e1f942b01f19a9d2f_CLAWD-AGENT-01-02-2026.png" alt="ClawdAgent Logo" class="logo-image-new">
         </div>
         <div class="nav-links">
             <a href="chatbots.html" class="nav-button">Chatbots</a>
             <a href="marketplace.html" class="nav-button">Marketplace</a>
-            <a href="https://x.com/TheLeonaOS" target="_blank" class="nav-button">Twitter/X</a>
-            <a href="https://pump.fun/coin/7beYKMuovbwA2qiyq5ZCvxR91HCDLTRZ5BiRmh1jpump" target="_blank" class="nav-button">pump.fun</a>
-            <a href="https://github.com/borkochomp/leonaOS" target="_blank" class="nav-button">GitHub</a>
+            <a href="https://x.com/drunkclawd" target="_blank" class="nav-button">Twitter/X</a>
+            <a href="https://www.pump.fun" target="_blank" class="nav-button">pump.fun</a>
+            <a href="https://github.com/drunkclawd/agent" target="_blank" class="nav-button">GitHub</a>
         </div>
     </nav>
 
@@ -829,7 +829,7 @@
     <div class="chat-container">
         <div class="model-viewer-container" id="modelContainer">
             <div class="character-window-header">
-                <span>LeonaOS</span>
+                <span>ClawdAgent</span>
                 <button class="customize-btn" onclick="openCustomize()">Customize</button>
             </div>
             <div class="loading-overlay">
@@ -837,7 +837,7 @@
             </div>
             <model-viewer
     id="characterViewer"
-    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/amy.glb"
+    src="https://raw.githubusercontent.com/webdevgf1/webdevgf-site/main/cartoon_crab_animated.glb"
     animation-name="idle"
     autoplay
     camera-target="-0.816808289357103 9149.46842888749006 27.002578242763862"
@@ -859,7 +859,7 @@
         <div class="chat-interface">
             <div class="chat-history" id="chatHistory">
                 <div class="message ai-message">
-                    Hello! I'm LeonaOS, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
+                    Hello! I'm ClawdAgent, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
                 </div>
             </div>
             <div class="input-container">
@@ -874,7 +874,7 @@
     <div id="faqModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">LeonaOS</div>
+                <div class="terminal-title">ClawdAgent</div>
                 <span class="close-btn" onclick="closeFAQ()">&times;</span>
             </div>
             <div class="terminal">
@@ -885,10 +885,10 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <div class="copyright">Copyright © 2025 LeonaOS</div>
+            <div class="copyright">Copyright © 2025 ClawdAgent</div>
             <div class="footer-middle"></div>
             <div class="footer-links">
-                <a href="https://x.com/TheLeonaOS" target="_blank" class="footer-link">
+                <a href="https://x.com/drunkclawd" target="_blank" class="footer-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
                     </svg>
@@ -980,7 +980,7 @@ function handleDemoClick() {
 }
         const API_KEY = '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';
         
-        const SYSTEM_PROMPT = `You are LeonaOS, a caring and supportive AI assistant who is an expert in coding. You should:
+        const SYSTEM_PROMPT = `You are ClawdAgent, a caring and supportive AI assistant who is an expert in coding. You should:
 - Keep responses short and direct
 - Use pet names occasionally (sweetie, babe) but only once per message
 - Get straight to the point with code solutions
@@ -999,12 +999,12 @@ IMPORTANT FORMATTING RULES:
 - Never mix code with regular text inside code blocks
 - Always include language identifier in the code block`;
 
-        const faqText = `> Initializing LeonaOS FAQ...
+        const faqText = `> Initializing ClawdAgent FAQ...
 > Loading information...
 
-About LeonaOS:
+About ClawdAgent:
 ---------------
-LeonaOS is an advanced AI assistant designed to make programming and web development accessible to everyone. It combines technical expertise with a friendly, supportive personality to help users learn and create.
+ClawdAgent is an advanced AI assistant designed to make programming and web development accessible to everyone. It combines technical expertise with a friendly, supportive personality to help users learn and create.
 
 Mission:
 --------
@@ -1041,7 +1041,7 @@ Q4 2025:
 
 Learning Approach:
 ----------------
-LeonaOS believes in learning by doing. It guides users through:
+ClawdAgent believes in learning by doing. It guides users through:
 - Building real-world projects
 - Understanding core programming concepts
 - Developing problem-solving skills
@@ -1296,7 +1296,7 @@ function loadChatHistory() {
             console.error('Error loading chat history:', error);
             chatHistory.innerHTML = `
                 <div class="message ai-message">
-                    Hello! I'm LeonaOS, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
+                    Hello! I'm ClawdAgent, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
                 </div>
             `;
         }
@@ -1315,7 +1315,7 @@ function confirmReset() {
     const chatHistory = document.getElementById('chatHistory');
     chatHistory.innerHTML = `
         <div class="message ai-message">
-            Hello! I'm LeonaOS, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
+            Hello! I'm ClawdAgent, your programming assistant. I'm a large language model (LLM) that can help you with everything from creating websites to discussing token trends. What would you like to talk about today?
         </div>
     `;
     localStorage.removeItem('webdevgf_chat_history');
@@ -1619,7 +1619,7 @@ function selectMusic(musicId) {
     <div id="customizeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="terminal-title">Customize LeonaOS</div>
+                <div class="terminal-title">Customize ClawdAgent</div>
                 <span class="close-btn" onclick="closeCustomize()">&times;</span>
             </div>
             <div class="terminal customize-terminal">
@@ -1715,7 +1715,6 @@ function selectMusic(musicId) {
     </div>    
 </body>
 </html>
-
 
 
 
